@@ -8,7 +8,6 @@
 
 # Node
 node_modules/
-dist/
 build/
 
 # Windows
