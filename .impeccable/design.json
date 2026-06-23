@@ -1,0 +1,128 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-06-23T17:54:00+08:00",
+  "title": "Design System: TangTang Homepage",
+  "extensions": {
+    "colorMeta": {
+      "kuaishou-orange": {
+        "role": "primary",
+        "displayName": "Kuaishou Orange",
+        "canonical": "oklch(60% 0.22 35)",
+        "tonalRamp": ["#3d1100", "#6b1e00", "#a32b00", "#d93900", "#ff4906", "#ff7040", "#ff9a7a", "#ffc4b0"]
+      },
+      "accent-blue": {
+        "role": "secondary",
+        "displayName": "Signal Blue",
+        "canonical": "oklch(62% 0.13 240)",
+        "tonalRamp": ["#0a1a2e", "#0f2a47", "#1a3d61", "#265580", "#4e97d8", "#79b5e8", "#a7d0f3", "#d4e9fa"]
+      },
+      "surface-dark": {
+        "role": "neutral",
+        "displayName": "Deep Space",
+        "canonical": "oklch(14% 0.02 265)",
+        "tonalRamp": ["#0a0a16", "#111122", "#1a1a2e", "#22223c", "#2e2e4a", "#3a3a58", "#4a4a70", "#6a6a90"]
+      },
+      "ink-deep": {
+        "role": "neutral",
+        "displayName": "Pure White",
+        "canonical": "oklch(100% 0 0)",
+        "tonalRamp": ["#404040", "#606060", "#808080", "#a0a0a0", "#c0c0c0", "#e0e0e0", "#f0f0f0", "#ffffff"]
+      }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Name 'TangTang' — the single biggest text on the page." },
+      "body": { "displayName": "Body", "purpose": "Hitokoto quote, page descriptions. Max 65ch." },
+      "label": { "displayName": "Mono Label", "purpose": "Attribution lines, stack tags. Never in nav or headings." }
+    },
+    "shadows": [
+      { "name": "avatar-ring", "value": "0 0 0 2px rgba(255,255,255,0.5), 0 2px 20px 3px rgba(0,0,0,0.25)", "purpose": "Structural ring around avatar circle." },
+      { "name": "modal-elevation", "value": "0 24px 64px rgba(0,0,0,0.6)", "purpose": "WeChat QR modal card shadow." }
+    ],
+    "motion": [
+      { "name": "ease-out-quart", "value": "cubic-bezier(0.25, 1, 0.5, 1)", "purpose": "Default easing for iUp entrance and state transitions." },
+      { "name": "iup-stagger", "value": "150ms", "purpose": "Per-element delay in iUp cascade." },
+      { "name": "iup-initial-delay", "value": "300ms", "purpose": "Delay before iUp cascade begins on page load." }
+    ],
+    "breakpoints": [
+      { "name": "mobile", "value": "768px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Nav Link",
+      "kind": "nav",
+      "refersTo": "nav-link",
+      "description": "Pill-shaped navigation link. Orange fill on active state only.",
+      "html": "<a class=\"ds-nav-link\" href=\"#\">博客</a>",
+      "css": ".ds-nav-link { display: inline-block; padding: 8px 20px; border-radius: 9999px; color: #ffffff; text-decoration: none; font-size: 0.9rem; background: transparent; transition: background 0.2s ease; } .ds-nav-link:hover { background: rgba(255,255,255,0.06); } .ds-nav-link.active { background: #FF4906; color: #ffffff; }"
+    },
+    {
+      "name": "Primary Button / CTA",
+      "kind": "button",
+      "refersTo": "nav-link-active",
+      "description": "Orange accent button — used sparingly, max one per screen.",
+      "html": "<button class=\"ds-btn-primary\">查看简历</button>",
+      "css": ".ds-btn-primary { display: inline-block; padding: 10px 28px; border-radius: 9999px; background: #FF4906; color: #ffffff; font-size: 0.9rem; font-weight: 500; border: none; cursor: pointer; transition: background 0.2s ease, transform 0.15s ease; } .ds-btn-primary:hover { background: #ff6630; transform: translateY(-1px); } .ds-btn-primary:active { transform: translateY(0); }"
+    },
+    {
+      "name": "Ghost Back Link",
+      "kind": "button",
+      "refersTo": "nav-link",
+      "description": "Transparent pill with hairline border — used for back navigation on inner pages.",
+      "html": "<a class=\"ds-btn-ghost\" href=\"/\">← 返回首页</a>",
+      "css": ".ds-btn-ghost { display: inline-block; padding: 10px 28px; border-radius: 9999px; border: 1px solid rgba(255,255,255,0.4); color: rgba(255,255,255,0.8); text-decoration: none; font-size: 0.9rem; background: transparent; transition: background 0.2s ease, color 0.2s ease; } .ds-btn-ghost:hover { background: rgba(255,255,255,0.1); color: #ffffff; }"
+    },
+    {
+      "name": "Avatar Circle",
+      "kind": "custom",
+      "refersTo": "avatar-ring",
+      "description": "120px circle with 3D flip on hover. Click triggers WeChat modal.",
+      "html": "<div class=\"ds-avatar\"><img src=\"https://avatars.githubusercontent.com/florencemalis0-ui\" alt=\"TangTang\" /></div>",
+      "css": ".ds-avatar { width: 120px; height: 120px; border-radius: 9999px; overflow: hidden; box-shadow: 0 0 0 2px rgba(255,255,255,0.5), 0 2px 20px 3px rgba(0,0,0,0.25); cursor: pointer; transition: transform 0.3s ease; } .ds-avatar:hover { transform: scale(1.04); } .ds-avatar img { width: 100%; height: 100%; object-fit: cover; }"
+    },
+    {
+      "name": "Inner Page Container",
+      "kind": "card",
+      "refersTo": "modal-overlay",
+      "description": "Centered dark container for Blog, Resume, About placeholder pages.",
+      "html": "<div class=\"ds-inner-page\"><h1 class=\"ds-inner-title\">博客</h1><p class=\"ds-inner-desc\">即将上线</p><a class=\"ds-btn-ghost\" href=\"/\">← 返回首页</a></div>",
+      "css": ".ds-inner-page { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; background: #1a1a2e; padding: 40px 20px; text-align: center; } .ds-inner-title { font-size: clamp(2rem, 6vw, 3.5rem); font-weight: 700; color: #ffffff; margin-bottom: 16px; letter-spacing: -0.02em; } .ds-inner-desc { font-size: 1rem; color: rgba(255,255,255,0.45); margin-bottom: 40px; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Engineer's Signal",
+    "overview": "This system is built on the conviction that technical identity should feel as precise as the code it represents. Dark surfaces absorb attention and push content forward; every element earns its place through function and contrast, not decoration.\n\nThe palette speaks quietly but confidently: deep-space darks, clean whites, and one sharp signal color — Kuaishou orange — reserved for the single most important moment on any screen.\n\nThis system explicitly rejects over-engineered portfolio aesthetics: no particle systems, no CSS gradients pretending to be 'futuristic', no glassmorphism on glassmorphism.",
+    "keyCharacteristics": [
+      "Dark, immersive full-bleed backgrounds",
+      "Single accent color (Kuaishou orange) used sparingly",
+      "White text hierarchy with opacity-stepped supporting text",
+      "Monospace labels for technical context only",
+      "Cascaded entrance animations — purposeful, never idle"
+    ],
+    "rules": [
+      { "name": "The One Signal Rule", "body": "Kuaishou orange (#FF4906) appears on at most one element per screen. It is a signal, not a theme.", "section": "colors" },
+      { "name": "The Overlay Calibration Rule", "body": "The wallpaper overlay must keep the wallpaper visible as texture (~40% bleed-through). If the overlay reads as solid black, it is too dark.", "section": "colors" },
+      { "name": "The Mono Boundary Rule", "body": "Source Code Pro is used exclusively for technical metadata. Never in navigation, headings, or body prose.", "section": "typography" },
+      { "name": "The Flat-By-Default Rule", "body": "No box-shadow on nav items, cards, or containers at rest. Hover states may use a subtle background fill — never a shadow.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do use Kuaishou orange (#FF4906) on exactly one interactive element per screen.",
+      "Do keep wallpaper bleed-through at ~40%.",
+      "Do use clamp() for all display and headline sizes.",
+      "Do use monospace exclusively for technical metadata and attribution.",
+      "Do include @media (prefers-reduced-motion: reduce) for every animation.",
+      "Do cascade entrance animations with 150ms stagger.",
+      "Do keep body line length at ≤65ch."
+    ],
+    "donts": [
+      "Don't use particle effects, CSS noise textures, or animated gradients.",
+      "Don't use a white or light background on any page.",
+      "Don't use glassmorphism as a design feature.",
+      "Don't put Kuaishou orange on more than one element per screen.",
+      "Don't use monospace font in navigation or headings.",
+      "Don't animate CSS layout properties — only transform and opacity.",
+      "Don't build a white-background page for any route.",
+      "Don't add more than 3 items to the main navigation."
+    ]
+  }
+}
