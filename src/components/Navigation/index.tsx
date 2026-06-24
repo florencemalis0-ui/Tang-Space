@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom'
 
 const NAV_ITEMS = [
   { to: '/', label: '首页' },
-  { to: '/blog', label: '博客' },
+  { to: '/notes', label: '记录' },
   { to: '/resume', label: '简历' },
   { to: '/about', label: '关于' },
 ]
@@ -25,7 +25,10 @@ export function Navigation() {
 
       <ul className={`nav-list${open ? ' visible' : ''}`}>
         {NAV_ITEMS.map(({ to, label }) => {
-          const isActive = to === '/' ? location.pathname === '/' : location.pathname.startsWith(to)
+          const isActive =
+            to === '/'
+              ? location.pathname === '/'
+              : location.pathname.startsWith(to) || (to === '/notes' && location.pathname.startsWith('/blog'))
           return (
             <li key={to}>
               <Link

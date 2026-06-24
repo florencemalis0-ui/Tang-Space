@@ -1,15 +1,101 @@
+import { useRef } from 'react'
 import { Link } from 'react-router-dom'
+import { useBingBg } from '../../hooks/useBingBg'
+
+const FOCUS = ['AI Agent 工程化', '后端系统稳定性', ' GPU算力', '个人网站', '生活记录']
 
 export default function About() {
+  const pageRef = useRef<HTMLElement>(null)
+
+  useBingBg(pageRef)
+
   return (
-    <div className="inner-page">
-      <span className="inner-page__badge">About</span>
-      <h1 className="inner-page__title">关于我</h1>
-      <p className="inner-page__desc">
-        TangTang，唐睿阳。<br />
-        快手工程师，写代码，也写生活。
-      </p>
-      <Link to="/" className="inner-page__back">← 返回首页</Link>
-    </div>
+    <main ref={pageRef} className="about-page about-page--journal notes-page--wallpaper">
+      <div className="about-journal-shell">
+        <header className="about-journal-top">
+          <Link to="/" className="inner-page__back">← 返回首页</Link>
+          <span className="inner-page__badge">About</span>
+        </header>
+
+        <section className="about-journal-hero">
+          <div>
+            <p className="about-journal-kicker">TangTang · Personal Site</p>
+            <h1>关于我</h1>
+            <p>这里会放技术，也会放生活。不是很正式，但尽量真实。</p>
+          </div>
+        </section>
+
+        <div className="about-journal-layout">
+          <article className="about-journal-main">
+            <section className="about-journal-section">
+              <h2>你好，我是 TangTang</h2>
+              <p>
+                现在在快手做工程相关的工作，主要关注 AI、后端系统和GPU模型。平时写得比较多的是工程实践、系统设计、AI 应用落地过程中遇到的问题，以及一些自己踩过的坑。
+              </p>
+            </section>
+
+            <section className="about-journal-section">
+              <h2>这个网站</h2>
+              <p>
+                我做这个网站，最开始只是想有一个自己的主页。后来慢慢觉得，它不应该只是简历，也不应该只放技术文章。
+              </p>
+              <p>
+                所以这里以后会放很多杂七杂八的东西：技术记录、生活照片、旅行、一些突然冒出来的想法，或者某个阶段想留下来的话。
+              </p>
+            </section>
+
+            <section className="about-journal-section">
+              <h2>我想留下什么</h2>
+              <p>
+                我不太想把这里做成一个很正式的博客。它更像一个自己的小空间，能让我把一些真实发生过的东西存下来。
+              </p>
+              <p>
+                如果你是因为技术内容来到这里，欢迎看看我的记录。如果你只是路过，也希望你能从这些文字和照片里，看到一点真实的我。
+              </p>
+            </section>
+          </article>
+
+          <aside className="about-journal-sidebar" aria-label="个人信息">
+            <section className="about-mini-card about-mini-card--profile">
+              <span className="about-mini-card__label">Me</span>
+              <h2>唐睿阳</h2>
+              <p>TangTang</p>
+              <div className="about-mini-card__meta">
+                <span>Kuaishou Engineer</span>
+                <span>AI · Backend · Cloud Native</span>
+              </div>
+            </section>
+
+            <section className="about-mini-card">
+              <span className="about-mini-card__label">最近在看</span>
+              <div className="about-journal-tags">
+                {FOCUS.map((item) => (
+                  <span key={item}>{item}</span>
+                ))}
+              </div>
+            </section>
+
+            <section className="about-mini-card">
+              <span className="about-mini-card__label">这个站会有</span>
+              <ul className="about-site-list">
+                <li>技术记录</li>
+                <li>生活照片</li>
+                <li>旅行和碎碎念</li>
+                <li>阶段性的想法</li>
+              </ul>
+            </section>
+
+            <section className="about-mini-card">
+              <span className="about-mini-card__label">继续了解</span>
+              <div className="about-journal-links">
+                <Link to="/notes">Notes</Link>
+                <Link to="/resume">Resume</Link>
+                <a href="https://github.com/florencemalis0-ui" target="_blank" rel="noreferrer">GitHub</a>
+              </div>
+            </section>
+          </aside>
+        </div>
+      </div>
+    </main>
   )
 }
