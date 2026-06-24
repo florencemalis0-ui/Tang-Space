@@ -1,6 +1,8 @@
 import { useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { useBingBg } from '../../hooks/useBingBg'
+import '../Blog/index.css'
+import './index.css'
 
 const FOCUS = ['AI Agent 工程化', '后端系统稳定性', ' GPU算力', '个人网站', '生活记录']
 

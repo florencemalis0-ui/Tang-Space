@@ -2,6 +2,8 @@ import { useMemo, useRef, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { NOTE_TYPE_LABEL, notes } from '../../data/notes'
 import { useBingBg } from '../../hooks/useBingBg'
+import '../Blog/index.css'
+import './index.css'
 
 const INITIAL_IMAGE_COUNT = 12
 

@@ -2,6 +2,7 @@ import { useMemo, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { NOTE_TYPE_LABEL, notes, type Note, type NoteType } from '../../data/notes'
 import { useBingBg } from '../../hooks/useBingBg'
+import './index.css'
 
 const FILTERS: Array<NoteType | 'all'> = ['all', 'tech', 'life', 'travel', 'thought']
 

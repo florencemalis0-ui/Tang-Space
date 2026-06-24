@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
+import './index.css'
 
 const NAV_ITEMS = [
   { to: '/', label: '首页' },

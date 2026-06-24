@@ -1,8 +1,9 @@
 import { Link } from 'react-router-dom'
+import './index.css'
 
 export default function Resume() {
   return (
-    <div className="inner-page">
+    <div className="resume-page">
       <span className="inner-page__badge">Resume</span>
       <h1 className="inner-page__title">简历</h1>
       <p className="inner-page__desc">
