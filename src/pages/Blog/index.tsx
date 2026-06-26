@@ -28,18 +28,13 @@ function NoteCard({ note }: { note: Note }) {
         {cover ? (
           <img src={cover} alt={note.title} loading="lazy" />
         ) : (
-          <div className={`note-card__banner note-card__banner--${note.type}`}>
-            <span className="note-card__banner-label">{NOTE_TYPE_LABEL[note.type]}</span>
-          </div>
+          <div className={`note-card__banner note-card__banner--${note.type}`} />
         )}
+        <span className="note-card__type">{NOTE_TYPE_LABEL[note.type]}</span>
         {hasImages ? <span className="note-card__image-count">{images.length} 图</span> : null}
       </div>
 
       <div className="note-card__body">
-        <div className="note-card__meta">
-          <span>{NOTE_TYPE_LABEL[note.type]}</span>
-          <span>{note.date}</span>
-        </div>
         <h2 className="note-card__title">{note.title}</h2>
         <p className="note-card__summary">{note.summary}</p>
         <div className="note-card__tags">
@@ -47,6 +42,7 @@ function NoteCard({ note }: { note: Note }) {
             <span key={tag}>{tag}</span>
           ))}
         </div>
+        <time className="note-card__date" dateTime={note.date}>{note.date}</time>
       </div>
     </Link>
   )
