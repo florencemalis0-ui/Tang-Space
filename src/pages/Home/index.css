@@ -141,4 +141,32 @@
   font-size: 0.72rem;
   color: var(--color-ink-faint);
   letter-spacing: 0.04em;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* ⌘K 命令面板入口提示：克制、可点、不引入第二处橙 */
+.cmdk-hint {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--color-ink-muted);
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: var(--radius-sm);
+  padding: 1px 6px;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: color var(--duration-fast) ease, border-color var(--duration-fast) ease;
+}
+
+.cmdk-hint:hover {
+  color: var(--color-ink-secondary);
+  border-color: var(--color-border-strong);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cmdk-hint {
+    transition: none;
+  }
 }

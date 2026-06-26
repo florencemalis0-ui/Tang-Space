@@ -1,21 +1,16 @@
-import { useMemo, useRef, useState } from 'react'
+import { useMemo, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { useBingBg } from '../../hooks/useBingBg'
-import { WeChatModal } from '../../components/WeChatModal'
 import { notes } from '../../data/notes'
+import { EMAIL_B64, GITHUB_URL } from '../../data/contacts'
 import { decryptEmail } from '../../utils/email'
 import '../Blog/index.css'
 import './index.css'
 
 const FOCUS = ['AI Agent 工程化', '后端系统稳定性', 'GPU 算力', '个人网站', '生活记录']
 
-// TODO: 替换为真实邮箱的 Base64 编码。
-// 在浏览器控制台执行 btoa('your@email.com') 即可获得，把结果填到下面。
-const EMAIL_B64 = 'aGVsbG9AZXhhbXBsZS5jb20='
-
 export default function About() {
   const pageRef = useRef<HTMLElement>(null)
-  const [wechatVisible, setWechatVisible] = useState(false)
 
   useBingBg(pageRef)
 
@@ -86,11 +81,11 @@ export default function About() {
             <section className="about-mini-card about-social">
               <span className="about-mini-card__label">联系</span>
               <div className="about-social__links">
-                <a href="https://github.com/florencemalis0-ui" target="_blank" rel="noreferrer" className="about-social__link">
+                <a href={GITHUB_URL} target="_blank" rel="noreferrer" className="about-social__link">
                   <span className="about-social__name">GitHub</span>
                   <span className="about-social__handle">@florencemalis0-ui</span>
                 </a>
-                <button type="button" className="about-social__link" onClick={() => setWechatVisible(true)}>
+                <button type="button" className="about-social__link" onClick={() => window.dispatchEvent(new CustomEvent('tang:open-wechat'))}>
                   <span className="about-social__name">微信</span>
                   <span className="about-social__handle">扫码添加</span>
                 </button>
@@ -136,8 +131,6 @@ export default function About() {
           </aside>
         </div>
       </div>
-
-      <WeChatModal visible={wechatVisible} onClose={() => setWechatVisible(false)} />
     </main>
   )
 }

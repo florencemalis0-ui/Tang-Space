@@ -1,8 +1,7 @@
-import { useRef, useState } from 'react'
+import { useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { Avatar } from '../../components/Avatar'
 import { Navigation } from '../../components/Navigation'
-import { WeChatModal } from '../../components/WeChatModal'
 import { useHitokoto } from '../../hooks/useHitokoto'
 import { useBingBg } from '../../hooks/useBingBg'
 import { useIUp } from '../../hooks/useIUp'
@@ -13,7 +12,6 @@ const TECH_TAGS = ['Go', 'Python', 'AI/ML', 'Cloud Native', 'Backend', '快手']
 export default function Home() {
   const panelRef = useRef<HTMLElement>(null)
   const appRef = useRef<HTMLDivElement>(null)
-  const [wechatVisible, setWechatVisible] = useState(false)
 
   const { hitokoto, from } = useHitokoto()
 
@@ -26,7 +24,7 @@ export default function Home() {
         <div className="panel-main">
           <div className="panel-main__inner">
             <div className="hero-avatar iUp">
-              <Avatar onClick={() => setWechatVisible(true)} />
+              <Avatar onClick={() => window.dispatchEvent(new CustomEvent('tang:open-wechat'))} />
             </div>
 
             <h1 className="hero-name iUp">
@@ -53,11 +51,19 @@ export default function Home() {
         </div>
 
         <div className="remark iUp">
-          <p className="power">Made with ♥ by TangTang</p>
+          <p className="power">
+            Made with ♥ by TangTang
+            <button
+              type="button"
+              className="cmdk-hint"
+              onClick={() => window.dispatchEvent(new CustomEvent('tang:open-cmdk'))}
+              aria-label="打开命令面板"
+            >
+              ⌘K
+            </button>
+          </p>
         </div>
       </header>
-
-      <WeChatModal visible={wechatVisible} onClose={() => setWechatVisible(false)} />
     </div>
   )
 }
