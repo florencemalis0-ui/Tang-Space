@@ -7,11 +7,29 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background-color: var(--color-bg-dark);
+  background-color: var(--color-bg-dark); /* 图片加载前的兜底底色 */
+  overflow: hidden; /* 裁掉壁纸层的过采样部分 */
+}
+
+/* 壁纸独立层：只负责图片 + 视差 transform，被 ::after 遮罩(z:1)盖在下方 */
+.panel-cover__bg {
+  position: absolute;
+  inset: -32px; /* 过采样：给 translate 留余量，避免平移时露出边缘 */
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
-  overflow: hidden;
+  z-index: 0;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+}
+
+/* 降级兜底：即便 JS 在运行时切换 reduced-motion 后继续写内联 transform，
+   !important 也能压住（与 index.css 既有 reduced-motion !important 约定一致）。 */
+@media (prefers-reduced-motion: reduce) {
+  .panel-cover__bg {
+    transform: none !important;
+    will-change: auto;
+  }
 }
 
 /* 壁纸遮罩：~40% 壁纸透出（Overlay Calibration Rule） */

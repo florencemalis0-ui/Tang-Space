@@ -4,23 +4,27 @@ import { Avatar } from '../../components/Avatar'
 import { Navigation } from '../../components/Navigation'
 import { useHitokoto } from '../../hooks/useHitokoto'
 import { useBingBg } from '../../hooks/useBingBg'
+import { useParallaxBg } from '../../hooks/useParallaxBg'
 import { useIUp } from '../../hooks/useIUp'
 import './index.css'
 
 const TECH_TAGS = ['Go', 'Python', 'AI/ML', 'Cloud Native', 'Backend', '快手']
 
 export default function Home() {
-  const panelRef = useRef<HTMLElement>(null)
+  // 壁纸独立成层：bg 负责图片 + 视差 transform，::after 遮罩固定做「窗框」，内容不动
+  const bgRef = useRef<HTMLDivElement>(null)
   const appRef = useRef<HTMLDivElement>(null)
 
   const { hitokoto, from } = useHitokoto()
 
-  useBingBg(panelRef)
+  useBingBg(bgRef)
+  useParallaxBg(bgRef)
   useIUp(appRef)
 
   return (
     <div ref={appRef}>
-      <header ref={panelRef} className="panel-cover">
+      <header className="panel-cover">
+        <div ref={bgRef} className="panel-cover__bg" aria-hidden="true" />
         <div className="panel-main">
           <div className="panel-main__inner">
             <div className="hero-avatar iUp">
