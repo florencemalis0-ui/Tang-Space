@@ -26,13 +26,19 @@ Tang-Space/
 │   ├── components/
 │   │   ├── Avatar/          # 头像（hover 浮现「Be Brave」，点击弹微信二维码）
 │   │   ├── Navigation/      # 首页导航（pill 形，移动端汉堡菜单）
-│   │   └── WeChatModal/     # 微信二维码弹窗
+│   │   ├── WeChatModal/     # 微信二维码弹窗（全局唯一，挂在 App）
+│   │   └── CommandPalette/  # ⌘K 命令面板（全局，挂在 App，Suspense 外）
 │   ├── hooks/
 │   │   ├── useBingBg.ts     # Bing 壁纸（bing.biturl.top + sessionStorage 轮播）
 │   │   ├── useHitokoto.ts   # 一言 API
-│   │   └── useIUp.ts        # 入场错落动画
+│   │   ├── useIUp.ts        # 入场错落动画
+│   │   ├── useParallaxBg.ts # 首页鼠标视差壁纸（rAF+lerp，reduced-motion/触屏关）
+│   │   ├── useTilt.ts       # 记录卡片 3D tilt（CSS 变量注入，MAX 4°）
+│   │   └── useBlurUp.ts     # 图片 blur-up 渐显（治缓存图 onLoad 不触发）
 │   ├── data/
-│   │   └── notes.ts         # 记录内容（硬编码数组，id 即详情页地址）
+│   │   ├── notes.ts         # 记录内容（硬编码数组，id 即详情页地址）
+│   │   ├── contacts.ts      # EMAIL_B64 / GITHUB_URL 常量（邮箱 Base64 + GitHub URL）
+│   │   └── now.ts           # 关于页 Now 板块数据（此刻在做什么）
 │   ├── utils/
 │   │   └── email.ts         # Base64 邮箱解码
 │   └── pages/
@@ -90,6 +96,8 @@ Tang-Space/
 8. **部署传已构建的 `dist/`**：CI 不重新 build（`.github/workflows/deploy.yml` 直接上传 dist/），改完代码必须本地 `npm run build` 再提交 `dist/`，否则线上不更新
 9. **不要手删 `dist/404.html`**：它是 `index.html` 的副本，由 `vite.config.ts` 的 `spa-404-fallback` 插件自动生成。GitHub Pages 对找不到的路径回退到它，刷新内页（`/about`、`/notes/xxx`）不 404
 10. **图片路径用绝对前缀** `/Tang-Space/assets/...`（如 `lifeImages`），不要用相对 `./assets/...`——嵌套路由（`/notes/xxx`）下相对路径会 404
+11. **全局弹窗/面板用 CustomEvent 解耦**：WeChatModal 与 CommandPalette 都全局挂在 `App.tsx`（不在各页重复挂），其他地方触发它们一律 `window.dispatchEvent(new CustomEvent('tang:open-wechat'))` 或 `'tang:open-cmdk'`，由 App 监听打开。不要新增第二份 modal/palette 实例
+12. **新动效三件套**：所有新动画只用 `transform`/`opacity`（禁动 layout 属性），必须给 `prefers-reduced-motion` 降级（JS `matchMedia` 闸门 + CSS `!important` 兜底压内联值），触屏 `pointer: coarse` 默认关指针增强效果
 
 ## Impeccable Skill 使用方式
 
@@ -108,6 +116,9 @@ node .agents/skills/impeccable/scripts/context.mjs
 
 ## 待办事项
 
-- [ ] 简历页实现（技术栈展示、工作经历）—— 目前唯一占位的主板块
-- [ ] 持续丰富 Notes 内容（技术记录 / 生活照片 / 旅行 / 随想）
+- [x] 四个创意功能（⌘K 命令面板 / 首页鼠标视差壁纸 / 记录卡片 tilt+blur-up / 关于页 Now 板块）—— 已实现
+- [ ] 简历页实现（技术栈展示、工作经历）—— 目前唯一占位的主板块（用户还没想好，暂不动）
+- [ ] 持续丰富 Notes 内容（技术记录 / 生活照片 / 旅行 / 随想）—— 目前仅 2 条，blur-up 待有图笔记生效
+- [ ] `src/data/contacts.ts` 的 EMAIL_B64 仍是占位 `aGVsbG9AZXhhbXBsZS5jb20=`，需替换为真实邮箱 Base64
+- [ ] `src/data/now.ts` 的 nowItems 是合理占位，需用户替换为真实在做/读/学的内容，并同步 `nowUpdatedAt`
 - [ ] 壁纸策略优化（考虑每日固定一张还是继续轮播）
