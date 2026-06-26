@@ -2,12 +2,11 @@ import { useMemo, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { useBingBg } from '../../hooks/useBingBg'
 import { notes } from '../../data/notes'
+import { nowItems, NOW_CATEGORY_LABEL, nowUpdatedAt } from '../../data/now'
 import { EMAIL_B64, GITHUB_URL } from '../../data/contacts'
 import { decryptEmail } from '../../utils/email'
 import '../Blog/index.css'
 import './index.css'
-
-const FOCUS = ['AI Agent 工程化', '后端系统稳定性', 'GPU 算力', '个人网站', '生活记录']
 
 export default function About() {
   const pageRef = useRef<HTMLElement>(null)
@@ -44,8 +43,44 @@ export default function About() {
               </p>
             </section>
 
-            <section className="about-journal-section">
+            <section className="about-journal-section about-now">
               <span className="about-journal-section__num">02</span>
+              <h2>Now</h2>
+              <p className="about-now__intro">此时此刻。比简历近一点。</p>
+              <dl className="about-now__list">
+                {nowItems.map((item) => (
+                  <div className="about-now__row" key={item.id}>
+                    <dt className="about-now__cat">{NOW_CATEGORY_LABEL[item.category]}</dt>
+                    <dd className="about-now__content">
+                      <span className="about-now__title">{item.title}</span>
+                      {item.detail && <span className="about-now__detail">{item.detail}</span>}
+                      {item.link &&
+                        (item.link.href.startsWith('http') ? (
+                          <a
+                            className="about-now__link"
+                            href={item.link.href}
+                            target="_blank"
+                            rel="noreferrer"
+                          >
+                            {item.link.label}
+                          </a>
+                        ) : (
+                          <Link className="about-now__link" to={item.link.href}>
+                            {item.link.label}
+                          </Link>
+                        ))}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+              <p className="about-now__updated">
+                <span>last updated</span>
+                <time>{nowUpdatedAt}</time>
+              </p>
+            </section>
+
+            <section className="about-journal-section">
+              <span className="about-journal-section__num">03</span>
               <h2>这个网站</h2>
               <p>
                 我做这个网站，最开始只是想有一个自己的主页。后来慢慢觉得，它不应该只是简历，也不应该只放技术文章。
@@ -56,7 +91,7 @@ export default function About() {
             </section>
 
             <section className="about-journal-section">
-              <span className="about-journal-section__num">03</span>
+              <span className="about-journal-section__num">04</span>
               <h2>我想留下什么</h2>
               <p>
                 我不太想把这里做成一个很正式的博客。它更像一个自己的小空间，能让我把一些真实发生过的东西存下来。
@@ -93,15 +128,6 @@ export default function About() {
                   <span className="about-social__name">邮箱</span>
                   <span className="about-social__handle">点击发送</span>
                 </button>
-              </div>
-            </section>
-
-            <section className="about-mini-card">
-              <span className="about-mini-card__label">最近在看</span>
-              <div className="about-journal-tags">
-                {FOCUS.map((item) => (
-                  <span key={item}>{item}</span>
-                ))}
               </div>
             </section>
 
