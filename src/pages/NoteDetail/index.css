@@ -57,38 +57,6 @@
   gap: var(--space-lg);
 }
 
-.note-detail__figure {
-  overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 24px;
-  background: rgba(255, 255, 255, 0.045);
-}
-
-.note-detail__figure img {
-  width: 100%;
-  max-height: 82vh;
-  display: block;
-  object-fit: contain;
-  background: rgba(0, 0, 0, 0.24);
-}
-
-.note-detail__figure figcaption {
-  padding: 10px 14px;
-  color: rgba(255, 255, 255, 0.45);
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-}
-
-.notes-feature__meta a {
-  color: rgba(255, 255, 255, 0.86);
-  transition: color var(--duration-fast) ease;
-}
-
-.notes-feature__meta a:hover {
-  color: var(--color-orange);
-}
-
-
 .note-detail__gallery-head {
   display: flex;
   align-items: baseline;

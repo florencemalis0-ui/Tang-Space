@@ -142,14 +142,3 @@
   color: var(--color-ink-faint);
   letter-spacing: 0.04em;
 }
-
-.remark .power a {
-  color: var(--color-ink-muted);
-  text-decoration: underline;
-  text-underline-offset: 3px;
-  transition: color var(--duration-fast) ease;
-}
-
-.remark .power a:hover {
-  color: var(--color-ink-secondary);
-}

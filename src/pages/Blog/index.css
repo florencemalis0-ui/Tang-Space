@@ -159,8 +159,7 @@
   border-color: rgba(78, 151, 216, 0.2);
 }
 
-.note-card--travel,
-.note-card--photo {
+.note-card--travel {
   border-color: rgba(255, 73, 6, 0.18);
 }
 
@@ -409,7 +408,7 @@
 }
 
 /* ===================================================
-   Notes Wallpaper Override + Gallery Lightbox
+   Notes Wallpaper Override
    =================================================== */
 .notes-page--wallpaper {
   position: relative;

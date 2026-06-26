@@ -6,14 +6,11 @@
   /* Colors */
   --color-bg-dark: #0d0d1a;
   --color-bg-page: #1a1a2e;
-  --color-surface: rgba(255, 255, 255, 0.04);
   --color-surface-hover: rgba(255, 255, 255, 0.08);
-  --color-border: rgba(255, 255, 255, 0.1);
   --color-border-strong: rgba(255, 255, 255, 0.2);
 
   --color-orange: #ff4906;
   --color-orange-glow: rgba(255, 73, 6, 0.3);
-  --color-blue: #4e97d8;
 
   --color-ink: #ffffff;
   --color-ink-secondary: rgba(255, 255, 255, 0.72);
@@ -33,13 +30,11 @@
 
   /* Radius */
   --radius-sm: 4px;
-  --radius-md: 10px;
   --radius-lg: 18px;
   --radius-full: 9999px;
 
   /* Motion */
   --ease-out: cubic-bezier(0.25, 1, 0.5, 1);
-  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
   --duration-fast: 150ms;
   --duration-normal: 280ms;
   --duration-slow: 500ms;
@@ -109,17 +104,6 @@ a {
 /* ===================================================
    Inner Pages (Blog / Resume / About)
    =================================================== */
-.inner-page {
-  min-height: 100vh;
-  background: var(--color-bg-page);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: var(--space-xl) var(--space-lg);
-  text-align: center;
-}
-
 .inner-page__badge {
   font-family: var(--font-mono);
   font-size: 0.7rem;
@@ -127,7 +111,7 @@ a {
   text-transform: uppercase;
   color: var(--color-orange);
   background: var(--color-orange-glow);
-  border: 1px solid rgba(255, 73, 6, 0.3);
+  border: 1px solid var(--color-orange-glow);
   border-radius: var(--radius-full);
   padding: 4px 14px;
   margin-bottom: var(--space-md);

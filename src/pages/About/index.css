@@ -72,6 +72,11 @@
   gap: 16px;
 }
 
+.about-journal-sidebar {
+  position: sticky;
+  top: 24px;
+}
+
 .about-journal-section,
 .about-mini-card {
   border: 1px solid rgba(255, 255, 255, 0.12);
@@ -96,11 +101,6 @@
 
 .about-journal-section p + p {
   margin-top: 16px;
-}
-
-.about-journal-sidebar {
-  position: sticky;
-  top: 24px;
 }
 
 .about-mini-card__label {
@@ -157,24 +157,6 @@
   display: grid;
   gap: 8px;
   list-style: none;
-}
-
-.about-journal-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-}
-
-.about-journal-links a {
-  color: rgba(255, 255, 255, 0.80);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.24);
-  padding-bottom: 4px;
-  transition: color var(--duration-fast) ease, border-color var(--duration-fast) ease;
-}
-
-.about-journal-links a:hover {
-  color: var(--color-orange);
-  border-color: rgba(255, 73, 6, 0.62);
 }
 
 /* ===================================================
