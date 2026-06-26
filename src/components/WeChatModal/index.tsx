@@ -49,7 +49,7 @@ export function WeChatModal({ visible, onClose }: WeChatModalProps) {
         <button className={styles.close} onClick={onClose} aria-label="关闭">✕</button>
         <p className={styles.title}>微信扫码添加</p>
         <img
-          src="./assets/img/wechat.jpg"
+          src={import.meta.env.BASE_URL + 'assets/img/wechat.jpg'}
           alt="WeChat QR Code"
           className={styles.qr}
         />

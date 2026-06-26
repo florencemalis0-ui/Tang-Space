@@ -6,38 +6,47 @@ import './index.css'
 
 const FILTERS: Array<NoteType | 'all'> = ['all', 'tech', 'life', 'travel', 'thought']
 
-function getYear(date: string) {
-  return date.slice(0, 4)
+// 精选优先，其次按日期倒序
+function sortNotes(items: Note[]) {
+  return [...items].sort((a, b) => {
+    if (a.featured !== b.featured) return a.featured ? -1 : 1
+    return b.date.localeCompare(a.date)
+  })
 }
 
-function getDayLabel(date: string) {
-  const parts = date.split('.')
-  if (parts.length >= 3) return `${parts[1]}.${parts[2]}`
-  if (parts.length >= 2) return parts[1]
-  return date
-}
+function NoteCard({ note }: { note: Note }) {
+  const images = note.images ?? []
+  const hasImages = images.length > 0
+  const cover = hasImages ? images[0] : null
 
-function groupNotesByYear(items: Note[]) {
-  return items.reduce<Record<string, Note[]>>((groups, note) => {
-    const year = getYear(note.date)
-    groups[year] = groups[year] ?? []
-    groups[year].push(note)
-    return groups
-  }, {})
-}
-
-function NoteTimelineItem({ note }: { note: Note }) {
   return (
-    <Link to={`/notes/${note.id}`} className={`notes-entry notes-entry--${note.type}`}>
-      <time className="notes-entry__date">{getDayLabel(note.date)}</time>
-      <div className="notes-entry__content">
-        <div className="notes-entry__meta">
-          <span>{NOTE_TYPE_LABEL[note.type]}</span>
-          <span>{note.tags.join(' / ')}</span>
-        </div>
-        <h2>{note.title}</h2>
-        <p>{note.summary}</p>
+    <Link
+      to={`/notes/${note.id}`}
+      className={`note-card note-card--${note.type}${note.featured ? ' note-card--featured' : ''}`}
+    >
+      <div className="note-card__media">
+        {cover ? (
+          <img src={cover} alt={note.title} loading="lazy" />
+        ) : (
+          <div className={`note-card__banner note-card__banner--${note.type}`}>
+            <span className="note-card__banner-label">{NOTE_TYPE_LABEL[note.type]}</span>
+          </div>
+        )}
+        {hasImages ? <span className="note-card__image-count">{images.length} 图</span> : null}
+      </div>
 
+      <div className="note-card__body">
+        <div className="note-card__meta">
+          <span>{NOTE_TYPE_LABEL[note.type]}</span>
+          <span>{note.date}</span>
+        </div>
+        <h2 className="note-card__title">{note.title}</h2>
+        <p className="note-card__summary">{note.summary}</p>
+        <div className="note-card__tags">
+          {note.tags.map((tag) => (
+            <span key={tag}>{tag}</span>
+          ))}
+        </div>
       </div>
     </Link>
   )
@@ -50,53 +59,116 @@ export default function Blog() {
   useBingBg(pageRef)
 
   const filteredNotes = useMemo(() => {
-    if (activeType === 'all') return notes
-    return notes.filter((note) => note.type === activeType)
+    const list = activeType === 'all' ? notes : notes.filter((n) => n.type === activeType)
+    return sortNotes(list)
   }, [activeType])
 
-  const groupedNotes = useMemo(() => groupNotesByYear(filteredNotes), [filteredNotes])
-  const years = Object.keys(groupedNotes).sort((a, b) => Number(b) - Number(a))
+  // 统计：总数 + 按类型分布
+  const stats = useMemo(() => {
+    const byType: Record<NoteType, number> = { tech: 0, life: 0, travel: 0, thought: 0 }
+    notes.forEach((n) => {
+      byType[n.type] += 1
+    })
+    return { total: notes.length, byType }
+  }, [])
+
+  // 聚焦标签：按出现频率取前 8
+  const focusTags = useMemo(() => {
+    const counts: Record<string, number> = {}
+    notes.forEach((n) =>
+      n.tags.forEach((t) => {
+        counts[t] = (counts[t] ?? 0) + 1
+      })
+    )
+    return Object.entries(counts)
+      .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+      .slice(0, 8)
+      .map(([tag]) => tag)
+  }, [])
+
+  // 最近记录：日期倒序前 4
+  const recent = useMemo(() => sortNotes(notes).slice(0, 4), [])
 
   return (
-    <main ref={pageRef} className="notes-page notes-page--wallpaper notes-page--timeline">
-      <section className="notes-shell notes-timeline-shell">
-        <header className="notes-timeline-hero">
-          <div className="notes-timeline-hero__top">
+    <main ref={pageRef} className="notes-page notes-page--wallpaper">
+      <section className="notes-shell">
+        <header className="notes-hero">
+          <div className="notes-hero__top">
             <Link to="/" className="inner-page__back notes-hero__back">← 返回首页</Link>
             <span className="inner-page__badge">Notes</span>
           </div>
-          <div className="notes-timeline-hero__copy">
-            <h1>Notes</h1>
-            <p>不是博客，更像我留下的一些痕迹。技术、生活、旅途和突然冒出来的想法，都先放在这里。</p>
-          </div>
+          <h1 className="notes-hero__title">Notes</h1>
+          <p className="notes-hero__desc">
+            不是博客，更像我留下的一些痕迹。技术、生活、旅途和突然冒出来的想法，都先放在这里。
+          </p>
         </header>
 
-        <nav className="notes-index" aria-label="记录分类">
-          {FILTERS.map((type, index) => (
-            <button
-              key={type}
-              type="button"
-              className={activeType === type ? 'notes-index__item notes-index__item--active' : 'notes-index__item'}
-              onClick={() => setActiveType(type)}
-            >
-              {NOTE_TYPE_LABEL[type]}
-              {index < FILTERS.length - 1 ? <span>·</span> : null}
-            </button>
-          ))}
+        <nav className="notes-toolbar" aria-label="记录分类">
+          {FILTERS.map((type) => {
+            const count = type === 'all' ? stats.total : stats.byType[type as NoteType]
+            return (
+              <button
+                key={type}
+                type="button"
+                aria-pressed={activeType === type}
+                className={activeType === type ? 'notes-filter notes-filter--active' : 'notes-filter'}
+                onClick={() => setActiveType(type)}
+              >
+                {NOTE_TYPE_LABEL[type]}
+                <span className="notes-filter__count">{count}</span>
+              </button>
+            )
+          })}
         </nav>
 
-        <section className="notes-timeline" aria-label="记录时间轴">
-          {years.map((year) => (
-            <section key={year} className="notes-year">
-              <h2 className="notes-year__label">{year}</h2>
-              <div className="notes-year__list">
-                {groupedNotes[year].map((note) => (
-                  <NoteTimelineItem key={note.id} note={note} />
+        <div className="notes-layout">
+          <div className="notes-grid">
+            {filteredNotes.map((note) => (
+              <NoteCard key={note.id} note={note} />
+            ))}
+          </div>
+
+          <aside className="notes-side" aria-label="记录概览">
+            <section className="notes-side__panel notes-stats">
+              <h2>记录</h2>
+              <div className="notes-stats__total">
+                <span className="notes-stats__num">{stats.total}</span>
+                <span className="notes-stats__label">条记录</span>
+              </div>
+              <ul className="notes-stats__breakdown">
+                {FILTERS.filter((t) => t !== 'all').map((t) => (
+                  <li key={t}>
+                    <span className="notes-stats__type">{NOTE_TYPE_LABEL[t as NoteType]}</span>
+                    <span className="notes-stats__count">{stats.byType[t as NoteType]}</span>
+                  </li>
+                ))}
+              </ul>
+            </section>
+
+            <section className="notes-side__panel">
+              <h2>聚焦</h2>
+              <div className="notes-focus-tags">
+                {focusTags.map((tag) => (
+                  <span key={tag}>{tag}</span>
                 ))}
               </div>
             </section>
-          ))}
-        </section>
+
+            <section className="notes-side__panel notes-side__panel--quiet">
+              <h2>最近</h2>
+              <ol className="notes-recent">
+                {recent.map((note) => (
+                  <li key={note.id}>
+                    <Link to={`/notes/${note.id}`} className="notes-recent__item">
+                      <span className="notes-recent__date">{note.date}</span>
+                      <span className="notes-recent__title">{note.title}</span>
+                    </Link>
+                  </li>
+                ))}
+              </ol>
+            </section>
+          </aside>
+        </div>
       </section>
     </main>
   )

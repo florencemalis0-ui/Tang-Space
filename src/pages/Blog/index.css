@@ -1,5 +1,6 @@
 /* ===================================================
    Notes Page — 技术与生活记录
+   卡片网格 + 侧边栏布局
    =================================================== */
 .notes-page {
   min-height: 100vh;
@@ -16,13 +17,28 @@
   margin: 0 auto;
 }
 
+/* ===================================================
+   Hero
+   =================================================== */
 .notes-hero {
   max-width: 720px;
-  margin-bottom: var(--space-xl);
+  margin-bottom: var(--space-lg);
+}
+
+.notes-hero__top {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  margin-bottom: var(--space-md);
+}
+
+.notes-hero__top .inner-page__back,
+.notes-hero__top .inner-page__badge {
+  margin: 0;
 }
 
 .notes-hero__back {
-  margin-bottom: var(--space-lg);
+  margin-bottom: var(--space-md);
 }
 
 .notes-hero__title {
@@ -41,79 +57,37 @@
   text-wrap: pretty;
 }
 
-.notes-feature {
-  position: relative;
-  overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 28px;
-  padding: clamp(24px, 5vw, 44px);
-  margin-bottom: var(--space-lg);
-  background:
-    linear-gradient(135deg, rgba(255, 73, 6, 0.16), rgba(255, 255, 255, 0.035) 46%, rgba(78, 151, 216, 0.10)),
-    rgba(255, 255, 255, 0.045);
-}
-
-.notes-feature::before {
-  content: '';
-  position: absolute;
-  inset: auto 32px 32px auto;
-  width: 120px;
-  height: 2px;
-  background: var(--color-orange);
-  opacity: 0.9;
-}
-
-.notes-feature__label {
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  color: var(--color-orange);
-  letter-spacing: 0.12em;
-  margin-bottom: var(--space-md);
-}
-
-.notes-feature h2 {
-  max-width: 760px;
-  font-size: clamp(1.5rem, 4vw, 2.6rem);
-  line-height: 1.16;
-  letter-spacing: -0.03em;
-  margin-bottom: var(--space-md);
-  text-wrap: balance;
-}
-
-.notes-feature p {
-  max-width: 720px;
-  color: rgba(255, 255, 255, 0.76);
-  line-height: 1.8;
-}
-
-.notes-feature__meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-sm);
-  margin-top: var(--space-lg);
-  font-family: var(--font-mono);
-  font-size: 0.76rem;
-  color: rgba(255, 255, 255, 0.52);
-}
-
+/* ===================================================
+   Toolbar / 筛选
+   =================================================== */
 .notes-toolbar {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-xs);
-  margin: var(--space-lg) 0;
+  margin-bottom: var(--space-lg);
 }
 
 .notes-filter {
   cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: var(--radius-full);
   padding: 8px 15px;
   color: rgba(255, 255, 255, 0.7);
   background: rgba(255, 255, 255, 0.045);
+  font-size: 0.86rem;
   transition:
     color var(--duration-fast) ease,
     background var(--duration-fast) ease,
     border-color var(--duration-fast) ease;
+}
+
+.notes-filter__count {
+  color: rgba(255, 255, 255, 0.4);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
 }
 
 .notes-filter:hover {
@@ -127,9 +101,16 @@
   border-color: rgba(255, 73, 6, 0.45);
 }
 
+.notes-filter--active .notes-filter__count {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* ===================================================
+   Layout: 卡片网格 + 侧边栏
+   =================================================== */
 .notes-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 320px;
+  grid-template-columns: minmax(0, 1fr) 300px;
   gap: var(--space-lg);
   align-items: start;
 }
@@ -140,8 +121,13 @@
   gap: var(--space-md);
 }
 
+/* ===================================================
+   Note Card
+   =================================================== */
 .note-card {
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
   border: 1px solid rgba(255, 255, 255, 0.105);
   border-radius: 22px;
   background: rgba(255, 255, 255, 0.045);
@@ -159,6 +145,14 @@
 
 .note-card--featured {
   grid-column: span 2;
+}
+
+.note-card--featured .note-card__media {
+  aspect-ratio: 21 / 9;
+}
+
+.note-card--featured .note-card__title {
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
 }
 
 .note-card--tech {
@@ -182,6 +176,43 @@
   height: 100%;
   display: block;
   object-fit: cover;
+  transition: transform var(--duration-slow) var(--ease-out);
+}
+
+.note-card:hover .note-card__media img {
+  transform: scale(1.04);
+}
+
+/* 无图卡片的渐变 banner 占位 —— 类型色提供视觉锚点 */
+.note-card__banner {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.1), transparent 60%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.04), rgba(0, 0, 0, 0.22));
+}
+
+.note-card__banner--tech {
+  background:
+    radial-gradient(circle at 30% 20%, rgba(78, 151, 216, 0.28), transparent 60%),
+    linear-gradient(135deg, rgba(78, 151, 216, 0.1), rgba(0, 0, 0, 0.25));
+}
+
+.note-card__banner--travel {
+  background:
+    radial-gradient(circle at 30% 20%, rgba(255, 73, 6, 0.22), transparent 60%),
+    linear-gradient(135deg, rgba(255, 73, 6, 0.08), rgba(0, 0, 0, 0.25));
+}
+
+.note-card__banner-label {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.14em;
+  color: rgba(255, 255, 255, 0.4);
+  text-transform: uppercase;
 }
 
 .note-card__image-count {
@@ -194,10 +225,14 @@
   background: rgba(0, 0, 0, 0.55);
   font-family: var(--font-mono);
   font-size: 0.72rem;
+  backdrop-filter: blur(4px);
 }
 
 .note-card__body {
   padding: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
 .note-card__meta {
@@ -229,7 +264,8 @@
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
-  margin-top: var(--space-md);
+  margin-top: auto;
+  padding-top: var(--space-md);
 }
 
 .note-card__tags span,
@@ -243,6 +279,9 @@
   font-size: 0.68rem;
 }
 
+/* ===================================================
+   Sidebar
+   =================================================== */
 .notes-side {
   position: sticky;
   top: var(--space-lg);
@@ -262,58 +301,107 @@
 }
 
 .notes-side__panel h2 {
-  font-size: 1rem;
+  font-size: 0.78rem;
   margin-bottom: var(--space-sm);
-}
-
-.notes-side__panel p,
-.notes-side__panel li {
-  color: rgba(255, 255, 255, 0.66);
-  line-height: 1.7;
-  font-size: 0.9rem;
-}
-
-.notes-side__panel ol {
-  margin-top: var(--space-sm);
-  padding-left: 1.2em;
-}
-
-.notes-side__panel code {
-  color: rgba(255, 255, 255, 0.86);
+  color: rgba(255, 255, 255, 0.5);
   font-family: var(--font-mono);
-  font-size: 0.78em;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
+/* 统计面板 */
+.notes-stats__total {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: var(--space-md);
+}
+
+.notes-stats__num {
+  font-size: 2.4rem;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--color-ink);
+}
+
+.notes-stats__label {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.82rem;
+}
+
+.notes-stats__breakdown {
+  list-style: none;
+  display: grid;
+  gap: 8px;
+}
+
+.notes-stats__breakdown li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  font-size: 0.86rem;
+}
+
+.notes-stats__breakdown li:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.notes-stats__type {
+  color: rgba(255, 255, 255, 0.66);
+}
+
+.notes-stats__count {
+  color: rgba(255, 255, 255, 0.88);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+}
+
+/* 聚焦标签 */
 .notes-focus-tags {
   display: flex;
   flex-wrap: wrap;
   gap: 7px;
 }
 
-@media (max-width: 900px) {
-  .notes-layout {
-    grid-template-columns: 1fr;
-  }
-
-  .notes-side {
-    position: static;
-  }
+/* 最近记录 */
+.notes-recent {
+  list-style: none;
+  display: grid;
+  gap: 2px;
 }
 
-@media (max-width: 640px) {
-  .notes-page {
-    padding-inline: var(--space-md);
-  }
-
-  .notes-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .note-card--featured {
-    grid-column: auto;
-  }
+.notes-recent__item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 8px 4px;
+  border-radius: var(--radius-sm);
+  transition: background var(--duration-fast) ease;
 }
 
+.notes-recent__item:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.notes-recent__date {
+  color: rgba(255, 255, 255, 0.4);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+}
+
+.notes-recent__title {
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 0.88rem;
+  line-height: 1.4;
+}
+
+.notes-recent__item:hover .notes-recent__title {
+  color: var(--color-ink);
+}
 
 /* ===================================================
    Notes Wallpaper Override + Gallery Lightbox
@@ -348,230 +436,33 @@
   z-index: 1;
 }
 
-
 /* ===================================================
-   Notes Timeline — 更像个人记录流，少一点 dashboard 味
+   Responsive
    =================================================== */
-.notes-page--timeline .notes-shell {
-  width: min(960px, 100%);
-}
-
-.notes-timeline-shell {
-  padding-bottom: var(--space-xl);
-}
-
-.notes-timeline-hero {
-  padding: clamp(32px, 7vw, 76px) 0 clamp(28px, 6vw, 56px);
-}
-
-.notes-timeline-hero__top {
-  display: flex;
-  align-items: center;
-  gap: var(--space-xs);
-  margin-bottom: clamp(28px, 6vw, 64px);
-}
-
-.notes-timeline-hero__top .inner-page__badge,
-.notes-timeline-hero__top .inner-page__back {
-  margin: 0;
-}
-
-.notes-timeline-hero__copy {
-  display: grid;
-  grid-template-columns: minmax(160px, 0.55fr) minmax(280px, 1fr);
-  gap: clamp(24px, 5vw, 72px);
-  align-items: end;
-}
-
-.notes-timeline-hero h1 {
-  font-size: clamp(3.4rem, 11vw, 7rem);
-  line-height: 0.88;
-  letter-spacing: -0.065em;
-}
-
-.notes-timeline-hero p {
-  max-width: 560px;
-  color: rgba(255, 255, 255, 0.76);
-  font-size: clamp(1rem, 2vw, 1.16rem);
-  line-height: 1.9;
-  text-wrap: pretty;
-}
-
-.notes-index {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: clamp(36px, 7vw, 72px);
-  padding-bottom: var(--space-md);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
-}
-
-.notes-index__item {
-  cursor: pointer;
-  display: inline-flex;
-  gap: 8px;
-  border: 0;
-  color: rgba(255, 255, 255, 0.52);
-  background: transparent;
-  font-family: var(--font-mono);
-  font-size: 0.78rem;
-  letter-spacing: 0.04em;
-  transition: color var(--duration-fast) ease;
-}
-
-.notes-index__item:hover,
-.notes-index__item--active {
-  color: var(--color-orange);
-}
-
-.notes-index__item span {
-  color: rgba(255, 255, 255, 0.24);
-}
-
-.notes-timeline {
-  display: grid;
-  gap: clamp(48px, 9vw, 88px);
-}
-
-.notes-year {
-  display: grid;
-  grid-template-columns: 120px minmax(0, 1fr);
-  gap: clamp(20px, 5vw, 56px);
-}
-
-.notes-year__label {
-  position: sticky;
-  top: 28px;
-  align-self: start;
-  color: rgba(255, 255, 255, 0.35);
-  font-family: var(--font-mono);
-  font-size: 0.9rem;
-  letter-spacing: 0.12em;
-}
-
-.notes-year__list {
-  display: grid;
-  gap: 0;
-}
-
-.notes-entry {
-  display: grid;
-  grid-template-columns: 72px minmax(0, 1fr);
-  gap: clamp(18px, 4vw, 40px);
-  padding: 28px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.11);
-  transition:
-    border-color var(--duration-normal) ease,
-    transform var(--duration-normal) var(--ease-out);
-}
-
-.notes-entry:first-child {
-  padding-top: 0;
-}
-
-.notes-entry:hover {
-  transform: translateX(4px);
-  border-color: rgba(255, 255, 255, 0.28);
-}
-
-.notes-entry__date {
-  color: rgba(255, 255, 255, 0.42);
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
-  line-height: 1.6;
-}
-
-.notes-entry__meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 10px;
-  color: rgba(255, 255, 255, 0.46);
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-}
-
-.notes-entry h2 {
-  max-width: 760px;
-  font-size: clamp(1.3rem, 3vw, 2.1rem);
-  line-height: 1.22;
-  letter-spacing: -0.035em;
-  margin-bottom: 10px;
-  text-wrap: balance;
-}
-
-.notes-entry p {
-  max-width: 720px;
-  color: rgba(255, 255, 255, 0.68);
-  line-height: 1.8;
-  font-size: 0.96rem;
-  text-wrap: pretty;
-}
-
-.notes-entry__photos {
-  position: relative;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 8px;
-  margin-top: var(--space-md);
-  max-width: 640px;
-}
-
-.notes-entry__photo {
-  overflow: hidden;
-  aspect-ratio: 4 / 3;
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.05);
-}
-
-.notes-entry__photo img {
-  width: 100%;
-  height: 100%;
-  display: block;
-  object-fit: cover;
-  transition: transform var(--duration-slow) var(--ease-out);
-}
-
-.notes-entry:hover .notes-entry__photo img {
-  transform: scale(1.035);
-}
-
-.notes-entry__more {
-  position: absolute;
-  right: 10px;
-  bottom: 10px;
-  padding: 4px 10px;
-  border-radius: var(--radius-full);
-  color: var(--color-ink);
-  background: rgba(0, 0, 0, 0.58);
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-}
-
-@media (max-width: 760px) {
-  .notes-timeline-hero__copy,
-  .notes-year,
-  .notes-entry {
+@media (max-width: 900px) {
+  .notes-layout {
     grid-template-columns: 1fr;
   }
 
-  .notes-year__label {
+  .notes-side {
     position: static;
-    padding-bottom: var(--space-sm);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.14);
-  }
-
-  .notes-entry {
-    gap: var(--space-xs);
-  }
-
-  .notes-entry__date {
-    color: var(--color-orange);
   }
 }
 
-@media (max-width: 520px) {
-  .notes-entry__photos {
+@media (max-width: 640px) {
+  .notes-page {
+    padding-inline: var(--space-md);
+  }
+
+  .notes-grid {
     grid-template-columns: 1fr;
+  }
+
+  .note-card--featured {
+    grid-column: auto;
+  }
+
+  .note-card--featured .note-card__media {
+    aspect-ratio: 16 / 9;
   }
 }

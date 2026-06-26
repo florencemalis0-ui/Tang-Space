@@ -1,15 +1,27 @@
-import { useRef } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useBingBg } from '../../hooks/useBingBg'
+import { WeChatModal } from '../../components/WeChatModal'
+import { notes } from '../../data/notes'
+import { decryptEmail } from '../../utils/email'
 import '../Blog/index.css'
 import './index.css'
 
-const FOCUS = ['AI Agent 工程化', '后端系统稳定性', ' GPU算力', '个人网站', '生活记录']
+const FOCUS = ['AI Agent 工程化', '后端系统稳定性', 'GPU 算力', '个人网站', '生活记录']
+
+// TODO: 替换为真实邮箱的 Base64 编码。
+// 在浏览器控制台执行 btoa('your@email.com') 即可获得，把结果填到下面。
+const EMAIL_B64 = 'aGVsbG9AZXhhbXBsZS5jb20='
 
 export default function About() {
   const pageRef = useRef<HTMLElement>(null)
+  const [wechatVisible, setWechatVisible] = useState(false)
 
   useBingBg(pageRef)
+
+  const recentNotes = useMemo(() => {
+    return [...notes].sort((a, b) => b.date.localeCompare(a.date)).slice(0, 3)
+  }, [])
 
   return (
     <main ref={pageRef} className="about-page about-page--journal notes-page--wallpaper">
@@ -30,13 +42,15 @@ export default function About() {
         <div className="about-journal-layout">
           <article className="about-journal-main">
             <section className="about-journal-section">
+              <span className="about-journal-section__num">01</span>
               <h2>你好，我是 TangTang</h2>
               <p>
-                现在在快手做工程相关的工作，主要关注 AI、后端系统和GPU模型。平时写得比较多的是工程实践、系统设计、AI 应用落地过程中遇到的问题，以及一些自己踩过的坑。
+                现在在快手做工程相关的工作，主要关注 AI、后端系统和 GPU 模型。平时写得比较多的是工程实践、系统设计、AI 应用落地过程中遇到的问题，以及一些自己踩过的坑。
               </p>
             </section>
 
             <section className="about-journal-section">
+              <span className="about-journal-section__num">02</span>
               <h2>这个网站</h2>
               <p>
                 我做这个网站，最开始只是想有一个自己的主页。后来慢慢觉得，它不应该只是简历，也不应该只放技术文章。
@@ -47,6 +61,7 @@ export default function About() {
             </section>
 
             <section className="about-journal-section">
+              <span className="about-journal-section__num">03</span>
               <h2>我想留下什么</h2>
               <p>
                 我不太想把这里做成一个很正式的博客。它更像一个自己的小空间，能让我把一些真实发生过的东西存下来。
@@ -68,6 +83,24 @@ export default function About() {
               </div>
             </section>
 
+            <section className="about-mini-card about-social">
+              <span className="about-mini-card__label">联系</span>
+              <div className="about-social__links">
+                <a href="https://github.com/florencemalis0-ui" target="_blank" rel="noreferrer" className="about-social__link">
+                  <span className="about-social__name">GitHub</span>
+                  <span className="about-social__handle">@florencemalis0-ui</span>
+                </a>
+                <button type="button" className="about-social__link" onClick={() => setWechatVisible(true)}>
+                  <span className="about-social__name">微信</span>
+                  <span className="about-social__handle">扫码添加</span>
+                </button>
+                <button type="button" className="about-social__link" onClick={() => decryptEmail(EMAIL_B64)}>
+                  <span className="about-social__name">邮箱</span>
+                  <span className="about-social__handle">点击发送</span>
+                </button>
+              </div>
+            </section>
+
             <section className="about-mini-card">
               <span className="about-mini-card__label">最近在看</span>
               <div className="about-journal-tags">
@@ -75,6 +108,20 @@ export default function About() {
                   <span key={item}>{item}</span>
                 ))}
               </div>
+            </section>
+
+            <section className="about-mini-card about-mini-card--quiet">
+              <span className="about-mini-card__label">最近记录</span>
+              <ul className="about-recent">
+                {recentNotes.map((note) => (
+                  <li key={note.id}>
+                    <Link to={`/notes/${note.id}`} className="about-recent__item">
+                      <span className="about-recent__date">{note.date}</span>
+                      <span className="about-recent__title">{note.title}</span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
             </section>
 
             <section className="about-mini-card">
@@ -86,18 +133,11 @@ export default function About() {
                 <li>阶段性的想法</li>
               </ul>
             </section>
-
-            <section className="about-mini-card">
-              <span className="about-mini-card__label">继续了解</span>
-              <div className="about-journal-links">
-                <Link to="/notes">Notes</Link>
-                <Link to="/resume">Resume</Link>
-                <a href="https://github.com/florencemalis0-ui" target="_blank" rel="noreferrer">GitHub</a>
-              </div>
-            </section>
           </aside>
         </div>
       </div>
+
+      <WeChatModal visible={wechatVisible} onClose={() => setWechatVisible(false)} />
     </main>
   )
 }

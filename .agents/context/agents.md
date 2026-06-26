@@ -87,6 +87,9 @@ Tang-Space/
 5. **导航项**（记录/简历/关于）是 react-router-dom `<Link>` 路由跳转；内页用「← 返回首页」back-link
 6. **壁纸** 来自 `bing.biturl.top` API（`useBingBg` hook，sessionStorage 轮播），不在本地存图，也没有 GitHub Actions 抓取
 7. **头像 URL：** `https://avatars.githubusercontent.com/florencemalis0-ui`（带每日 cache-bust 参数）
+8. **部署传已构建的 `dist/`**：CI 不重新 build（`.github/workflows/deploy.yml` 直接上传 dist/），改完代码必须本地 `npm run build` 再提交 `dist/`，否则线上不更新
+9. **不要手删 `dist/404.html`**：它是 `index.html` 的副本，由 `vite.config.ts` 的 `spa-404-fallback` 插件自动生成。GitHub Pages 对找不到的路径回退到它，刷新内页（`/about`、`/notes/xxx`）不 404
+10. **图片路径用绝对前缀** `/Tang-Space/assets/...`（如 `lifeImages`），不要用相对 `./assets/...`——嵌套路由（`/notes/xxx`）下相对路径会 404
 
 ## Impeccable Skill 使用方式
 
