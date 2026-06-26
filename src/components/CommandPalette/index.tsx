@@ -1,11 +1,11 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { notes, NOTE_TYPE_LABEL } from '../../data/notes'
-import { EMAIL_B64, GITHUB_URL } from '../../data/contacts'
+import { EMAIL_B64 } from '../../data/contacts'
 import { decryptEmail } from '../../utils/email'
 import styles from './index.module.css'
 
-type Group = '跳转' | '笔记' | '外部' | '操作'
+type Group = '跳转' | '笔记' | '操作'
 
 interface Command {
   id: string
@@ -103,19 +103,6 @@ export function CommandPalette() {
       keywords: [n.title, n.summary, n.tags.join(' '), NOTE_TYPE_LABEL[n.type]].join(' '),
       run: go(`/notes/${n.id}`),
     }))
-    const external: Command[] = [
-      {
-        id: 'ext-github',
-        group: '外部',
-        title: 'GitHub',
-        subtitle: '@florencemalis0-ui',
-        keywords: 'github 代码 源码',
-        run: () => {
-          window.open(GITHUB_URL, '_blank', 'noopener,noreferrer')
-          close()
-        },
-      },
-    ]
     const actions: Command[] = [
       {
         id: 'act-wechat',
@@ -140,7 +127,7 @@ export function CommandPalette() {
         },
       },
     ]
-    return [...nav, ...noteCmds, ...external, ...actions]
+    return [...nav, ...noteCmds, ...actions]
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [navigate])
 

@@ -2,7 +2,7 @@ import { useMemo, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { useBingBg } from '../../hooks/useBingBg'
 import { notes } from '../../data/notes'
-import { EMAIL_B64, GITHUB_URL } from '../../data/contacts'
+import { EMAIL_B64 } from '../../data/contacts'
 import { decryptEmail } from '../../utils/email'
 import '../Blog/index.css'
 import './index.css'
@@ -81,10 +81,6 @@ export default function About() {
             <section className="about-mini-card about-social">
               <span className="about-mini-card__label">联系</span>
               <div className="about-social__links">
-                <a href={GITHUB_URL} target="_blank" rel="noreferrer" className="about-social__link">
-                  <span className="about-social__name">GitHub</span>
-                  <span className="about-social__handle">@florencemalis0-ui</span>
-                </a>
                 <button type="button" className="about-social__link" onClick={() => window.dispatchEvent(new CustomEvent('tang:open-wechat'))}>
                   <span className="about-social__name">微信</span>
                   <span className="about-social__handle">扫码添加</span>
