@@ -99,6 +99,16 @@ button {
     transform: none;
     transition: opacity var(--duration-normal) ease;
   }
+
+  /* 全站降级：缩短所有过渡、禁用非必要动画 */
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 /* ===================================================

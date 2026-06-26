@@ -7,6 +7,8 @@ import { useEffect } from 'react'
  * 每次刷新页面切换到下一张，8 张轮播。
  *
  * 使用 bing.biturl.top 镜像 API，国内访问稳定，直接返回图片，无跨域问题。
+ *
+ * 健壮性：先预加载图片，加载成功才应用为背景；失败则保持纯色底（不显示碎图）。
  */
 
 const BING_TOTAL = 8 // Bing 最多提供最近 8 天的壁纸
@@ -38,8 +40,15 @@ export function useBingBg(panelRef: React.RefObject<HTMLElement | null>) {
     const panel = panelRef.current
     if (!panel) return
 
-    const idx = getNextIndex()
-    const url = getBingUrl(idx)
-    applyBg(panel, url)
+    const url = getBingUrl(getNextIndex())
+
+    // 预加载：成功才应用，失败保持纯色底（不显示碎图）
+    const img = new Image()
+    img.onload = () => applyBg(panel, url)
+    img.src = url
+
+    return () => {
+      img.onload = null
+    }
   }, [panelRef])
 }

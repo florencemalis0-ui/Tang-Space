@@ -3,14 +3,18 @@ name: TangTang Homepage
 description: TangTang 的个人品牌主页 — 快手工程师，专业·科技·个性
 colors:
   ink-deep: "#ffffff"
-  ink-secondary: "rgba(255,255,255,0.75)"
-  ink-muted: "rgba(255,255,255,0.45)"
+  ink-secondary: "rgba(255,255,255,0.72)"
+  ink-muted: "rgba(255,255,255,0.42)"
+  ink-faint: "rgba(255,255,255,0.18)"
   kuaishou-orange: "#FF4906"
-  accent-blue: "#4e97d8"
-  surface-overlay: "rgba(37,68,103,0.75)"
+  orange-glow: "rgba(255,73,6,0.3)"
+  surface-overlay: "rgba(13,13,26,0.58)"
   surface-dark: "#1a1a2e"
-  surface-card: "rgba(255,255,255,0.06)"
-  border-subtle: "rgba(255,255,255,0.12)"
+  surface-card: "rgba(255,255,255,0.045)"
+  surface-hover: "rgba(255,255,255,0.08)"
+  border-subtle: "rgba(255,255,255,0.105)"
+  border-strong: "rgba(255,255,255,0.2)"
+  bg-dark: "#0d0d1a"
 typography:
   display:
     fontFamily: "'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', -apple-system, sans-serif"
@@ -35,15 +39,14 @@ typography:
     letterSpacing: "0.05em"
 rounded:
   sm: "4px"
-  md: "8px"
-  lg: "16px"
+  lg: "18px"
   full: "9999px"
 spacing:
-  xs: "8px"
-  sm: "16px"
-  md: "24px"
-  lg: "40px"
-  xl: "64px"
+  xs: "6px"
+  sm: "12px"
+  md: "20px"
+  lg: "32px"
+  xl: "56px"
 components:
   nav-link:
     backgroundColor: "transparent"
@@ -59,9 +62,9 @@ components:
   avatar-ring:
     backgroundColor: "transparent"
     rounded: "{rounded.full}"
-    size: "120px"
+    size: "112px"
   modal-overlay:
-    backgroundColor: "rgba(0,0,0,0.7)"
+    backgroundColor: "rgba(0,0,0,0.75)"
     rounded: "{rounded.lg}"
 ---
 
@@ -190,4 +193,4 @@ Not a visual component but documented here because it defines perceived quality.
 - **Don't** use the same monospace font in navigation or headings — it signals code, not content.
 - **Don't** animate CSS layout properties (width, height, top, left). Animate only transform and opacity.
 - **Don't** build a résumé-style white-background page for any route. Every surface is dark — inner pages either carry the Bing wallpaper (Blog/About/NoteDetail) or use solid `#1a1a2e` (Resume).
-- **Don't** add more than 3 items to the main navigation. Cognitive load over breadth.
+- **Don't** add more than 4 items to the main navigation (首页 / 记录 / 简历 / 关于). Cognitive load over breadth.

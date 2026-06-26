@@ -64,9 +64,9 @@ Tang-Space/
 **设计北极星：** "The Engineer's Signal"（工程师的信号）
 
 **品牌色：**
-- 主色：Kuaishou Orange `#FF4906`（每页最多一处使用）
+- 主色：Kuaishou Orange `#FF4906`（One Signal Rule：每屏最多 1 处，仅 avatar ring + nav active 圆点两处 sanctioned）
 - 辅助：Signal Blue `#4e97d8`（链接、次级高亮）
-- 背景：Deep Space `#1a1a2e`（仅 Resume 页纯色；Blog/About/NoteDetail 用 Bing 壁纸 + 遮罩）
+- 背景：Deep Space `#1a1a2e`（仅 Resume 页纯色；Blog/About/NoteDetail 用 Bing 壁纸 + ~40% 透出遮罩）
 - 文字：Pure White `#ffffff` → Soft White `rgba(255,255,255,0.72)` → Ghost White `rgba(255,255,255,0.42)`
 
 **字体：**

@@ -12,7 +12,10 @@ export function useHitokoto(): HitokotoResult {
   })
 
   useEffect(() => {
-    fetch('https://v1.hitokoto.cn')
+    const controller = new AbortController()
+    const timeout = setTimeout(() => controller.abort(), 5000)
+
+    fetch('https://v1.hitokoto.cn', { signal: controller.signal })
       .then((res) => res.json())
       .then((res) => {
         if (res.hitokoto && res.from) {
@@ -20,8 +23,14 @@ export function useHitokoto(): HitokotoResult {
         }
       })
       .catch(() => {
-        // 加载失败保持默认值
+        // 加载失败或超时，保持默认值
       })
+      .finally(() => clearTimeout(timeout))
+
+    return () => {
+      clearTimeout(timeout)
+      controller.abort()
+    }
   }, [])
 
   return data
