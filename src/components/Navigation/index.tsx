@@ -26,10 +26,7 @@ export function Navigation() {
 
       <ul className={`nav-list${open ? ' visible' : ''}`}>
         {NAV_ITEMS.map(({ to, label }) => {
-          const isActive =
-            to === '/'
-              ? location.pathname === '/'
-              : location.pathname.startsWith(to) || (to === '/notes' && location.pathname.startsWith('/blog'))
+          const isActive = to === '/' ? location.pathname === '/' : location.pathname.startsWith(to)
           return (
             <li key={to}>
               <Link
