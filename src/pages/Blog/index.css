@@ -119,12 +119,15 @@
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: var(--space-md);
+  perspective: 900px; /* tilt 的 3D 透视，放在父级避免 transform list 顺序歧义 */
 }
 
 /* ===================================================
    Note Card
    =================================================== */
 .note-card {
+  --rx: 0deg;
+  --ry: 0deg;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -138,7 +141,7 @@
 }
 
 .note-card:hover {
-  transform: translateY(-4px);
+  transform: translateY(-4px) rotateX(var(--rx)) rotateY(var(--ry));
   border-color: rgba(255, 255, 255, 0.22);
   background: rgba(255, 255, 255, 0.065);
 }
@@ -175,11 +178,36 @@
   height: 100%;
   display: block;
   object-fit: cover;
-  transition: transform var(--duration-slow) var(--ease-out);
+  filter: blur(10px);
+  opacity: 0;
+  transition:
+    transform var(--duration-slow) var(--ease-out),
+    filter var(--duration-slow) var(--ease-out),
+    opacity var(--duration-slow) var(--ease-out);
+}
+
+/* blur-up 加载完成：清晰淡入 */
+.note-card__media img.is-loaded {
+  filter: blur(0);
+  opacity: 1;
 }
 
 .note-card:hover .note-card__media img {
   transform: scale(1.04);
+}
+
+/* 降级：reduced-motion 下图片直接清晰、tilt 锁 0
+   （!important 压住运行时切换后 JS 写入的内联 --rx/--ry） */
+@media (prefers-reduced-motion: reduce) {
+  .note-card__media img {
+    filter: none;
+    opacity: 1;
+  }
+
+  .note-card {
+    --rx: 0deg !important;
+    --ry: 0deg !important;
+  }
 }
 
 /* 无图卡片的渐变 banner 占位 —— 类型色提供视觉锚点 */

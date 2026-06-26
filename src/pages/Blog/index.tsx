@@ -2,6 +2,8 @@ import { useMemo, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { NOTE_TYPE_LABEL, notes, type Note, type NoteType } from '../../data/notes'
 import { useBingBg } from '../../hooks/useBingBg'
+import { useTilt } from '../../hooks/useTilt'
+import { useBlurUp } from '../../hooks/useBlurUp'
 import './index.css'
 
 const FILTERS: Array<NoteType | 'all'> = ['all', 'tech', 'life', 'travel', 'thought']
@@ -18,15 +20,26 @@ function NoteCard({ note }: { note: Note }) {
   const images = note.images ?? []
   const hasImages = images.length > 0
   const cover = hasImages ? images[0] : null
+  const tilt = useTilt()
+  const blur = useBlurUp()
 
   return (
     <Link
       to={`/notes/${note.id}`}
       className={`note-card note-card--${note.type}${note.featured ? ' note-card--featured' : ''}`}
+      onMouseMove={tilt.onMouseMove}
+      onMouseLeave={tilt.onMouseLeave}
     >
       <div className="note-card__media">
         {cover ? (
-          <img src={cover} alt={note.title} loading="lazy" />
+          <img
+            src={cover}
+            alt={note.title}
+            loading="lazy"
+            ref={blur.ref}
+            onLoad={blur.onLoad}
+            className={blur.className}
+          />
         ) : (
           <div className={`note-card__banner note-card__banner--${note.type}`} />
         )}
