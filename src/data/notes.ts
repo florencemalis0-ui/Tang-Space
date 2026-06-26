@@ -26,7 +26,7 @@ export const NOTE_TYPE_LABEL: Record<NoteType | 'all', string> = {
  * 然后在 notes 里写：lifeImages('hangzhou-01.jpg', 'hangzhou-02.jpg')
  */
 export function lifeImages(...fileNames: string[]) {
-  return fileNames.map((fileName) => `/Tang-Space/assets/img/life/${fileName}`)
+  return fileNames.map((fileName) => `${import.meta.env.BASE_URL}assets/img/life/${fileName}`)
 }
 
 /**
@@ -61,7 +61,6 @@ export const notes: Note[] = [
     date: '2026.06.24',
     summary: '记录一个 AI 应用从想法到可用系统中遇到的问题、约束和取舍。技术不是做出来就结束，而是要能长期运行。',
     tags: ['AI', 'Backend', 'System Design'],
-    // images: lifeImages('wechat.jpg', 'wechat.jpg', 'wechat.jpg'),
     featured: true,
   },
   {

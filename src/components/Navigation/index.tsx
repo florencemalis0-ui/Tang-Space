@@ -20,11 +20,13 @@ export function Navigation() {
         className="mobile-toggle"
         onClick={() => setOpen((v) => !v)}
         aria-label="切换菜单"
+        aria-expanded={open}
+        aria-controls="primary-nav"
       >
         {open ? '✕' : '☰'}
       </button>
 
-      <ul className={`nav-list${open ? ' visible' : ''}`}>
+      <ul id="primary-nav" className={`nav-list${open ? ' visible' : ''}`}>
         {NAV_ITEMS.map(({ to, label }) => {
           const isActive = to === '/' ? location.pathname === '/' : location.pathname.startsWith(to)
           return (

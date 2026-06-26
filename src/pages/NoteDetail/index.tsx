@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { NOTE_TYPE_LABEL, notes } from '../../data/notes'
 import { useBingBg } from '../../hooks/useBingBg'
@@ -21,6 +21,25 @@ export default function NoteDetail() {
     if (!note?.images) return []
     return expanded ? note.images : note.images.slice(0, INITIAL_IMAGE_COUNT)
   }, [expanded, note])
+
+  // lightbox 键盘：ESC 关闭、左右切换
+  useEffect(() => {
+    if (activeImageIndex === null) return
+    const imgs = note?.images
+    if (!imgs?.length) return
+    const last = imgs.length - 1
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setActiveImageIndex(null)
+      } else if (e.key === 'ArrowLeft') {
+        setActiveImageIndex((c) => (c === null ? null : c === 0 ? last : c - 1))
+      } else if (e.key === 'ArrowRight') {
+        setActiveImageIndex((c) => (c === null ? null : c === last ? 0 : c + 1))
+      }
+    }
+    window.addEventListener('keydown', handler)
+    return () => window.removeEventListener('keydown', handler)
+  }, [activeImageIndex, note?.images])
 
   if (!note) {
     return (
@@ -105,9 +124,9 @@ export default function NoteDetail() {
       {activeImage ? (
         <div className="note-lightbox" role="dialog" aria-modal="true" aria-label="图片预览">
           <button className="note-lightbox__close" type="button" onClick={() => setActiveImageIndex(null)}>关闭</button>
-          <button className="note-lightbox__nav note-lightbox__nav--prev" type="button" onClick={showPrevImage}>←</button>
+          <button className="note-lightbox__nav note-lightbox__nav--prev" type="button" onClick={showPrevImage} aria-label="上一张">←</button>
           <img src={activeImage} alt={`${note.title} - 大图预览`} />
-          <button className="note-lightbox__nav note-lightbox__nav--next" type="button" onClick={showNextImage}>→</button>
+          <button className="note-lightbox__nav note-lightbox__nav--next" type="button" onClick={showNextImage} aria-label="下一张">→</button>
           <div className="note-lightbox__count">
             {(activeImageIndex ?? 0) + 1} / {images.length}
           </div>

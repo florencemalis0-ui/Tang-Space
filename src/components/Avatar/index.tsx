@@ -8,10 +8,16 @@ interface AvatarProps {
 export function Avatar({ onClick }: AvatarProps) {
   const imgRef = useRef<HTMLImageElement>(null)
   const [imgLoaded, setImgLoaded] = useState(false)
+  const [imgError, setImgError] = useState(false)
 
   const handleLoad = () => {
     imgRef.current?.classList.add('show')
     setImgLoaded(true)
+  }
+
+  const handleError = () => {
+    setImgError(true)
+    setImgLoaded(true) // 失败也放开 overlay，保证点击微信仍可用
   }
 
   const dayStamp = Math.floor(Date.now() / 86400000)
@@ -25,13 +31,18 @@ export function Avatar({ onClick }: AvatarProps) {
     >
       {/* 头像图片 */}
       <div className={styles.imgWrap}>
-        <img
-          ref={imgRef}
-          src={avatarUrl}
-          alt="TangTang"
-          className={`js-avatar ${styles.img}`}
-          onLoad={handleLoad}
-        />
+        {imgError ? (
+          <div className={styles.fallback} aria-hidden="true">T</div>
+        ) : (
+          <img
+            ref={imgRef}
+            src={avatarUrl}
+            alt="TangTang"
+            className={`js-avatar ${styles.img}`}
+            onLoad={handleLoad}
+            onError={handleError}
+          />
+        )}
       </div>
 
       {/* Hover 覆盖层 */}

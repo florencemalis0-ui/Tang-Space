@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { Avatar } from '../../components/Avatar'
 import { Navigation } from '../../components/Navigation'
 import { WeChatModal } from '../../components/WeChatModal'
@@ -29,7 +30,7 @@ export default function Home() {
             </div>
 
             <h1 className="hero-name iUp">
-              <a href="/" title="TangTang">TangTang</a>
+              <Link to="/" title="TangTang">TangTang</Link>
             </h1>
 
             <p className="hero-subtitle iUp">唐睿阳 · Kuaishou Engineer</p>

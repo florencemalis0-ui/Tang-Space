@@ -21,6 +21,7 @@ function App() {
       <Route path="/blog/*" element={<RedirectToNotes />} />
       <Route path="/resume" element={<Resume />} />
       <Route path="/about" element={<About />} />
+      <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   )
 }

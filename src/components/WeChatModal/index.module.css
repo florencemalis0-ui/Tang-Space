@@ -26,7 +26,7 @@
   top: 10px;
   right: 12px;
   font-size: 0.9rem;
-  color: #aaa;
+  color: #666;
   cursor: pointer;
   line-height: 1;
   background: none;
@@ -36,12 +36,12 @@
 }
 
 .close:hover {
-  color: #333;
+  color: #1a1a1a;
 }
 
 .title {
   font-size: 0.75rem;
-  color: #999;
+  color: #666;
   letter-spacing: 0.06em;
   margin-bottom: 14px;
 }
