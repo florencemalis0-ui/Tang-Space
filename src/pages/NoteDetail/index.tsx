@@ -10,6 +10,7 @@ const INITIAL_IMAGE_COUNT = 12
 export default function NoteDetail() {
   const { id } = useParams()
   const pageRef = useRef<HTMLElement>(null)
+  const lightboxRef = useRef<HTMLDivElement>(null)
   const [expanded, setExpanded] = useState(false)
   const [activeImageIndex, setActiveImageIndex] = useState<number | null>(null)
 
@@ -40,6 +41,13 @@ export default function NoteDetail() {
     window.addEventListener('keydown', handler)
     return () => window.removeEventListener('keydown', handler)
   }, [activeImageIndex, note?.images])
+
+  // lightbox 打开时聚焦容器（便于键盘操作 + 屏幕阅读器朗读）
+  useEffect(() => {
+    if (activeImageIndex !== null) {
+      lightboxRef.current?.focus()
+    }
+  }, [activeImageIndex])
 
   if (!note) {
     return (
@@ -122,7 +130,7 @@ export default function NoteDetail() {
       </article>
 
       {activeImage ? (
-        <div className="note-lightbox" role="dialog" aria-modal="true" aria-label="图片预览">
+        <div className="note-lightbox" ref={lightboxRef} role="dialog" aria-modal="true" aria-label="图片预览" tabIndex={-1}>
           <button className="note-lightbox__close" type="button" onClick={() => setActiveImageIndex(null)}>关闭</button>
           <button className="note-lightbox__nav note-lightbox__nav--prev" type="button" onClick={showPrevImage} aria-label="上一张">←</button>
           <img src={activeImage} alt={`${note.title} - 大图预览`} />

@@ -140,6 +140,11 @@
   padding: var(--space-lg);
 }
 
+/* 容器仅作焦点承接，不显示 outline（焦点交给内部按钮） */
+.note-lightbox:focus {
+  outline: none;
+}
+
 .note-lightbox img {
   max-width: min(1100px, 88vw);
   max-height: 84vh;
