@@ -89,7 +89,8 @@
   font-size: clamp(2.8rem, 8.5vw, 6.5rem);
   font-weight: 700;
   letter-spacing: -0.04em;
-  line-height: 1;
+  line-height: 1.15;
+  padding-block: 0.1em;
   margin-bottom: 28px;
   /* 粉白渐变文字（白→淡紫粉），非信号色，守 One Signal */
   background: linear-gradient(180deg, #ffffff 0%, #fdebfd 65%, #e0b8e6 100%);
