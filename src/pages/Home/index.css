@@ -1,140 +1,161 @@
 /* ===================================================
-   Panel / Hero — 首页全屏背景
+   Home — 3D 过程化背景 + 滚动叙事
+   背景：固定 canvas（粒子流场），内容层在上滚动
    =================================================== */
-.panel-cover {
+.home-root {
   position: relative;
   width: 100%;
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  background-color: var(--color-bg-dark); /* 图片加载前的兜底底色 */
-  overflow: hidden; /* 裁掉壁纸层的过采样部分 */
+  background-color: var(--color-bg-dark);
 }
 
-/* 壁纸独立层：只负责图片 + 视差 transform，被 ::after 遮罩(z:1)盖在下方 */
-.panel-cover__bg {
-  position: absolute;
-  inset: -32px; /* 过采样：给 translate 留余量，避免平移时露出边缘 */
-  background-size: cover;
-  background-position: center center;
-  background-repeat: no-repeat;
-  z-index: 0;
-  will-change: transform;
-  transform: translate3d(0, 0, 0);
-}
-
-/* 降级兜底：即便 JS 在运行时切换 reduced-motion 后继续写内联 transform，
-   !important 也能压住（与 index.css 既有 reduced-motion !important 约定一致）。 */
-@media (prefers-reduced-motion: reduce) {
-  .panel-cover__bg {
-    transform: none !important;
-    will-change: auto;
-  }
-}
-
-/* 壁纸遮罩：~40% 壁纸透出（Overlay Calibration Rule） */
-.panel-cover::after {
-  content: '';
-  position: absolute;
+/* 固定 3D canvas：底层，不接收指针（内容可点） */
+.home-canvas {
+  position: fixed;
   inset: 0;
-  background:
-    linear-gradient(
-      to bottom,
-      rgba(13, 13, 26, 0.58) 0%,
-      rgba(13, 13, 26, 0.50) 40%,
-      rgba(13, 13, 26, 0.66) 100%
-    );
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* 顶部固定导航 */
+.home-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px clamp(20px, 5vw, 48px);
+  pointer-events: none;
+}
+
+.home-header > * {
+  pointer-events: auto;
+}
+
+.home-logo {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 1.1rem;
+  letter-spacing: -0.02em;
+  color: var(--color-ink);
+  opacity: 0.9;
+}
+
+.home-logo:hover {
+  opacity: 1;
+}
+
+/* 内容层 */
+.home-content {
+  position: relative;
   z-index: 1;
 }
 
-.panel-main {
-  position: relative;
-  z-index: 2;
-  flex: 1;
+/* ===================================================
+   Hero
+   =================================================== */
+.hero {
+  min-height: 100vh;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: var(--space-xl) var(--space-lg);
-}
-
-.panel-main__inner {
-  width: 100%;
-  max-width: 520px;
   text-align: center;
+  padding: 80px clamp(20px, 5vw, 48px) 40px;
 }
 
-/* ===================================================
-   Hero Content
-   =================================================== */
-.hero-avatar {
-  margin-bottom: var(--space-lg);
+.hero-kicker {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+  margin-bottom: 22px;
 }
 
 .hero-name {
-  font-size: clamp(2.4rem, 6vw, 3.8rem);
+  font-size: clamp(3.2rem, 13vw, 10rem);
   font-weight: 700;
-  letter-spacing: -0.025em;
-  color: var(--color-ink);
-  line-height: 1.05;
-  margin-bottom: var(--space-xs);
-}
-
-.hero-name a {
-  color: inherit;
-}
-
-.hero-subtitle {
-  font-size: clamp(0.9rem, 2vw, 1.05rem);
-  color: var(--color-ink-secondary);
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  font-weight: 400;
-  margin-bottom: var(--space-lg);
-}
-
-.hero-divider {
-  width: 40px;
-  height: 2px;
-  background: rgba(255, 255, 255, 0.3);
-  border: none;
-  margin: 0 auto var(--space-md);
-  border-radius: var(--radius-full);
+  letter-spacing: -0.04em;
+  line-height: 1;
+  margin-bottom: 28px;
+  /* 冷调渐变文字（白→淡蓝），非橙，守 One Signal */
+  background: linear-gradient(180deg, #ffffff 0%, #e3f0ff 65%, #b8c8e8 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 60px rgba(180, 200, 232, 0.15);
 }
 
 .hero-hitokoto {
-  font-size: 0.9rem;
-  color: rgba(255, 255, 255, 0.88);
-  line-height: 1.75;
-  max-width: 400px;
-  margin: 0 auto var(--space-md);
+  font-size: clamp(0.95rem, 1.8vw, 1.15rem);
+  color: rgba(255, 255, 255, 0.82);
+  line-height: 1.8;
+  max-width: 460px;
   font-style: italic;
+  margin-bottom: 64px;
 }
 
 .hero-hitokoto strong {
+  display: block;
   font-style: normal;
-  font-size: 0.78rem;
+  font-size: 0.76rem;
   color: var(--color-ink-muted);
   font-family: var(--font-mono);
   letter-spacing: 0.04em;
+  margin-top: 10px;
 }
 
-/* Tech tags */
+.hero-scroll-hint {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  color: var(--color-ink-muted);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.hero-scroll-hint::after {
+  content: '';
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(to bottom, var(--color-ink-muted), transparent);
+  animation: scroll-pulse 2.4s var(--ease-out) infinite;
+}
+
+@keyframes scroll-pulse {
+  0%, 100% { opacity: 0.3; transform: translateY(0); }
+  50% { opacity: 1; transform: translateY(8px); }
+}
+
+/* ===================================================
+   Tech tags
+   =================================================== */
 .hero-tags {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-xs);
   justify-content: center;
-  margin-bottom: var(--space-lg);
+  margin-top: 28px;
 }
 
 .hero-tag {
   font-family: var(--font-mono);
   font-size: 0.7rem;
   color: rgba(255, 255, 255, 0.65);
-  background: rgba(0, 0, 0, 0.35);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.045);
+  border: 1px solid rgba(255, 255, 255, 0.16);
   border-radius: var(--radius-full);
-  padding: 3px 10px;
+  padding: 4px 12px;
   letter-spacing: 0.06em;
   transition: color var(--duration-fast) ease, border-color var(--duration-fast) ease;
 }
@@ -144,35 +165,160 @@
   border-color: var(--color-border-strong);
 }
 
-
 /* ===================================================
-   Footer Remark
+   Signal — 第二屏
    =================================================== */
-.remark {
-  position: relative;
-  z-index: 2;
-  text-align: center;
-  padding: var(--space-md) var(--space-lg);
+.signal {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80px clamp(20px, 5vw, 48px);
 }
 
-.remark .power {
+.signal__inner {
+  width: 100%;
+  max-width: 680px;
+  text-align: center;
+}
+
+.signal__label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+  margin-bottom: 20px;
+}
+
+.signal__title {
+  font-size: clamp(2rem, 5vw, 3.4rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  color: var(--color-ink);
+  margin-bottom: 24px;
+}
+
+.signal__desc {
+  font-size: clamp(1rem, 1.6vw, 1.12rem);
+  color: rgba(255, 255, 255, 0.72);
+  line-height: 1.9;
+  text-wrap: pretty;
+  max-width: 560px;
+  margin: 0 auto 18px;
+}
+
+.signal__avatar {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+}
+
+/* ===================================================
+   Nav gate — 第三屏入口卡片（mask 渐变描边）
+   =================================================== */
+.nav-gate {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px clamp(20px, 5vw, 48px);
+}
+
+.nav-gate > .signal__label {
+  text-align: center;
+  margin-bottom: 36px;
+}
+
+.nav-gate__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  width: 100%;
+  max-width: 880px;
+}
+
+/* 卡片：用 mask-composite 做渐变描边，无 box-shadow（flat） */
+.nav-gate__card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 32px 24px;
+  border-radius: var(--radius-lg);
+  background: rgba(255, 255, 255, 0.03);
+  overflow: hidden;
+  transition: transform var(--duration-normal) var(--ease-out),
+    background var(--duration-normal) ease;
+}
+
+.nav-gate__card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.04) 60%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  transition: background var(--duration-normal) ease;
+}
+
+.nav-gate__card:hover {
+  transform: translateY(-4px);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.nav-gate__card:hover::before {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.12) 60%);
+}
+
+.nav-gate__label {
+  font-family: var(--font-sans);
+  font-size: 1.3rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--color-ink);
+}
+
+.nav-gate__desc {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.04em;
+  color: var(--color-ink-muted);
+}
+
+/* ===================================================
+   Footer
+   =================================================== */
+.home-footer {
+  padding: 48px clamp(20px, 5vw, 48px) 36px;
+  text-align: center;
+}
+
+.home-footer p {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-mono);
   font-size: 0.72rem;
   color: var(--color-ink-faint);
   letter-spacing: 0.04em;
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
 }
 
-/* ⌘K 命令面板入口提示：克制、可点、不引入第二处橙 */
+/* ⌘K 提示 */
 .cmdk-hint {
   font-family: var(--font-mono);
   font-size: 0.68rem;
   color: var(--color-ink-muted);
-  background: rgba(0, 0, 0, 0.35);
+  background: rgba(255, 255, 255, 0.045);
   border: 1px solid rgba(255, 255, 255, 0.16);
   border-radius: var(--radius-sm);
-  padding: 1px 6px;
+  padding: 1px 7px;
   letter-spacing: 0.04em;
   cursor: pointer;
   transition: color var(--duration-fast) ease, border-color var(--duration-fast) ease;
@@ -183,7 +329,26 @@
   border-color: var(--color-border-strong);
 }
 
+/* ===================================================
+   Responsive
+   =================================================== */
+@media (max-width: 760px) {
+  .nav-gate__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .home-header {
+    padding: 14px 18px;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .hero-scroll-hint::after {
+    animation: none;
+  }
+
+  .nav-gate__card,
+  .hero-tag,
   .cmdk-hint {
     transition: none;
   }

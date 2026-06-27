@@ -20,4 +20,15 @@ export default defineConfig({
     },
   ],
   base: '/Tang-Space/',
+  build: {
+    rollupOptions: {
+      output: {
+        // three / gsap 拆成独立 vendor chunk，利于缓存与并行加载
+        manualChunks: {
+          three: ['three'],
+          gsap: ['gsap'],
+        },
+      },
+    },
+  },
 })

@@ -1,71 +1,26 @@
 ---
 name: TangTang Homepage
-description: TangTang 的个人品牌主页 — 快手工程师，专业·科技·个性
+description: TangTang 的个人品牌主页 — 3D 过程化视觉，代码即艺术
 colors:
+  bg-dark: "#0d0d1a"
   ink-deep: "#ffffff"
   ink-secondary: "rgba(255,255,255,0.72)"
   ink-muted: "rgba(255,255,255,0.42)"
-  ink-faint: "rgba(255,255,255,0.18)"
   kuaishou-orange: "#FF4906"
-  orange-glow: "rgba(255,73,6,0.3)"
-  surface-overlay: "rgba(13,13,26,0.58)"
-  surface-dark: "#1a1a2e"
-  surface-card: "rgba(255,255,255,0.045)"
-  surface-hover: "rgba(255,255,255,0.08)"
-  border-subtle: "rgba(255,255,255,0.105)"
-  border-strong: "rgba(255,255,255,0.2)"
-  bg-dark: "#0d0d1a"
+  particle-cool: "linear-gradient(180deg,#ffffff 0%,#e3f0ff 65%,#b8c8e8 100%)"
+  signal-blue: "#4e97d8"
 typography:
   display:
     fontFamily: "'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', -apple-system, sans-serif"
-    fontSize: "clamp(2rem, 6vw, 3.5rem)"
     fontWeight: 700
-    lineHeight: 1.1
-    letterSpacing: "-0.02em"
-  headline:
-    fontFamily: "'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', -apple-system, sans-serif"
-    fontSize: "clamp(1.25rem, 3vw, 1.75rem)"
-    fontWeight: 400
-    lineHeight: 1.3
-  body:
-    fontFamily: "'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', -apple-system, sans-serif"
-    fontSize: "1rem"
-    fontWeight: 400
-    lineHeight: 1.7
-  label:
+  mono:
     fontFamily: "'SF Mono', 'Fira Code', 'Source Code Pro', Consolas, monospace"
-    fontSize: "0.8rem"
     fontWeight: 400
     letterSpacing: "0.05em"
-rounded:
-  sm: "4px"
-  lg: "18px"
-  full: "9999px"
-spacing:
-  xs: "6px"
-  sm: "12px"
-  md: "20px"
-  lg: "32px"
-  xl: "56px"
-components:
-  nav-link:
-    backgroundColor: "transparent"
-    textColor: "{colors.ink-deep}"
-    rounded: "{rounded.full}"
-    padding: "8px 20px"
-  nav-link-hover:
-    backgroundColor: "{colors.surface-card}"
-    textColor: "{colors.ink-deep}"
-  nav-link-active:
-    backgroundColor: "rgba(255,255,255,0.1)"
-    textColor: "{colors.ink-deep}"
-  avatar-ring:
-    backgroundColor: "transparent"
-    rounded: "{rounded.full}"
-    size: "112px"
-  modal-overlay:
-    backgroundColor: "rgba(0,0,0,0.75)"
-    rounded: "{rounded.lg}"
+rendering:
+  engine: "Three.js (WebGL)"
+  approach: "过程化 shader 生成全部几何与运动，不导入外部 3D 模型（零版权风险、体积轻）"
+  signature: "粒子流场 + curl-noise + additive 发光 + 滚动驱动相机推进"
 ---
 
 # Design System: TangTang Homepage
@@ -74,123 +29,109 @@ components:
 
 **Creative North Star: "The Engineer's Signal"**
 
-This system is built on the conviction that technical identity should feel as precise as the code it represents. The interface is a broadcast — not a brochure. Dark surfaces absorb attention and push content forward; every element earns its place through function and contrast, not decoration. The Bing wallpaper backdrop grounds the page in the world while the overlaid content asserts a distinct, personal frequency.
+这个系统以 3D 过程化视觉表达工程师的信号。所有几何与运动由 GLSL shader 原生生成——不导入任何外部 3D 模型，代码即艺术。粒子在 curl-noise 流场中流动，形成数据流/星河感；少数橙色粒子聚成「信号束」，作为深色宇宙里的唯一高饱和信号。
 
-The palette speaks quietly but confidently: deep-space darks, clean whites, and one sharp signal color — Kuaishou orange — reserved for the single most important moment on any screen. Typography is set for reading at a glance: large name, small commentary, clear hierarchy. Motion is intentional: the iUp cascade introduces content with weight, not whimsy.
+视觉语言：深色宇宙背景吸收注意力，冷调（白→淡蓝）粒子作为主体，Kuaishou Orange 作为每屏唯一的信号色。滚动驱动相机穿越粒子场，文字叙事层在上层滚动。每一处效果都因过程化生成而属于这个站本身，而非搬运的美术资产。
 
-This system explicitly rejects the aesthetics of over-engineered portfolios: no particle systems, no CSS gradients pretending to be "futuristic", no glassmorphism piled on top of glassmorphism. It also rejects the opposite failure — the blank white résumé page that signals nothing.
+这个系统拒绝搬运别家作品：不导入受版权的 glb 模型、不复用他站 shader、不堆砌现成材质。所有 3D 从零写起，追求精确与原创。
 
 **Key Characteristics:**
-- Dark, immersive full-bleed backgrounds (Bing wallpaper or solid deep-space dark)
-- Single accent color (Kuaishou orange `#FF4906`) used sparingly — max one usage per screen
-- White text hierarchy with opacity-stepped supporting text
-- Monospace labels for technical context (stack, metadata, captions)
-- Entrance animations are cascaded and purposeful; no idle animations
+- 深色全屏 3D 背景（过程化粒子流场，无外部模型）
+- Single accent color（Kuaishou orange）作为信号束，每屏最多一处
+- 白→淡蓝冷调粒子主体，additive 发光
+- 滚动驱动相机与粒子演化（lerp 平滑）
+- Monospace 仅用于技术元数据（标签、编号、出处）
+- 全部动效提供 prefers-reduced-motion 降级；触屏/移动端自动降级粒子数与关闭鼠标视差
 
-## 2. Colors: The Signal Palette
+## 2. Colors
 
-A near-monochromatic dark system with one high-contrast brand signal and a supporting blue for links.
+近单色深色系统 + 一个高饱和品牌信号色 + 冷调粒子主体。
 
 ### Primary
-- **Kuaishou Orange** (`#FF4906`): The sole saturated accent. Used on exactly one element per screen — the active nav state, a CTA, or a key highlight. Its rarity is its power.
-
-### Secondary
-- **Signal Blue** (`#4e97d8`): Links, interactive text, secondary highlights. Cooler counterpoint to the orange.
+- **Kuaishou Orange** (`#FF4906`)：唯一饱和信号色。作为 3D 粒子「信号束」出现（shader 内 ~6% 粒子向橙过渡），以及导航 active 圆点。每屏最多一处可见。
 
 ### Neutral
-- **Pure White** (`#ffffff`): Primary display text — names, headings, key labels.
-- **Soft White** (`rgba(255,255,255,0.75)`): Body text, descriptions, secondary copy.
-- **Ghost White** (`rgba(255,255,255,0.45)`): Muted captions, placeholders, disabled states.
-- **Slate Overlay** (`rgba(37,68,103,0.75)`): The dark film over the Bing wallpaper — deep blue-grey that reads as almost-black while preserving wallpaper texture.
-- **Deep Space** (`#1a1a2e`): Solid dark background used only by the Resume page. Blog, About and NoteDetail carry the Bing wallpaper (with the slate overlay) like the home page.
-- **Frosted Card** (`rgba(255,255,255,0.06)`): Subtle surface for nav and card containers against dark backgrounds.
-- **Hairline Border** (`rgba(255,255,255,0.12)`): Dividers, card outlines, input borders. Barely visible.
+- **Deep Space** (`#0d0d1a`)：背景。canvas 透明，由根容器填此色。
+- **Pure White** (`#ffffff`)：显示文字、hero 名字。
+- **Soft White** (`rgba(255,255,255,0.72)`)：正文。
+- **Ghost White** (`rgba(255,255,255,0.42)`)：mono 标签、caption。
+
+### Particle Palette
+- **Cool Gradient**：粒子主体 `#ffffff → #e3f0ff → #b8c8e8`（白到淡蓝），additive 混合在深色上发冷光。
+- **Signal Beam**：橙色粒子束，沿斜带分布，滚动穿越时可见。
 
 ### Named Rules
-**The One Signal Rule.** Kuaishou orange (`#FF4906`) appears on at most one element per screen. It is a signal, not a theme. Using it twice on the same screen cancels both uses.
-
-**The Overlay Calibration Rule.** The wallpaper overlay (`cover-slate`) must keep the wallpaper visible as texture, not erase it. Target ~40% wallpaper bleed-through. If the overlay reads as solid black, it is too dark.
+**The One Signal Rule.** Kuaishou orange 在任意时刻的可见屏幕上最多出现一处。3D 信号束是主要承载；UI 文字与卡片不使用橙。导航 active 圆点与信号束不会同时成为视觉焦点（信号束随滚动出现，圆点常驻但极小）。
 
 ## 3. Typography
 
-**Display Font:** PingFang SC (with Hiragino Sans GB, Microsoft YaHei, -apple-system, sans-serif fallback)
-**Body Font:** Same family — PingFang SC carries both display and body weight
-**Mono/Label Font:** SF Mono / Fira Code / Source Code Pro (with Consolas fallback)
-
-**Character:** The primary family is PingFang SC — Apple's CJK-first sans with strong Chinese coverage and clean Latin glyphs; it handles both English and Chinese. Monospace (SF Mono / Fira Code / Source Code Pro) is reserved strictly for technical metadata, never for body prose.
-
-### Hierarchy
-- **Display** (700, `clamp(2rem, 6vw, 3.5rem)`, 1.1): The name "TangTang" — the single biggest text on the page.
-- **Headline** (400, `clamp(1.25rem, 3vw, 1.75rem)`, 1.3): Subtitle / tagline. One per page.
-- **Body** (400, `1rem`, 1.7): Hitokoto quote, page descriptions. Max 65ch line length.
-- **Label** (400, `0.8rem`, monospace, `letter-spacing: 0.05em`): Stack tags, captions, attribution (`—「source」`). Always lowercase or sentence case, never shouting caps.
+- **Display / Body**：PingFang SC（CJK 优先）
+- **Mono**：SF Mono / Fira Code / Source Code Pro，仅用于技术元数据（kicker、section 编号、tech tags、出处、⌘K 提示）。不进导航文字、标题正文。
 
 ### Named Rules
-**The Mono Boundary Rule.** The mono family (SF Mono / Fira Code / Source Code Pro) is used exclusively for technical metadata — attribution lines, stack labels, code snippets. It must never appear in navigation, headings, or body prose.
+**The Mono Boundary Rule.** Mono 字族专用于技术元数据，永不进导航或正文标题。
 
-## 4. Elevation
+## 4. Motion & 3D
 
-This system is **flat by default, lifted by state**. Dark surfaces have no ambient shadows; they sit flush and let color and opacity carry hierarchy. Shadows appear only in two conditions: the avatar ring (permanent, structural) and modal backdrops (transient, focus-trapping).
+### 3D 主控（`src/webgl/Experience.ts`）
+- WebGLRenderer（alpha 透明、antialias、DPR 上限 2）
+- PerspectiveCamera，滚动推进 z（18 → 4），鼠标视差偏移
+- 粒子 ShaderMaterial：自定义 vertex（curl-noise 流场位移 + 滚动推进 + 鼠标视差）+ fragment（软圆 additive 发光 + 信号束橙色过渡）
+- FogExp2 远处淡入背景色
 
-### Shadow Vocabulary
-- **Avatar Ring** (`box-shadow: 0 0 0 2px rgba(255,255,255,0.5), 0 2px 20px 3px rgba(0,0,0,0.25)`): Structural — defines the avatar circle against any wallpaper background.
-- **Modal Backdrop** (`background: rgba(0,0,0,0.7)`): Transient — dims the entire page when the WeChat QR modal is open.
+### 滚动驱动
+- 原生 scroll 事件 + lerp（0.08）平滑 → `uScroll` uniform 与 camera z
+- 不用 background-position / layout 属性动画；3D 只动 transform（合成器）与 uniform
+
+### 性能分级
+- 桌面 30000 粒子，移动端 12000，reduced-motion 6000 且静止渲染单帧
+- `uPixelRatio` 上限 2
 
 ### Named Rules
-**The Flat-By-Default Rule.** No box-shadow on nav items, cards, or containers at rest. Hover states may use a very subtle background fill (`rgba(255,255,255,0.06)`) — never a shadow.
+**The Reduced-Motion Rule.** 所有 3D 与动效必须降级：`matchMedia('(prefers-reduced-motion: reduce)')` 命中时不推进时间、不绑鼠标监听、渲染单帧静态。CSS 层额外兜底（关闭 transition / 动画）。
+
+**The Procedural-First Rule.** 3D 几何与运动一律过程化生成（shader / Three.js 原生），不导入外部 glb/gltf 模型资产。保证零版权风险、原创性、轻体积。
 
 ## 5. Components
 
-### Navigation
-The nav is the primary wayfinding surface. It renders only on Home, inline with the panel content — never in a fixed header bar (inner pages use back-links).
-- **Container:** Pill-shaped, `rgba(0,0,0,0.35)` fill + hairline border + subtle blur.
-- **Link rest/hover:** Transparent at rest, `rgba(255,255,255,0.07)` fill on hover, full-radius pill.
-- **Active state:** Semi-transparent white fill (`rgba(255,255,255,0.1)`) with a small Kuaishou-orange indicator dot — orange appears only as the dot, never as a full background.
-- **Typography:** Body font, `0.82rem`, not monospace, sentence case.
-- **Mobile:** Collapses to a hamburger toggle; the list shows/hides via `display` toggle (no bounce animation).
-- **Items:** `/` 首页, `/notes` 记录, `/resume` 简历, `/about` 关于 (max 4).
+### 3D Canvas 背景
+- `position: fixed; inset: 0; z-index: 0; pointer-events: none`
+- 内容层 `z-index: 1` 在上滚动
 
-### Avatar
-The signature component. A 112×112 circle with a hover scale + overlay interaction (not a 3D flip).
-- **Default face:** GitHub avatar photo (`avatars.githubusercontent.com/florencemalis0-ui`, cache-busted daily).
-- **Hover face:** Overlay fades in showing "Be Brave" + "2026 · 向前"; the whole button scales to `1.04`.
-- **Ring:** Structural ring — white hairline + soft Kuaishou-orange glow + drop shadow; always present, intensifies on hover.
-- **Interaction:** Triggers WeChat QR modal on click.
+### 顶部固定导航
+- logo「TangTang」+ Navigation（pill 形，移动端汉堡）
+- `pointer-events: none` 容器，子元素 auto
 
-### WeChat QR Modal
-- **Backdrop:** `rgba(0,0,0,0.7)` full-screen overlay.
-- **Container:** Centered, `border-radius: 16px`, white background, drop shadow.
-- **Dismiss:** Click outside or × button closes.
+### 滚动叙事 Sections
+- Hero（100vh）：kicker + 大名字（冷调渐变文字）+ hitokoto + scroll hint
+- Signal（100vh）：编号 + 标题 + 介绍 + tech tags + Avatar
+- Nav Gate（100vh）：3 张入口卡片
 
-### Inner Pages (Blog / About / NoteDetail / Resume)
-- **Blog / About / NoteDetail:** Full-bleed Bing wallpaper with the slate overlay — real content pages, not placeholders.
-- **Resume:** The only solid-dark inner page (`#1a1a2e`, no wallpaper). Centered column: badge + title + description + back link.
-- **Back link:** Pill-shaped, `border: 1px solid rgba(255,255,255,0.2)`, transparent fill, `hover: rgba(255,255,255,0.08)`.
+### Nav Gate 卡片（mask 渐变描边）
+- `mask-composite: exclude` 做 1px 渐变描边，无 box-shadow（flat）
+- hover：边框提亮 + 背景填充 + 微位移
 
-### Entrance Animation (iUp)
-Not a visual component but documented here because it defines perceived quality.
-- **Default state:** `opacity: 0; transform: translateY(20px)`.
-- **Active state:** `opacity: 1; transform: translateY(0); transition: 0.4s ease`.
-- **Cascade:** 150ms stagger per element, 300ms initial delay.
-- **Reduced motion override:** Required. `@media (prefers-reduced-motion: reduce)` must remove transforms and snap opacity directly.
+### 入场动画（iUp）
+- 内容元素 `.iUp` → `.up` 级联淡入（300ms 延迟 + 150ms stagger）
+- reduced-motion 降级为瞬显
+
+### ⌘K 命令面板
+- 全局挂载，ARIA combobox + 焦点陷阱，详见 `src/components/CommandPalette/`
 
 ## 6. Do's and Don'ts
 
 ### Do:
-- **Do** use Kuaishou orange (`#FF4906`) on exactly one interactive element per screen.
-- **Do** keep wallpaper bleed-through at ~40% — the `cover-slate` overlay is a veil, not a blackout.
-- **Do** use `clamp()` for all display and headline sizes — the page must look intentional on mobile and 4K.
-- **Do** use monospace (Source Code Pro) exclusively for technical metadata and attribution.
-- **Do** include `@media (prefers-reduced-motion: reduce)` for every CSS transition and animation.
-- **Do** cascade entrance animations with 150ms stagger. Uniform simultaneous reveals feel mechanical.
-- **Do** keep body line length at ≤65ch for any paragraph longer than two lines.
+- **Do** 过程化生成所有 3D（shader + Three.js 原生），不导入模型
+- **Do** 保持橙色为每屏唯一信号（信号束 / nav 圆点）
+- **Do** 为所有 3D 与动效提供 prefers-reduced-motion 降级
+- **Do** 移动端 / 触屏降级粒子数与关闭鼠标视差
+- **Do** 用 mask-composite 做渐变描边，替代 box-shadow
+- **Do** 3D 动画只用 transform / uniform，不动画 layout 属性
 
 ### Don't:
-- **Don't** use particle effects, CSS noise textures, or animated gradients — this is not a 2019 "creative portfolio".
-- **Don't** use a white or light background on any page in this system. Every surface is dark.
-- **Don't** use glassmorphism (heavy `backdrop-filter: blur`) as a design feature. The overlay is structural, not decorative.
-- **Don't** put Kuaishou orange on more than one element. Two orange elements on the same screen means neither is special.
-- **Don't** use the same monospace font in navigation or headings — it signals code, not content.
-- **Don't** animate CSS layout properties (width, height, top, left). Animate only transform and opacity.
-- **Don't** build a résumé-style white-background page for any route. Every surface is dark — inner pages either carry the Bing wallpaper (Blog/About/NoteDetail) or use solid `#1a1a2e` (Resume).
-- **Don't** add more than 4 items to the main navigation (首页 / 记录 / 简历 / 关于). Cognitive load over breadth.
+- **Don't** 导入外部受版权的 3D 模型 / shader / 字体
+- **Don't** 在 UI 文字、卡片上使用橙色（橙专属 3D 信号束）
+- **Don't** 用白底/浅色背景——所有页面深色
+- **Don't** 在导航或标题使用 monospace 字体
+- **Don't** 省略 reduced-motion 降级
+- **Don't** 搬运别家作品的 bundle 或资产——手法可学，资产必须原创

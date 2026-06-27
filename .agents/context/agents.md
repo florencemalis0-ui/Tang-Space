@@ -11,8 +11,9 @@ GitHub 用户名：`florencemalis0-ui`
 - **框架：** React 18 + TypeScript + Vite 6
 - **路由：** react-router-dom v7（`BrowserRouter`，`basename=import.meta.env.BASE_URL`）。`/notes` 是主路由，`/blog/*` 重定向到 `/notes/*` 兼容旧链接。
 - **样式：** CSS Modules + 全局 CSS（`src/index.css`）
-- **构建：** `npm run build` → `dist/`，部署到 GitHub Pages
-- **壁纸：** `useBingBg` 调用 `bing.biturl.top` 镜像 API 取最近 8 张 Bing 壁纸，`sessionStorage` 记录 index，每次刷新 +1 轮播（无 GitHub Actions、无本地静态图）
+- **3D（首页）：** Three.js + 自写 GLSL shader，过程化粒子流场（不导入外部模型）。`src/webgl/` 下 Experience 主控 + shaders。滚动驱动 + 鼠标视差，reduced-motion/移动端降级
+- **构建：** `npm run build` → `dist/`，部署到 GitHub Pages。three/gsap 拆为独立 vendor chunk（`vite.config.ts` manualChunks）
+- **壁纸（内页）：** `useBingBg` 调用 `bing.biturl.top` 镜像 API 取最近 8 张 Bing 壁纸，`sessionStorage` 记录 index，每次刷新 +1 轮播。首页已改用 3D 背景，useBingBg 仅内页（Blog/About）使用
 - **部署自动化：** `.github/workflows/deploy.yml` 在 push 到 main 时直接上传已构建的 `dist/`（CI 不重新 build）
 
 ## 项目结构
@@ -28,22 +29,24 @@ Tang-Space/
 │   │   ├── Navigation/      # 首页导航（pill 形，移动端汉堡菜单）
 │   │   ├── WeChatModal/     # 微信二维码弹窗（全局唯一，挂在 App）
 │   │   └── CommandPalette/  # ⌘K 命令面板（全局，挂在 App，Suspense 外）
+│   ├── webgl/               # 3D 过程化视觉（首页）
+│   │   ├── Experience.ts    # Three.js 主控（renderer/camera/粒子系统/loop/dispose）
+│   │   ├── useExperience.ts # React hook 接入（滚动/鼠标/降级/清理）
+│   │   └── shaders.ts       # GLSL（simplex/curl noise + 粒子顶点片元）
 │   ├── hooks/
-│   │   ├── useBingBg.ts     # Bing 壁纸（bing.biturl.top + sessionStorage 轮播）
+│   │   ├── useBingBg.ts     # Bing 壁纸（bing.biturl.top + sessionStorage 轮播，内页用）
 │   │   ├── useHitokoto.ts   # 一言 API
 │   │   ├── useIUp.ts        # 入场错落动画
-│   │   ├── useParallaxBg.ts # 首页鼠标视差壁纸（rAF+lerp，reduced-motion/触屏关）
 │   │   ├── useTilt.ts       # 记录卡片 3D tilt（CSS 变量注入，MAX 4°）
 │   │   └── useBlurUp.ts     # 图片 blur-up 渐显（治缓存图 onLoad 不触发）
 │   ├── data/
 │   │   ├── notes.ts         # 记录内容（硬编码数组，id 即详情页地址）
-│   │   ├── contacts.ts      # EMAIL_B64 / GITHUB_URL 常量（邮箱 Base64 + GitHub URL）
-│   │   └── now.ts           # 关于页 Now 板块数据（此刻在做什么）
+│   │   └── contacts.ts      # EMAIL_B64 常量（邮箱 Base64）
 │   ├── utils/
 │   │   └── email.ts         # Base64 邮箱解码
 │   └── pages/
-│       ├── Home/            # 首页（全屏壁纸 + hero）
-│       ├── Blog/            # /notes 列表（时间轴 + 分类筛选，已实现）
+│       ├── Home/            # 首页（3D 粒子流场背景 + 滚动叙事）
+│       ├── Blog/            # /notes 列表（卡片网格 + 侧边栏，已实现）
 │       ├── NoteDetail/      # /notes/:id 详情（图库 + lightbox，已实现）
 │       ├── About/           # /about（journal 双栏，已实现）
 │       └── Resume/          # /resume（占位）
@@ -116,9 +119,12 @@ node .agents/skills/impeccable/scripts/context.mjs
 
 ## 待办事项
 
-- [x] 四个创意功能（⌘K 命令面板 / 首页鼠标视差壁纸 / 记录卡片 tilt+blur-up / 关于页 Now 板块）—— 已实现
+- [x] ⌘K 命令面板（全站）+ 全局微信弹窗解耦
+- [x] 记录卡片 3D tilt + 图片 blur-up
+- [x] 首页 3D 过程化重构（Three.js 粒子流场 + 滚动叙事，**不导入外部模型，纯自写 shader**）
+- [ ] 3D 内页迁移：Blog/About/NoteDetail 目前仍是壁纸 + flat 风格，待迁移到 3D 视觉语言（保留各自内容）
+- [ ] 删除 useParallaxBg.ts（Home 改 3D 后已成死代码，待清理）
 - [ ] 简历页实现（技术栈展示、工作经历）—— 目前唯一占位的主板块（用户还没想好，暂不动）
 - [ ] 持续丰富 Notes 内容（技术记录 / 生活照片 / 旅行 / 随想）—— 目前仅 2 条，blur-up 待有图笔记生效
 - [ ] `src/data/contacts.ts` 的 EMAIL_B64 仍是占位 `aGVsbG9AZXhhbXBsZS5jb20=`，需替换为真实邮箱 Base64
-- [ ] `src/data/now.ts` 的 nowItems 是合理占位，需用户替换为真实在做/读/学的内容，并同步 `nowUpdatedAt`
-- [ ] 壁纸策略优化（考虑每日固定一张还是继续轮播）
+- [ ] 壁纸策略优化（内页考虑统一到 3D 或继续 Bing 轮播）
