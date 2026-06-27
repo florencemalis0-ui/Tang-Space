@@ -48,10 +48,10 @@ export default function Home() {
             <span className="signal__label iUp">01 — Signal</span>
             <h2 className="signal__title iUp">工程师的信号</h2>
             <p className="signal__desc iUp">
-              这个站点是一次广播，不是宣传册。暗色背景吸收注意力，把内容推向更深处；每一个元素都因功能与对比赢得位置，而非装饰。
+              写代码的人，顺手把生活也记在这里。
             </p>
             <p className="signal__desc iUp">
-              现在在快手做工程，关注 AI、后端系统与 GPU 算力。这里会放技术记录，也放生活。
+              技术记录、生活碎片、突然冒出来的想法——不追求完整，只追求真实。
             </p>
             <div className="hero-tags iUp">
               {TECH_TAGS.map((tag) => (
