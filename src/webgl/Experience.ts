@@ -59,7 +59,7 @@ export class Experience {
     this.renderer.toneMappingExposure = 1.1
 
     this.scene = new THREE.Scene()
-    this.scene.fog = new THREE.FogExp2(0x0a0e1f, 0.008)
+    this.scene.fog = new THREE.FogExp2(0x0a0e1f, 0.005)
 
     this.camera = new THREE.PerspectiveCamera(60, 1, 0.1, 200)
     this.camera.position.set(0, 0, 18)
@@ -224,18 +224,20 @@ export class Experience {
 
     for (const c of this.crystals) {
       const ud = c.userData as CrystalData
-      c.position.x = ud.base.x + Math.sin(t * 0.4 + ud.base.z) * 1.3
-      c.position.y = ud.base.y + Math.cos(t * 0.3 + ud.base.x) * 1.1
-      // 视差穿越：近的晶体滚动时移动更快
+      // 漂移幅度加大 + 呼吸缩放（节奏感）
+      c.position.x = ud.base.x + Math.sin(t * 0.4 + ud.base.z) * 1.6
+      c.position.y = ud.base.y + Math.cos(t * 0.3 + ud.base.x) * 1.3
       c.position.z = ud.base.z + this.scroll * 26 * ud.parallax
-      c.rotation.x += ud.spin.x * 0.01
-      c.rotation.y += ud.spin.y * 0.01
-      c.rotation.z += ud.spin.z * 0.01
+      const breath = 1 + Math.sin(t * 0.8 + ud.base.x * 2) * 0.06
+      c.scale.setScalar(breath)
+      c.rotation.x += ud.spin.x * 0.012
+      c.rotation.y += ud.spin.y * 0.012
+      c.rotation.z += ud.spin.z * 0.012
       if (ud.isSignal) {
         const mat = c.material as THREE.MeshPhysicalMaterial
         const p = 0.85 + Math.sin(t * 1.6 + ud.base.z) * 0.15
         mat.emissiveIntensity = p
-        mat.emissive = new THREE.Color('#fb5959').multiplyScalar(p * 0.4)
+        mat.emissive = new THREE.Color('#fb5959').multiplyScalar(p * 0.5)
       }
     }
 
