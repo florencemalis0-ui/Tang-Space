@@ -142,7 +142,8 @@ void main(){
 
   // 深处衰减
   float fade = clamp(1.0 - vDepth / 80.0, 0.0, 1.0);
-  float alpha = glow * (0.55 + vSignal * 0.4) * fade;
+  // 普通粒子 alpha 降档避免过曝白压字；信号束保持高亮（+0.4）
+  float alpha = glow * (0.42 + vSignal * 0.4) * fade;
 
   gl_FragColor = vec4(col, alpha);
 }
