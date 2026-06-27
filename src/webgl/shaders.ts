@@ -1,8 +1,8 @@
 /**
  * 过程化 3D 视觉的 GLSL shader（原创，无任何外部模型）
  *
- * 主题「工程师的信号」：粒子在 curl-noise 流场中流动，形成数据流/星河感。
- * 橙色仅作为信号点缀（One Signal Rule），主体为白→淡蓝的冷调。
+ * 主题「凤凰粉白」：粒子在 curl-noise 流场中流动，形成数据流/星河感。
+ * 玫红仅作为信号点缀（One Signal Rule），主体为白→淡紫粉的粉白调。
  */
 
 // Ashima/Ian McEwan simplex 3D noise（公开许可，业界标准）
@@ -84,7 +84,7 @@ vec3 curlNoise(vec3 p){
 export const particleVertex = /* glsl */ `
 attribute vec3 aSeed;
 attribute float aScale;
-attribute float aSignal; // 0..1，越大越靠近「信号束」（橙色）
+attribute float aSignal; // 0..1，越大越靠近「信号束」（玫红）
 uniform float uTime;
 uniform float uScroll;   // 滚动进度 0..1
 uniform vec2 uMouse;      // 鼠标 -1..1
@@ -121,7 +121,7 @@ void main(){
 }
 `
 
-// 粒子片元：软圆 + additive 发光，信号束粒子偏橙
+// 粒子片元：软圆 + additive 发光，信号束粒子玫红
 export const particleFragment = /* glsl */ `
 precision highp float;
 varying float vSignal;
@@ -135,9 +135,9 @@ void main(){
   float core = smoothstep(0.5, 0.0, d);
   float glow = pow(core, 2.5);
 
-  // 主体冷白→淡蓝，信号束粒子向橙过渡（One Signal：橙集中）
-  vec3 cool = mix(vec3(0.78, 0.86, 1.0), vec3(1.0), core);
-  vec3 signal = vec3(1.0, 0.29, 0.02); // #ff4906
+  // 主体白→淡紫粉（#eabdf6），信号束粒子向玫红过渡（One Signal：玫红集中）
+  vec3 cool = mix(vec3(0.918, 0.741, 0.965), vec3(1.0), core);
+  vec3 signal = vec3(0.984, 0.349, 0.349); // #fb5959
   vec3 col = mix(cool, signal, vSignal * 0.85);
 
   // 深处衰减

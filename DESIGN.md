@@ -1,13 +1,14 @@
 ---
 name: TangTang Homepage
-description: TangTang 的个人品牌主页 — 3D 过程化视觉，代码即艺术
+description: TangTang 的个人品牌主页 — 凤凰粉白 3D 过程化视觉，代码即艺术
 colors:
-  bg-dark: "#0d0d1a"
+  bg-dark: "#0a0e1f"
   ink-deep: "#ffffff"
   ink-secondary: "rgba(255,255,255,0.72)"
   ink-muted: "rgba(255,255,255,0.42)"
-  kuaishou-orange: "#FF4906"
-  particle-cool: "linear-gradient(180deg,#ffffff 0%,#e3f0ff 65%,#b8c8e8 100%)"
+  phoenix-rose: "#fb5959"
+  phoenix-violet: "#6248a4"
+  particle-pink: "linear-gradient(180deg,#ffffff 0%,#fdebfd 65%,#eabdf6 100%)"
   signal-blue: "#4e97d8"
 typography:
   display:
@@ -27,41 +28,45 @@ rendering:
 
 ## 1. Overview
 
-**Creative North Star: "The Engineer's Signal"**
+**Creative North Star: "The Engineer's Signal · Phoenix Rose"**
 
-这个系统以 3D 过程化视觉表达工程师的信号。所有几何与运动由 GLSL shader 原生生成——不导入任何外部 3D 模型，代码即艺术。粒子在 curl-noise 流场中流动，形成数据流/星河感；少数橙色粒子聚成「信号束」，作为深色宇宙里的唯一高饱和信号。
+这个系统以 3D 过程化视觉表达工程师的信号。所有几何与运动由 GLSL shader 原生生成——不导入任何外部 3D 模型，代码即艺术。粒子在 curl-noise 流场中流动，形成数据流/星河感；少数玫红粒子聚成「信号束」，作为深蓝紫宇宙里的唯一高饱和信号。
 
-视觉语言：深色宇宙背景吸收注意力，冷调（白→淡蓝）粒子作为主体，Kuaishou Orange 作为每屏唯一的信号色。滚动驱动相机穿越粒子场，文字叙事层在上层滚动。每一处效果都因过程化生成而属于这个站本身，而非搬运的美术资产。
+视觉语言：深蓝紫宇宙背景（`#0a0e1f`）吸收注意力，把内容推向更深处；粉白（白→淡紫粉 `#eabdf6`）粒子作为主体，Phoenix Rose `#fb5959` 作为每屏唯一的信号色。3D canvas 全局挂在 `App.tsx`，所有页面共享同一粒子场，切页不卸载——背景常驻连续，内容层在其上淡入滚动。每一处效果都因过程化生成而属于这个站本身，而非搬运的美术资产。
 
-这个系统拒绝搬运别家作品：不导入受版权的 glb 模型、不复用他站 shader、不堆砌现成材质。所有 3D 从零写起，追求精确与原创。
+这个系统拒绝搬运别家作品：不导入受版权的 glb 模型、不复用他站 shader、不堆砌现成材质。所有 3D 从零写起，追求精确与原创。（配色氛围灵感取自 Noomo Storytelling 的「凤凰」，但全部资产原创。）
 
 **Key Characteristics:**
-- 深色全屏 3D 背景（过程化粒子流场，无外部模型）
-- Single accent color（Kuaishou orange）作为信号束，每屏最多一处
-- 白→淡蓝冷调粒子主体，additive 发光
+- 深蓝紫全屏 3D 背景（过程化粒子流场，无外部模型），全局常驻 `App.tsx`，切页不卸载
+- Single accent color（Phoenix Rose `#fb5959`）作为信号束，每屏最多一处
+- 白→淡紫粉粉白粒子主体，additive 发光；violet `#6248a4` 辅助光晕
 - 滚动驱动相机与粒子演化（lerp 平滑）
+- 路由切换：3D 不动，内容层 translateY+opacity 淡入（page-enter）
 - Monospace 仅用于技术元数据（标签、编号、出处）
 - 全部动效提供 prefers-reduced-motion 降级；触屏/移动端自动降级粒子数与关闭鼠标视差
 
 ## 2. Colors
 
-近单色深色系统 + 一个高饱和品牌信号色 + 冷调粒子主体。
+深蓝紫底 + 一个高饱和品牌信号色 + 粉白粒子主体 + 紫辅助光晕。
 
 ### Primary
-- **Kuaishou Orange** (`#FF4906`)：唯一饱和信号色。作为 3D 粒子「信号束」出现（shader 内 ~6% 粒子向橙过渡），以及导航 active 圆点。每屏最多一处可见。
+- **Phoenix Rose** (`#fb5959`)：唯一饱和信号色。作为 3D 粒子「信号束」出现（shader 内 ~6% 粒子向玫红过渡），以及导航 active 圆点、avatar ring、focus 环。每屏最多一处可见（UI 文字 / badge / 卡片边框不用）。
 
 ### Neutral
-- **Deep Space** (`#0d0d1a`)：背景。canvas 透明，由根容器填此色。
+- **Deep Space** (`#0a0e1f`)：背景。canvas 透明，由根容器填此色；内页用 `rgba(10,14,31,0.7)` 轻遮罩让 3D 透出。
 - **Pure White** (`#ffffff`)：显示文字、hero 名字。
 - **Soft White** (`rgba(255,255,255,0.72)`)：正文。
 - **Ghost White** (`rgba(255,255,255,0.42)`)：mono 标签、caption。
 
+### Secondary
+- **Phoenix Violet** (`#6248a4`)：辅助光晕（径向背景、travel/tech 分类色），非信号色。
+
 ### Particle Palette
-- **Cool Gradient**：粒子主体 `#ffffff → #e3f0ff → #b8c8e8`（白到淡蓝），additive 混合在深色上发冷光。
-- **Signal Beam**：橙色粒子束，沿斜带分布，滚动穿越时可见。
+- **Pink Gradient**：粒子主体 `#ffffff → #fdebfd → #eabdf6`（白到淡紫粉），additive 混合在深蓝紫上发粉白光。
+- **Signal Beam**：玫红粒子束，沿斜带分布，滚动穿越时可见。
 
 ### Named Rules
-**The One Signal Rule.** Kuaishou orange 在任意时刻的可见屏幕上最多出现一处。3D 信号束是主要承载；UI 文字与卡片不使用橙。导航 active 圆点与信号束不会同时成为视觉焦点（信号束随滚动出现，圆点常驻但极小）。
+**The One Signal Rule.** Phoenix Rose `#fb5959` 在任意时刻的可见屏幕上最多出现一处。3D 信号束是主要承载；UI 文字、badge、卡片边框不使用玫红。导航 active 圆点、avatar ring 与信号束不会同时成为视觉焦点（信号束随滚动出现，圆点 / ring 常驻但极小）。
 
 ## 3. Typography
 
@@ -74,10 +79,15 @@ rendering:
 ## 4. Motion & 3D
 
 ### 3D 主控（`src/webgl/Experience.ts`）
-- WebGLRenderer（alpha 透明、antialias、DPR 上限 2）
+- WebGLRenderer（alpha 透明、antialias、DPR 上限 2），背景色 `#0a0e1f`
 - PerspectiveCamera，滚动推进 z（18 → 4），鼠标视差偏移
-- 粒子 ShaderMaterial：自定义 vertex（curl-noise 流场位移 + 滚动推进 + 鼠标视差）+ fragment（软圆 additive 发光 + 信号束橙色过渡）
+- 粒子 ShaderMaterial：自定义 vertex（curl-noise 流场位移 + 滚动推进 + 鼠标视差）+ fragment（软圆 additive 发光 + 白→淡紫粉主体 + 信号束玫红过渡）
 - FogExp2 远处淡入背景色
+
+### 全局常驻（`src/App.tsx`）
+- 3D canvas 在 App 级 fixed 挂载（`useExperience`），所有路由共享同一粒子场，切页不卸载/不重建——背景连续，视觉"切换时一样"
+- 内容层 `.app-shell`（z-1）在 canvas（z-0）之上；路由 `<div key={pathname} className="page-transition">` 触发淡入
+- 内页用 `rgba(10,14,31,0.7)` 轻遮罩让 3D 透出（~30% bleed），不挡文字可读性
 
 ### 滚动驱动
 - 原生 scroll 事件 + lerp（0.08）平滑 → `uScroll` uniform 与 camera z
@@ -91,6 +101,8 @@ rendering:
 **The Reduced-Motion Rule.** 所有 3D 与动效必须降级：`matchMedia('(prefers-reduced-motion: reduce)')` 命中时不推进时间、不绑鼠标监听、渲染单帧静态。CSS 层额外兜底（关闭 transition / 动画）。
 
 **The Procedural-First Rule.** 3D 几何与运动一律过程化生成（shader / Three.js 原生），不导入外部 glb/gltf 模型资产。保证零版权风险、原创性、轻体积。
+
+**The Global 3D Rule.** 3D canvas 全局挂在 `App.tsx`（`useExperience`），所有页面共享，切页不卸载。内页必须用半透明遮罩（`rgba(10,14,31,~0.7)`）让 3D 透出 ~30%，禁止不透明背景挡住 canvas。
 
 ## 5. Components
 
@@ -122,7 +134,8 @@ rendering:
 
 ### Do:
 - **Do** 过程化生成所有 3D（shader + Three.js 原生），不导入模型
-- **Do** 保持橙色为每屏唯一信号（信号束 / nav 圆点）
+- **Do** 保持 Phoenix Rose 为每屏唯一信号（信号束 / nav 圆点 / avatar ring / focus）
+- **Do** 全局挂载 3D canvas 在 App.tsx，切页不卸载；内页半透明遮罩透出 3D
 - **Do** 为所有 3D 与动效提供 prefers-reduced-motion 降级
 - **Do** 移动端 / 触屏降级粒子数与关闭鼠标视差
 - **Do** 用 mask-composite 做渐变描边，替代 box-shadow
@@ -130,8 +143,9 @@ rendering:
 
 ### Don't:
 - **Don't** 导入外部受版权的 3D 模型 / shader / 字体
-- **Don't** 在 UI 文字、卡片上使用橙色（橙专属 3D 信号束）
-- **Don't** 用白底/浅色背景——所有页面深色
+- **Don't** 在 UI 文字、卡片、badge 上使用玫红（玫红专属 3D 信号束 / nav 圆点 / avatar ring / focus）
+- **Don't** 用白底/浅色背景——所有页面深蓝紫底
+- **Don't** 给内页不透明背景挡住全局 3D canvas——必须半透明遮罩透出
 - **Don't** 在导航或标题使用 monospace 字体
 - **Don't** 省略 reduced-motion 降级
-- **Don't** 搬运别家作品的 bundle 或资产——手法可学，资产必须原创
+- **Don't** 搬运别家作品的 bundle 或资产——手法可学，资产必须原创（凤凰配色氛围可学，3D 资产必须原创）

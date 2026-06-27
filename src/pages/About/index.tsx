@@ -1,6 +1,5 @@
-import { useMemo, useRef } from 'react'
+import { useMemo } from 'react'
 import { Link } from 'react-router-dom'
-import { useBingBg } from '../../hooks/useBingBg'
 import { notes } from '../../data/notes'
 import { EMAIL_B64 } from '../../data/contacts'
 import { decryptEmail } from '../../utils/email'
@@ -10,16 +9,12 @@ import './index.css'
 const FOCUS = ['AI Agent 工程化', '后端系统稳定性', 'GPU 算力', '个人网站', '生活记录']
 
 export default function About() {
-  const pageRef = useRef<HTMLElement>(null)
-
-  useBingBg(pageRef)
-
   const recentNotes = useMemo(() => {
     return [...notes].sort((a, b) => b.date.localeCompare(a.date)).slice(0, 3)
   }, [])
 
   return (
-    <main ref={pageRef} className="about-page about-page--journal notes-page--wallpaper">
+    <main className="about-page about-page--journal">
       <div className="about-journal-shell">
         <header className="about-journal-top">
           <Link to="/" className="inner-page__back">← 返回首页</Link>

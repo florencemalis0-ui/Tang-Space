@@ -1,7 +1,6 @@
-import { useMemo, useRef, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { NOTE_TYPE_LABEL, notes, type Note, type NoteType } from '../../data/notes'
-import { useBingBg } from '../../hooks/useBingBg'
 import { useTilt } from '../../hooks/useTilt'
 import { useBlurUp } from '../../hooks/useBlurUp'
 import './index.css'
@@ -62,10 +61,7 @@ function NoteCard({ note }: { note: Note }) {
 }
 
 export default function Blog() {
-  const pageRef = useRef<HTMLElement>(null)
   const [activeType, setActiveType] = useState<NoteType | 'all'>('all')
-
-  useBingBg(pageRef)
 
   const filteredNotes = useMemo(() => {
     const list = activeType === 'all' ? notes : notes.filter((n) => n.type === activeType)
@@ -99,7 +95,7 @@ export default function Blog() {
   const recent = useMemo(() => sortNotes(notes).slice(0, 4), [])
 
   return (
-    <main ref={pageRef} className="notes-page notes-page--wallpaper">
+    <main className="notes-page">
       <section className="notes-shell">
         <header className="notes-hero">
           <div className="notes-hero__top">

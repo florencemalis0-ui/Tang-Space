@@ -4,14 +4,11 @@
 .about-page--journal {
   min-height: 100vh;
   padding: clamp(24px, 5vw, 52px) var(--space-md) clamp(64px, 10vw, 112px);
-  background-color: var(--color-bg-dark);
-  background-size: cover;
-  background-position: center center;
-  background-repeat: no-repeat;
-}
-
-.about-page--journal::before {
-  background: linear-gradient(to bottom, rgba(13, 13, 26, 0.58) 0%, rgba(13, 13, 26, 0.52) 42%, rgba(13, 13, 26, 0.68) 100%);
+  /* 轻遮罩：半透明深底让全局 3D 透出；紫/粉光晕作氛围（玫红是信号色，不用于背景） */
+  background-color: rgba(10, 14, 31, 0.7);
+  background-image:
+    radial-gradient(circle at 88% 12%, rgba(98, 72, 164, 0.12), transparent 32%),
+    radial-gradient(circle at 12% 88%, rgba(224, 184, 230, 0.08), transparent 30%);
 }
 
 .about-journal-shell {
@@ -81,7 +78,7 @@
 .about-mini-card {
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 22px;
-  background: rgba(13, 13, 26, 0.68);
+  background: rgba(10, 14, 31, 0.62);
   padding: clamp(22px, 4vw, 34px);
 }
 
@@ -106,7 +103,7 @@
 .about-mini-card__label {
   display: inline-flex;
   margin-bottom: 14px;
-  color: var(--color-orange);
+  color: var(--color-ink-secondary);
   font-family: var(--font-mono);
   font-size: 0.74rem;
 }

@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { NOTE_TYPE_LABEL, notes } from '../../data/notes'
-import { useBingBg } from '../../hooks/useBingBg'
 import '../Blog/index.css'
 import './index.css'
 
@@ -9,12 +8,9 @@ const INITIAL_IMAGE_COUNT = 12
 
 export default function NoteDetail() {
   const { id } = useParams()
-  const pageRef = useRef<HTMLElement>(null)
   const lightboxRef = useRef<HTMLDivElement>(null)
   const [expanded, setExpanded] = useState(false)
   const [activeImageIndex, setActiveImageIndex] = useState<number | null>(null)
-
-  useBingBg(pageRef)
 
   const note = notes.find((item) => item.id === id)
 
@@ -51,7 +47,7 @@ export default function NoteDetail() {
 
   if (!note) {
     return (
-      <main ref={pageRef} className="notes-page notes-page--wallpaper">
+      <main className="notes-page">
         <section className="notes-shell note-detail note-detail--empty">
           <Link to="/notes" className="inner-page__back">← 返回记录</Link>
           <span className="inner-page__badge">Not Found</span>
@@ -82,7 +78,7 @@ export default function NoteDetail() {
   }
 
   return (
-    <main ref={pageRef} className="notes-page notes-page--wallpaper">
+    <main className="notes-page">
       <article className="notes-shell note-detail">
         <header className="note-detail__header">
           <Link to="/notes" className="inner-page__back note-detail__back">← 返回记录</Link>

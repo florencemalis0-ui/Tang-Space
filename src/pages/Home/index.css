@@ -6,17 +6,7 @@
   position: relative;
   width: 100%;
   min-height: 100vh;
-  background-color: var(--color-bg-dark);
-}
-
-/* 固定 3D canvas：底层，不接收指针（内容可点） */
-.home-canvas {
-  position: fixed;
-  inset: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: 0;
-  pointer-events: none;
+  background-color: transparent; /* 透出全局 3D canvas */
 }
 
 /* 顶部固定导航 */
@@ -76,6 +66,7 @@
   text-transform: uppercase;
   color: var(--color-ink-muted);
   margin-bottom: 22px;
+  text-shadow: 0 2px 12px rgba(10, 14, 31, 0.7);
 }
 
 .hero-name {
@@ -84,22 +75,24 @@
   letter-spacing: -0.04em;
   line-height: 1;
   margin-bottom: 28px;
-  /* 冷调渐变文字（白→淡蓝），非橙，守 One Signal */
-  background: linear-gradient(180deg, #ffffff 0%, #e3f0ff 65%, #b8c8e8 100%);
+  /* 粉白渐变文字（白→淡紫粉），非信号色，守 One Signal */
+  background: linear-gradient(180deg, #ffffff 0%, #fdebfd 65%, #e0b8e6 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
   -webkit-text-fill-color: transparent;
-  text-shadow: 0 0 60px rgba(180, 200, 232, 0.15);
+  text-shadow: 0 0 60px rgba(224, 184, 230, 0.18);
 }
 
 .hero-hitokoto {
   font-size: clamp(0.95rem, 1.8vw, 1.15rem);
-  color: rgba(255, 255, 255, 0.82);
+  color: rgba(255, 255, 255, 0.92);
   line-height: 1.8;
   max-width: 460px;
   font-style: italic;
   margin-bottom: 64px;
+  /* 深色光晕让正文从亮粒子中浮出（Home 透明背景） */
+  text-shadow: 0 2px 18px rgba(10, 14, 31, 0.75);
 }
 
 .hero-hitokoto strong {
@@ -122,6 +115,7 @@
   font-size: 0.72rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
+  text-shadow: 0 2px 12px rgba(10, 14, 31, 0.7);
 }
 
 .hero-scroll-hint::after {
@@ -203,11 +197,12 @@
 
 .signal__desc {
   font-size: clamp(1rem, 1.6vw, 1.12rem);
-  color: rgba(255, 255, 255, 0.72);
+  color: rgba(255, 255, 255, 0.85);
   line-height: 1.9;
   text-wrap: pretty;
   max-width: 560px;
   margin: 0 auto 18px;
+  text-shadow: 0 2px 16px rgba(10, 14, 31, 0.75);
 }
 
 .signal__avatar {

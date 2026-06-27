@@ -15,7 +15,7 @@ interface ExperienceOptions {
  * Three.js 3D 主控
  *
  * 过程化粒子流场：无任何外部模型，几何与运动全在 shader 里生成。
- * 主题「工程师的信号」——粒子如数据流，少数橙色粒子聚成信号束。
+ * 凤凰粉白配色：粒子如数据流，少数玫红粒子聚成信号束。
  *
  * 对外只需 setScroll / setMouse / dispose。
  */
@@ -45,10 +45,10 @@ export class Experience {
       powerPreference: 'high-performance',
     })
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-    this.renderer.setClearColor(0x0d0d1a, 0)
+    this.renderer.setClearColor(0x0a0e1f, 0)
 
     this.scene = new THREE.Scene()
-    this.scene.fog = new THREE.FogExp2(0x0d0d1a, 0.012)
+    this.scene.fog = new THREE.FogExp2(0x0a0e1f, 0.012)
 
     this.camera = new THREE.PerspectiveCamera(60, 1, 0.1, 200)
     this.camera.position.set(0, 0, 18)
@@ -90,7 +90,7 @@ export class Experience {
 
       scales[i] = 0.4 + Math.random() * 1.4
 
-      // ~6% 粒子为「信号束」：集中在一条斜带，形成穿越时可见的橙色光流
+      // ~6% 粒子为「信号束」：集中在一条斜带，形成穿越时可见的玫红光流
       const inBeam =
         Math.abs(y - x * 0.3 + 3) < 2.2 && Math.random() < 0.06
       signals[i] = inBeam ? 0.7 + Math.random() * 0.3 : Math.random() * 0.04
@@ -126,6 +126,8 @@ export class Experience {
     this.renderer.setSize(w, h, false)
     this.camera.aspect = w / h
     this.camera.updateProjectionMatrix()
+    // reduced-motion 无 rAF 循环：setSize 会清空 drawing buffer，需补一帧避免黑屏
+    if (this.opts.reducedMotion) this.renderOnce()
   }
 
   private renderOnce() {
@@ -156,6 +158,15 @@ export class Experience {
 
   setScroll(p: number) {
     this.scrollTarget = Math.max(0, Math.min(1, p))
+  }
+
+  /** 切页时直接复位滚动进度（同时置 scroll 与 scrollTarget），避免 lerp ~0.5s 相机后拉残影 */
+  resetScroll() {
+    this.scroll = 0
+    this.scrollTarget = 0
+    this.material.uniforms.uScroll.value = 0
+    this.camera.position.z = 18
+    if (this.opts.reducedMotion) this.renderOnce()
   }
 
   setMouse(x: number, y: number) {

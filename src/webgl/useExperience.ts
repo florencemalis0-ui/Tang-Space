@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 import { Experience } from './Experience'
 
 /**
@@ -42,7 +42,11 @@ export function useExperience(canvasRef: React.RefObject<HTMLCanvasElement | nul
     }
 
     window.addEventListener('scroll', onScroll, { passive: true })
-    window.addEventListener('mousemove', onMouse, { passive: true })
+    // 触屏 pointer:coarse 不绑鼠标视差（铁律8：tap 合成的 mousemove 会让相机永久歪斜）
+    if (!isMobile) {
+      window.addEventListener('mousemove', onMouse, { passive: true })
+    }
+
     onScroll()
 
     return () => {
@@ -52,4 +56,11 @@ export function useExperience(canvasRef: React.RefObject<HTMLCanvasElement | nul
       expRef.current = null
     }
   }, [canvasRef])
+
+  // 切页复位 3D 滚动进度（供 App 在路由变化时调用）
+  const resetScroll = useCallback(() => {
+    expRef.current?.resetScroll()
+  }, [])
+
+  return resetScroll
 }

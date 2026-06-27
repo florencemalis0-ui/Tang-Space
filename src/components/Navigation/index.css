@@ -44,14 +44,14 @@
   color: var(--color-ink);
 }
 
-/* 快手橙色活跃指示点 */
+/* 玫红活跃指示点（One Signal：导航唯一信号色） */
 .nav-link-active::before {
   content: '';
   display: inline-block;
   width: 5px;
   height: 5px;
   border-radius: 50%;
-  background: var(--color-orange);
+  background: var(--color-signal);
   flex-shrink: 0;
 }
 

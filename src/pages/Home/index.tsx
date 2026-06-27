@@ -4,7 +4,6 @@ import { Avatar } from '../../components/Avatar'
 import { Navigation } from '../../components/Navigation'
 import { useHitokoto } from '../../hooks/useHitokoto'
 import { useIUp } from '../../hooks/useIUp'
-import { useExperience } from '../../webgl/useExperience'
 import './index.css'
 
 const TECH_TAGS = ['Go', 'Python', 'AI/ML', 'Cloud Native', 'Backend', '快手']
@@ -16,18 +15,13 @@ const NAV_CARDS = [
 ]
 
 export default function Home() {
-  const canvasRef = useRef<HTMLCanvasElement>(null)
   const contentRef = useRef<HTMLDivElement>(null)
 
   const { hitokoto, from } = useHitokoto()
-  useExperience(canvasRef)
   useIUp(contentRef)
 
   return (
     <div className="home-root">
-      {/* 固定 3D 背景：过程化粒子流场 */}
-      <canvas ref={canvasRef} className="home-canvas" aria-hidden="true" />
-
       {/* 顶部固定导航 */}
       <header className="home-header">
         <Link to="/" className="home-logo">TangTang</Link>

@@ -3,14 +3,16 @@
    北极星: "The Engineer's Signal"
    =================================================== */
 :root {
-  /* Colors */
-  --color-bg-dark: #0d0d1a;
-  --color-bg-page: #1a1a2e;
+  /* Colors — 凤凰粉白：深蓝紫底 + 白→淡紫粉粒子 + 玫红信号 */
+  --color-bg-dark: #0a0e1f;
+  --color-bg-page: #11142e;
   --color-surface-hover: rgba(255, 255, 255, 0.08);
   --color-border-strong: rgba(255, 255, 255, 0.2);
 
-  --color-orange: #ff4906;
-  --color-orange-glow: rgba(255, 73, 6, 0.3);
+  --color-signal: #fb5959;        /* 玫红：唯一饱和信号色（3D 信号束 / nav 圆点 / focus） */
+  --color-signal-glow: rgba(251, 89, 89, 0.3);
+  --color-violet: #6248a4;        /* 深紫：辅助光晕（凤凰 brand-rose-200） */
+  --color-violet-glow: rgba(98, 72, 164, 0.3);
 
   --color-ink: #ffffff;
   --color-ink-secondary: rgba(255, 255, 255, 0.72);
@@ -68,7 +70,7 @@ a {
 
 /* 键盘焦点可见（鼠标点击不显示，仅 Tab 导航显示） */
 :focus-visible {
-  outline: 2px solid var(--color-orange);
+  outline: 2px solid var(--color-signal);
   outline-offset: 2px;
   border-radius: var(--radius-sm);
 }
@@ -131,9 +133,9 @@ button {
   font-size: 0.7rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--color-orange);
-  background: var(--color-orange-glow);
-  border: 1px solid var(--color-orange-glow);
+  color: var(--color-ink-secondary);
+  background: rgba(234, 189, 246, 0.08);
+  border: 1px solid rgba(234, 189, 246, 0.22);
   border-radius: var(--radius-full);
   padding: 4px 14px;
   margin-bottom: var(--space-md);
@@ -177,4 +179,40 @@ button {
   background: var(--color-surface-hover);
   color: var(--color-ink);
   border-color: rgba(255, 255, 255, 0.35);
+}
+
+/* ===================================================
+   Global 3D Canvas + Page Transition
+   3D 粒子场全局常驻（App 挂载），所有页面共享同一背景；
+   切页时 3D 不卸载，内容层淡入 —— 视觉上"切换时一样"。
+   =================================================== */
+.global-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* 内容层在 3D 之上（不设 z-index：避免创建堆叠上下文困住内部 fixed 浮层，
+   让 note-lightbox z-1200 能在根上下文正确盖住 CommandPalette z-1100 / WeChatModal z-1000） */
+.app-shell {
+  position: relative;
+}
+
+/* 路由切换淡入：3D 常驻不动，内容层 translateY+opacity 渐入 */
+.page-transition {
+  animation: page-enter var(--duration-slow) var(--ease-out);
+}
+
+@keyframes page-enter {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-transition {
+    animation: none;
+  }
 }

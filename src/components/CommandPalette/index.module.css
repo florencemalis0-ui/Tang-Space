@@ -14,7 +14,7 @@
 .panel {
   width: 560px;
   max-width: 92vw;
-  background: rgba(13, 13, 26, 0.92);
+  background: rgba(10, 14, 31, 0.92);
   border: 1px solid var(--color-border-strong);
   border-radius: var(--radius-lg);
   box-shadow: 0 32px 80px rgba(0, 0, 0, 0.55);
@@ -98,10 +98,10 @@
   background: var(--color-surface-hover);
 }
 
-/* 选中项：橙色填充 = 面板内唯一橙色信号（One Signal Rule） */
+/* 选中项：玫红填充 = 面板内唯一玫红信号（One Signal Rule） */
 .itemActive,
 .itemActive:hover {
-  background: var(--color-orange-glow);
+  background: var(--color-signal-glow);
 }
 
 .itemTitle {
@@ -152,9 +152,9 @@
   font-size: 0.66rem;
 }
 
-/* One Signal Rule：面板内禁用全局橙色焦点环，
-   让选中项的 orange-glow 填充成为唯一橙色信号。
-   关闭按钮用中性背景填充作为键盘焦点指示，不引入第二处橙。 */
+/* One Signal Rule：面板内禁用全局玫红焦点环，
+   让选中项的 signal-glow 填充成为唯一玫红信号。
+   关闭按钮用中性背景填充作为键盘焦点指示，不引入第二处信号色。 */
 .backdrop :focus-visible {
   outline: none;
 }
