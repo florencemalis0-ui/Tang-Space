@@ -24,7 +24,7 @@ function App() {
   // 这样 Resume/Blog/NoteDetail 等内页触发微信命令也能正常打开（不再静默失败）。
   const [wechatVisible, setWechatVisible] = useState(false)
 
-  // 全局 3D 粒子流场：挂在 App 级，所有页面共享同一背景，切页不卸载（"切换时一样"）。
+  // 全局 3D 水晶场：挂在 App 级，所有页面共享同一背景，切页不卸载（"切换时一样"）。
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const location = useLocation()
   const resetScroll = useExperience(canvasRef)

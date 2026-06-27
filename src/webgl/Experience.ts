@@ -33,6 +33,7 @@ export class Experience {
   private crystals: THREE.Mesh[] = []
   private dust: THREE.Points | null = null
   private pmrem: THREE.PMREMGenerator
+  private envMap: THREE.Texture | null = null
   private composer: EffectComposer
   private bloom: UnrealBloomPass
   private clock = new THREE.Clock()
@@ -66,8 +67,8 @@ export class Experience {
 
     // 程序化环境光（守铁律6）：transmission 必须有 envMap 才能折射
     this.pmrem = new THREE.PMREMGenerator(this.renderer)
-    const envMap = this.pmrem.fromScene(new RoomEnvironment(), 0.04).texture
-    this.scene.environment = envMap
+    this.envMap = this.pmrem.fromScene(new RoomEnvironment(), 0.04).texture
+    this.scene.environment = this.envMap
 
     this.buildCrystals()
     this.buildDust()
@@ -167,7 +168,7 @@ export class Experience {
     }
   }
 
-  /** 远处微尘：水晶周围细微闪烁尘点，补纵深气韵（不抢戏，非满天粒子） */
+  /** 远处微尘：水晶周围细微闪烁尘点，补纵深气韵（不抢戏，非主体） */
   private buildDust() {
     const count = this.opts.isMobile ? 300 : 600
     const positions = new Float32Array(count * 3)
@@ -282,6 +283,7 @@ export class Experience {
       ;(this.dust.material as THREE.Material).dispose()
     }
     this.composer.dispose()
+    this.envMap?.dispose()
     this.pmrem.dispose()
     this.renderer.dispose()
   }

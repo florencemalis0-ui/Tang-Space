@@ -11,7 +11,7 @@ GitHub 用户名：`florencemalis0-ui`
 - **框架：** React 18 + TypeScript + Vite 6
 - **路由：** react-router-dom v7（`BrowserRouter`，`basename=import.meta.env.BASE_URL`）。`/notes` 是主路由，`/blog/*` 重定向到 `/notes/*` 兼容旧链接。
 - **样式：** CSS Modules + 全局 CSS（`src/index.css`）
-- **3D（全局）：** Three.js + 自写 GLSL shader，过程化粒子流场（不导入外部模型）。`src/webgl/` 下 Experience 主控 + shaders。全局挂在 `App.tsx`（`useExperience`），所有页面共享，切页不卸载；滚动驱动 + 鼠标视差，reduced-motion/移动端降级
+- **3D（全局）：** Three.js 过程化水晶体（`IcosahedronGeometry` + `MeshPhysicalMaterial` 透射）+ Bloom 后处理 + 远处微尘（不导入外部模型）。`src/webgl/` 下 Experience 主控（已移除自写 GLSL shader，改用原生 Material + 后处理 Pass）。全局挂在 `App.tsx`（`useExperience`），所有页面共享，切页不卸载；滚动驱动 + 鼠标视差，reduced-motion/移动端降级
 - **构建：** `npm run build` → `dist/`，部署到 GitHub Pages。three/gsap 拆为独立 vendor chunk（`vite.config.ts` manualChunks）
 - **内页背景：** `rgba(10,14,31,0.7)` 半透明遮罩让全局 3D 透出 ~30%（已移除 Bing 壁纸，`useBingBg` 已删）
 - **部署自动化：** `.github/workflows/deploy.yml` 在 push 到 main 时直接上传已构建的 `dist/`（CI 不重新 build）
@@ -30,9 +30,8 @@ Tang-Space/
 │   │   ├── WeChatModal/     # 微信二维码弹窗（全局唯一，挂在 App）
 │   │   └── CommandPalette/  # ⌘K 命令面板（全局，挂在 App，Suspense 外）
 │   ├── webgl/               # 3D 过程化视觉（首页）
-│   │   ├── Experience.ts    # Three.js 主控（renderer/camera/粒子系统/loop/dispose）
-│   │   ├── useExperience.ts # React hook 接入（滚动/鼠标/降级/清理）
-│   │   └── shaders.ts       # GLSL（simplex/curl noise + 粒子顶点片元）
+│   │   ├── Experience.ts    # Three.js 主控（renderer/camera/水晶体/微尘/Bloom 后处理/loop/dispose）
+│   │   └── useExperience.ts # React hook 接入（滚动/鼠标/降级/清理 + resetScroll 复位）
 │   ├── hooks/
 │   │   ├── useHitokoto.ts   # 一言 API
 │   │   ├── useIUp.ts        # 入场错落动画
@@ -44,7 +43,7 @@ Tang-Space/
 │   ├── utils/
 │   │   └── email.ts         # Base64 邮箱解码
 │   └── pages/
-│       ├── Home/            # 首页（3D 粒子流场背景 + 滚动叙事）
+│       ├── Home/            # 首页（3D 过程化水晶背景 + 滚动叙事）
 │       ├── Blog/            # /notes 列表（卡片网格 + 侧边栏，已实现）
 │       ├── NoteDetail/      # /notes/:id 详情（图库 + lightbox，已实现）
 │       ├── About/           # /about（journal 双栏，已实现）
@@ -72,10 +71,10 @@ Tang-Space/
 **设计北极星：** "The Engineer's Signal"（工程师的信号）
 
 **品牌色：**
-- 主色：Phoenix Rose `#fb5959`（One Signal Rule：每屏最多 1 处，承载为 3D 信号束 + nav active 圆点 + avatar ring + focus）
+- 主色：Phoenix Rose `#fb5959`（One Signal Rule：每屏最多 1 处，承载为 3D 信号水晶 + nav active 圆点 + avatar ring + focus）
 - 辅助：Phoenix Violet `#6248a4`（径向光晕、travel/tech 分类色）
 - 背景：Deep Space `#0a0e1f`（深蓝紫宇宙底；内页用 `rgba(10,14,31,0.7)` 半透明遮罩让全局 3D 透出 ~30%）
-- 粒子：Pink Gradient `#ffffff → #fdebfd → #eabdf6`（白→淡紫粉，additive 发光）
+- 水晶：Pink Gradient `#ffffff → #fdebfd → #eabdf6`（白→淡紫粉，透射 + Bloom 发光）
 - 文字：Pure White `#ffffff` → Soft White `rgba(255,255,255,0.72)` → Ghost White `rgba(255,255,255,0.42)`
 
 **字体：**
@@ -94,7 +93,7 @@ Tang-Space/
 3. **Phoenix Rose `#fb5959` 每屏最多一处**（One Signal Rule）
 4. **头像点击** 触发微信弹窗（不是博客按钮）
 5. **导航项**（记录/简历/关于）是 react-router-dom `<Link>` 路由跳转；内页用「← 返回首页」back-link
-6. **3D 背景全局常驻**：`useExperience` 挂在 `App.tsx`，所有页面共享同一粒子流场，切页不卸载。内页用 `rgba(10,14,31,0.7)` 半透明遮罩透出 3D，禁止不透明背景挡住 canvas（已移除 Bing 壁纸，`useBingBg` 已删）
+6. **3D 背景全局常驻**：`useExperience` 挂在 `App.tsx`，所有页面共享同一水晶场，切页不卸载。内页用 `rgba(10,14,31,0.7)` 半透明遮罩透出 3D，禁止不透明背景挡住 canvas（已移除 Bing 壁纸，`useBingBg` 已删）
 7. **头像 URL：** `https://avatars.githubusercontent.com/florencemalis0-ui`（带每日 cache-bust 参数）
 8. **部署传已构建的 `dist/`**：CI 不重新 build（`.github/workflows/deploy.yml` 直接上传 dist/），改完代码必须本地 `npm run build` 再提交 `dist/`，否则线上不更新
 9. **不要手删 `dist/404.html`**：它是 `index.html` 的副本，由 `vite.config.ts` 的 `spa-404-fallback` 插件自动生成。GitHub Pages 对找不到的路径回退到它，刷新内页（`/about`、`/notes/xxx`）不 404
@@ -121,9 +120,9 @@ node .agents/skills/impeccable/scripts/context.mjs
 
 - [x] ⌘K 命令面板（全站）+ 全局微信弹窗解耦
 - [x] 记录卡片 3D tilt + 图片 blur-up
-- [x] 首页 3D 过程化重构（Three.js 粒子流场 + 滚动叙事，**不导入外部模型，纯自写 shader**）
+- [x] 首页 3D 过程化重构（Three.js 过程化水晶体 + Bloom 后处理 + 微尘 + 滚动叙事，**不导入外部模型**）
 - [x] 3D 全局化：canvas 提升到 App.tsx 全局常驻，所有页面共享，切页不卸载；内页移除 Bing 壁纸改半透明遮罩透出 3D（视觉"切换时一样"）
-- [x] 凤凰粉白配色：粒子主体白→淡紫粉、信号束橙→玫红、底色深蓝紫；CSS token `--color-orange` 重命名 `--color-signal`，新增 `--color-violet`
+- [x] 凤凰粉白配色：水晶主体白→淡紫粉、信号水晶橙→玫红、底色深蓝紫；CSS token `--color-orange` 重命名 `--color-signal`，新增 `--color-violet`
 - [x] 删除 useBingBg.ts（内页改全局 3D 后已成死代码，已清理）
 - [ ] 简历页实现（技术栈展示、工作经历）—— 目前唯一占位的主板块（用户还没想好，暂不动）
 - [ ] 持续丰富 Notes 内容（技术记录 / 生活照片 / 旅行 / 随想）—— blur-up 待有图笔记生效

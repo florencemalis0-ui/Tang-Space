@@ -3,13 +3,13 @@
    北极星: "The Engineer's Signal"
    =================================================== */
 :root {
-  /* Colors — 凤凰粉白：深蓝紫底 + 白→淡紫粉粒子 + 玫红信号 */
+  /* Colors — 凤凰粉白：深蓝紫底 + 白→淡紫粉水晶体 + 玫红信号 */
   --color-bg-dark: #0a0e1f;
   --color-bg-page: #11142e;
   --color-surface-hover: rgba(255, 255, 255, 0.08);
   --color-border-strong: rgba(255, 255, 255, 0.2);
 
-  --color-signal: #fb5959;        /* 玫红：唯一饱和信号色（3D 信号束 / nav 圆点 / focus） */
+  --color-signal: #fb5959;        /* 玫红：唯一饱和信号色（3D 信号水晶 / nav 圆点 / focus） */
   --color-signal-glow: rgba(251, 89, 89, 0.3);
   --color-violet: #6248a4;        /* 深紫：辅助光晕（凤凰 brand-rose-200） */
   --color-violet-glow: rgba(98, 72, 164, 0.3);
@@ -183,7 +183,7 @@ button {
 
 /* ===================================================
    Global 3D Canvas + Page Transition
-   3D 粒子场全局常驻（App 挂载），所有页面共享同一背景；
+   3D 水晶场全局常驻（App 挂载），所有页面共享同一背景；
    切页时 3D 不卸载，内容层淡入 —— 视觉上"切换时一样"。
    =================================================== */
 .global-canvas {

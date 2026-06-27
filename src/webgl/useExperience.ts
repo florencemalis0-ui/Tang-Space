@@ -9,7 +9,7 @@ import { Experience } from './Experience'
  * - 降级：reduced-motion / 触屏 自动检测并传给 Experience
  * - 清理：unmount 时 dispose 全部 GL 资源
  *
- * @param scrollRef 包裹可滚动内容的容器（用于计算滚动进度）
+ * @param canvasRef 3D canvas 挂载点
  */
 export function useExperience(canvasRef: React.RefObject<HTMLCanvasElement | null>) {
   const expRef = useRef<Experience | null>(null)

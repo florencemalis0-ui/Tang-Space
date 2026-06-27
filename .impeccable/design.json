@@ -98,22 +98,22 @@
   ],
   "narrative": {
     "northStar": "The Engineer's Signal · Phoenix Rose",
-    "overview": "This system is built on the conviction that technical identity should feel as precise as the code it represents. A deep blue-violet cosmos absorbs attention and pushes content forward; every element earns its place through function and contrast, not decoration.\n\nThe palette speaks quietly but confidently: deep-space blue-violet darks, clean whites, white→lilac-pink procedural particles, and one sharp signal color — Phoenix Rose — reserved for the single most important moment on any screen.\n\nA single procedural Three.js particle flow-field (curl-noise + additive glow, hand-written GLSL, no external models) is mounted globally in App.tsx and shared by every route, so the 3D never unmounts on navigation — the background stays continuous while content layers fade in over it.",
+    "overview": "This system is built on the conviction that technical identity should feel as precise as the code it represents. A deep blue-violet cosmos absorbs attention and pushes content forward; every element earns its place through function and contrast, not decoration.\n\nThe palette speaks quietly but confidently: deep-space blue-violet darks, clean whites, white→lilac-pink procedural crystals, and one sharp signal color — Phoenix Rose — reserved for the single most important moment on any screen.\n\nA single procedural Three.js crystal field (IcosahedronGeometry + MeshPhysicalMaterial transmission + Bloom postprocessing + distant dust, no external models) is mounted globally in App.tsx and shared by every route, so the 3D never unmounts on navigation — the background stays continuous while content layers fade in over it.",
     "keyCharacteristics": [
       "Deep blue-violet immersive full-bleed 3D background (global, never unmounts on route change)",
-      "Single accent color (Phoenix Rose #fb5959) used sparingly — 3D signal beam, nav active dot, avatar ring, focus ring",
-      "White→lilac-pink particle body with additive glow; violet #6248a4 as secondary glow",
+      "Single accent color (Phoenix Rose #fb5959) used sparingly — 3D signal crystal, nav active dot, avatar ring, focus ring",
+      "White→lilac-pink crystal body (MeshPhysicalMaterial transmission + Bloom glow); violet #6248a4 as secondary glow",
       "White text hierarchy with opacity-stepped supporting text",
       "Monospace labels for technical context only",
       "Cascaded entrance animations + route-change fade — purposeful, never idle"
     ],
     "rules": [
-      { "name": "The One Signal Rule", "body": "Phoenix Rose (#fb5959) appears on at most one sanctioned element per screen (3D signal beam / nav active dot / avatar ring). It is a signal, not a theme — never on body text, badges, or card borders.", "section": "colors" },
-      { "name": "The Global 3D Rule", "body": "The 3D particle canvas is mounted once in App.tsx and shared by all routes. Inner pages must use a translucent veil (rgba(10,14,31,~0.7)) so the 3D bleeds through (~30%) — never an opaque background that hides the canvas.", "section": "colors" },
+      { "name": "The One Signal Rule", "body": "Phoenix Rose (#fb5959) appears on at most one sanctioned element per screen (3D signal crystal / nav active dot / avatar ring). It is a signal, not a theme — never on body text, badges, or card borders.", "section": "colors" },
+      { "name": "The Global 3D Rule", "body": "The 3D crystal canvas is mounted once in App.tsx and shared by all routes. Inner pages must use a translucent veil (rgba(10,14,31,~0.7)) so the 3D bleeds through (~30%) — never an opaque background that hides the canvas.", "section": "colors" },
       { "name": "The Mono Boundary Rule", "body": "Monospace is used exclusively for technical metadata. Never in navigation, headings, or body prose.", "section": "typography" },
       { "name": "The Flat-By-Default Rule", "body": "No box-shadow on nav items, cards, or containers at rest (avatar ring is the sole exception). Hover states may use a subtle background fill — never a shadow.", "section": "elevation" },
-      { "name": "The Procedural-First Rule", "body": "All 3D geometry and motion is procedurally generated via hand-written GLSL/Three.js. Never import external glb/gltf models — zero copyright risk, original, lightweight.", "section": "3d" },
-      { "name": "The Reduced-Motion Rule", "body": "Every 3D effect and animation must degrade: matchMedia prefers-reduced-motion freezes the particle field to a single static frame, unbinds mouse/scroll drivers, and CSS disables transitions/animations.", "section": "motion" }
+      { "name": "The Procedural-First Rule", "body": "All 3D geometry and motion is procedurally generated via Three.js native Materials + Bloom postprocessing. Never import external glb/gltf models — zero copyright risk, original, lightweight.", "section": "3d" },
+      { "name": "The Reduced-Motion Rule", "body": "Every 3D effect and animation must degrade: matchMedia prefers-reduced-motion freezes the crystal field to a single static frame (renderOnce), unbinds mouse/scroll drivers, and CSS disables transitions/animations.", "section": "motion" }
     ],
     "dos": [
       "Do use Phoenix Rose (#fb5959) on at most one sanctioned element per screen.",
@@ -126,7 +126,7 @@
     ],
     "donts": [
       "Don't use a white or light background on any page.",
-      "Don't import external 3D models (glb/gltf) — procedural shader only.",
+      "Don't import external 3D models (glb/gltf) — procedural crystals only.",
       "Don't put Phoenix Rose on body text, badges, card borders, or more than one element per screen.",
       "Don't use monospace font in navigation or headings.",
       "Don't animate CSS layout properties — only transform and opacity.",
