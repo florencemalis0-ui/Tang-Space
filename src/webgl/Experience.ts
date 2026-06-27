@@ -32,6 +32,7 @@ export class Experience {
   private camera: THREE.PerspectiveCamera
   private crystals: THREE.Mesh[] = []
   private dust: THREE.Points | null = null
+  private farDust: THREE.Points | null = null
   private pmrem: THREE.PMREMGenerator
   private envMap: THREE.Texture | null = null
   private composer: EffectComposer
@@ -72,6 +73,7 @@ export class Experience {
 
     this.buildCrystals()
     this.buildDust()
+    this.buildFarDust()
 
     // 后处理：Bloom 让水晶边缘 + 信号晶体发光（凤凰水晶的辉光感核心）
     this.composer = new EffectComposer(this.renderer)
@@ -168,23 +170,23 @@ export class Experience {
     }
   }
 
-  /** 远处微尘：水晶周围细微闪烁尘点，补纵深气韵（不抢戏，非主体） */
+  /** 中近景微尘：水晶周围飘浮尘点，补气韵（不抢戏，非主体）。加密 + 扩范围治「周围空荡」 */
   private buildDust() {
-    const count = this.opts.isMobile ? 300 : 600
+    const count = this.opts.isMobile ? 500 : 1000
     const positions = new Float32Array(count * 3)
 
     for (let i = 0; i < count; i++) {
-      // 散布在水晶场范围内，z 纵深拉长
-      positions[i * 3] = (Math.random() - 0.5) * 30
-      positions[i * 3 + 1] = (Math.random() - 0.5) * 18
-      positions[i * 3 + 2] = -2 - Math.random() * 35
+      // 散布更广，铺到外缘 + z 纵深拉长
+      positions[i * 3] = (Math.random() - 0.5) * 40
+      positions[i * 3 + 1] = (Math.random() - 0.5) * 24
+      positions[i * 3 + 2] = -2 - Math.random() * 38
     }
 
     const geo = new THREE.BufferGeometry()
     geo.setAttribute('position', new THREE.BufferAttribute(positions, 3))
 
     const mat = new THREE.PointsMaterial({
-      size: 0.08,
+      size: 0.09,
       color: 0xeabdf6,
       transparent: true,
       opacity: 0.55,
@@ -195,6 +197,35 @@ export class Experience {
 
     this.dust = new THREE.Points(geo, mat)
     this.scene.add(this.dust)
+  }
+
+  /** 远景星河：更远、更小、更暗的微光点，铺纵深背景，治「外围空荡」。滚动更慢做远近视差 */
+  private buildFarDust() {
+    const count = this.opts.isMobile ? 400 : 800
+    const positions = new Float32Array(count * 3)
+
+    for (let i = 0; i < count; i++) {
+      // 更广更远：外缘 + 深处
+      positions[i * 3] = (Math.random() - 0.5) * 56
+      positions[i * 3 + 1] = (Math.random() - 0.5) * 32
+      positions[i * 3 + 2] = -15 - Math.random() * 40
+    }
+
+    const geo = new THREE.BufferGeometry()
+    geo.setAttribute('position', new THREE.BufferAttribute(positions, 3))
+
+    const mat = new THREE.PointsMaterial({
+      size: 0.045,
+      color: 0xfdebfd,
+      transparent: true,
+      opacity: 0.32,
+      sizeAttenuation: true,
+      depthWrite: false,
+      blending: THREE.AdditiveBlending,
+    })
+
+    this.farDust = new THREE.Points(geo, mat)
+    this.scene.add(this.farDust)
   }
 
   private resize = () => {
@@ -242,10 +273,14 @@ export class Experience {
       }
     }
 
-    // 微尘缓慢漂移
+    // 微尘缓慢漂移（远景更慢，做远近视差）
     if (this.dust) {
       this.dust.rotation.y = t * 0.02
       this.dust.position.z = this.scroll * 10
+    }
+    if (this.farDust) {
+      this.farDust.rotation.y = t * 0.01
+      this.farDust.position.z = this.scroll * 6
     }
 
     this.composer.render()
@@ -281,6 +316,10 @@ export class Experience {
     if (this.dust) {
       this.dust.geometry.dispose()
       ;(this.dust.material as THREE.Material).dispose()
+    }
+    if (this.farDust) {
+      this.farDust.geometry.dispose()
+      ;(this.farDust.material as THREE.Material).dispose()
     }
     this.composer.dispose()
     this.envMap?.dispose()

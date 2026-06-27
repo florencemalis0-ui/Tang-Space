@@ -25,5 +25,6 @@ TangTang（唐睿阳）的个人品牌主页。React 18 + TypeScript + Vite 6 + 
 ## 工作方式
 - 用户开 ultracode：exhaustive 正确优先，substantive 任务用 workflow 多视角审视 + 对抗验证
 - 发现新的非显然规则，主动追加进 `.agents/context/agents.md` 和本文件
-- 设计决策遵循 DESIGN.md 北极星 "The Engineer's Signal · Phoenix Rose"（3D 过程化，代码即艺术）
+- **改完代码必须主动同步所有受影响的 md 和其他代码**（包括代码注释）：实现机制级 / 命名级 / 铁律级改动，grep 关键词在 `src/` + 所有 `*.md` + `design.json` 找残留，同步到全量后 grep 验证清零再 build 再提交。教训：3D 从粒子重构到水晶后 4 份文档全漂移，要 workflow 31 个 findings 才补救
+- 设计决策遵循 DESIGN.md 北极星 "Phoenix Rose · 代码即艺术"（3D 过程化）
 - **个人板块要真实数据，不编占位**（如 Now/简历），宁可留空加 TODO 也不编造个人状态

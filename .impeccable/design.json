@@ -97,7 +97,7 @@
     }
   ],
   "narrative": {
-    "northStar": "The Engineer's Signal · Phoenix Rose",
+    "northStar": "Phoenix Rose · 代码即艺术",
     "overview": "This system is built on the conviction that technical identity should feel as precise as the code it represents. A deep blue-violet cosmos absorbs attention and pushes content forward; every element earns its place through function and contrast, not decoration.\n\nThe palette speaks quietly but confidently: deep-space blue-violet darks, clean whites, white→lilac-pink procedural crystals, and one sharp signal color — Phoenix Rose — reserved for the single most important moment on any screen.\n\nA single procedural Three.js crystal field (IcosahedronGeometry + MeshPhysicalMaterial transmission + Bloom postprocessing + distant dust, no external models) is mounted globally in App.tsx and shared by every route, so the 3D never unmounts on navigation — the background stays continuous while content layers fade in over it.",
     "keyCharacteristics": [
       "Deep blue-violet immersive full-bleed 3D background (global, never unmounts on route change)",

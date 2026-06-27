@@ -31,6 +31,8 @@ export default function Home() {
       <div ref={contentRef} className="home-content">
         {/* 第一屏：hero */}
         <section className="hero">
+          <aside className="hero-side hero-side--left iUp" aria-hidden="true">GMT+8 · Beijing</aside>
+          <aside className="hero-side hero-side--right iUp" aria-hidden="true">39.9°N · 116.4°E</aside>
           <p className="hero-kicker iUp">TangTang · Kuaishou Engineer</p>
           <h1 className="hero-name iUp">TangTang</h1>
           <p className="hero-hitokoto iUp">
@@ -44,9 +46,11 @@ export default function Home() {
 
         {/* 第二屏：信号 */}
         <section className="signal">
+          <aside className="hero-side hero-side--left iUp" aria-hidden="true">01</aside>
+          <aside className="hero-side hero-side--right iUp" aria-hidden="true">HERE</aside>
           <div className="signal__inner">
-            <span className="signal__label iUp">01 — Signal</span>
-            <h2 className="signal__title iUp">工程师的信号</h2>
+            <span className="signal__label iUp">01 — Here</span>
+            <h2 className="signal__title iUp">写在这里</h2>
             <p className="signal__desc iUp">
               写代码的人，顺手把生活也记在这里。
             </p>
@@ -66,6 +70,8 @@ export default function Home() {
 
         {/* 第三屏：导航入口 */}
         <section className="nav-gate">
+          <aside className="hero-side hero-side--left iUp" aria-hidden="true">02</aside>
+          <aside className="hero-side hero-side--right iUp" aria-hidden="true">EXPLORE</aside>
           <span className="signal__label iUp">02 — Explore</span>
           <div className="nav-gate__grid">
             {NAV_CARDS.map((card) => (

@@ -85,6 +85,33 @@
     0 2px 14px rgba(10, 14, 31, 0.75);
 }
 
+/* 两侧竖排 mono 元数据：治「中间字、两侧空」，框架感（坐标真实，非占位） */
+.hero-side {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+  writing-mode: vertical-rl;
+  text-shadow:
+    0 0 8px rgba(10, 14, 31, 0.9),
+    0 2px 12px rgba(10, 14, 31, 0.75);
+  pointer-events: none;
+}
+
+.hero-side--left {
+  left: clamp(20px, 4vw, 40px);
+}
+
+.hero-side--right {
+  right: clamp(20px, 4vw, 40px);
+}
+
 .hero-name {
   font-size: clamp(2.8rem, 8.5vw, 6.5rem);
   font-weight: 700;
@@ -186,11 +213,11 @@
    =================================================== */
 .signal {
   position: relative;
-  min-height: 100vh;
+  min-height: 72vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 80px clamp(20px, 5vw, 48px);
+  padding: clamp(64px, 10vw, 96px) clamp(20px, 5vw, 48px);
 }
 
 /* 径向深色背板：signal 文字区可读，3D 从四周透出 */
@@ -256,12 +283,12 @@
    =================================================== */
 .nav-gate {
   position: relative;
-  min-height: 100vh;
+  min-height: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 80px clamp(20px, 5vw, 48px);
+  padding: clamp(48px, 8vw, 80px) clamp(20px, 5vw, 48px) clamp(80px, 12vw, 120px);
 }
 
 /* 径向深色背板：卡片群可读，3D 从四周透出 */
@@ -389,6 +416,11 @@
 
   .home-header {
     padding: 14px 18px;
+  }
+
+  /* 小屏隐藏竖排元数据，避免拥挤 */
+  .hero-side {
+    display: none;
   }
 }
 

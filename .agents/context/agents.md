@@ -68,7 +68,7 @@ Tang-Space/
 
 ## 设计系统速查
 
-**设计北极星：** "The Engineer's Signal"（工程师的信号）
+**设计北极星：** "Phoenix Rose · 代码即艺术"
 
 **品牌色：**
 - 主色：Phoenix Rose `#fb5959`（One Signal Rule：每屏最多 1 处，承载为 3D 信号水晶 + nav active 圆点 + avatar ring + focus）
@@ -100,6 +100,7 @@ Tang-Space/
 10. **图片路径用绝对前缀** `/Tang-Space/assets/...`（如 `lifeImages`），不要用相对 `./assets/...`——嵌套路由（`/notes/xxx`）下相对路径会 404
 11. **全局弹窗/面板用 CustomEvent 解耦**：WeChatModal 与 CommandPalette 都全局挂在 `App.tsx`（不在各页重复挂），其他地方触发它们一律 `window.dispatchEvent(new CustomEvent('tang:open-wechat'))` 或 `'tang:open-cmdk'`，由 App 监听打开。不要新增第二份 modal/palette 实例
 12. **新动效三件套**：所有新动画只用 `transform`/`opacity`（禁动 layout 属性），必须给 `prefers-reduced-motion` 降级（JS `matchMedia` 闸门 + CSS `!important` 兜底压内联值），触屏 `pointer: coarse` 默认关指针增强效果
+13. **改完代码必须主动同步所有受影响的 md 和代码注释**：实现机制级（如粒子→水晶）、命名级（如北极星）、铁律级改动，grep 关键词在 `src/` + 所有 `*.md` + `design.json` 找残留，全量同步后 grep 验证清零再 build 再提交。教训：3D 从粒子重构到水晶后 CLAUDE.md / agents.md / DESIGN.md / design.json 全部漂移，要 review workflow 31 个 findings 才补救
 
 ## Impeccable Skill 使用方式
 

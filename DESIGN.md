@@ -28,9 +28,9 @@ rendering:
 
 ## 1. Overview
 
-**Creative North Star: "The Engineer's Signal · Phoenix Rose"**
+**Creative North Star: "Phoenix Rose · 代码即艺术"**
 
-这个系统以 3D 过程化视觉表达工程师的信号。几何由 Three.js 原生 `IcosahedronGeometry` 生成、材质用 `MeshPhysicalMaterial` 透射（玻璃水晶体）——不导入任何外部 3D 模型，代码即艺术。大小悬殊的水晶体在 Bloom 辉光中悬浮、漂移、呼吸；其中一颗玫红「信号水晶」脉冲发光，作为深蓝紫宇宙里的唯一高饱和信号。
+这个系统以 3D 过程化视觉表达「代码即艺术」。几何由 Three.js 原生 `IcosahedronGeometry` 生成、材质用 `MeshPhysicalMaterial` 透射（玻璃水晶体）——不导入任何外部 3D 模型。大小悬殊的水晶体在 Bloom 辉光中悬浮、漂移、呼吸；其中一颗玫红「信号水晶」脉冲发光，作为深蓝紫宇宙里的唯一高饱和信号。
 
 视觉语言：深蓝紫宇宙背景（`#0a0e1f`）吸收注意力，把内容推向更深处；粉白（白→淡紫粉 `#eabdf6`）水晶体作为主体，Phoenix Rose `#fb5959` 作为每屏唯一的信号色。3D canvas 全局挂在 `App.tsx`，所有页面共享同一水晶场，切页不卸载——背景常驻连续，内容层在其上淡入滚动。每一处效果都因过程化生成而属于这个站本身，而非搬运的美术资产。
 
