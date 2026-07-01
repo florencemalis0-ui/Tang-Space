@@ -2,6 +2,8 @@
 
 # TangTang · Tang-Space
 
+<img src="assets/hero-crystal.svg" alt="Phoenix Rose procedural crystals" width="800"/>
+
 ### Phoenix Rose · Code as Art
 
 A personal brand site built as procedural 3D art — refraction crystals, Bloom glow,
