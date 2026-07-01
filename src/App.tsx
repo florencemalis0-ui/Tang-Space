@@ -3,6 +3,7 @@ import { lazy, Suspense } from 'react'
 import { Routes, Route, Navigate, useParams, useLocation } from 'react-router-dom'
 import { CommandPalette } from './components/CommandPalette'
 import { WeChatModal } from './components/WeChatModal'
+import { BackToTop } from './components/BackToTop'
 import { useExperience } from './webgl/useExperience'
 
 // 代码分割：每个页面单独 chunk，首屏只加载 Home
@@ -11,6 +12,7 @@ const Blog = lazy(() => import('./pages/Blog'))
 const NoteDetail = lazy(() => import('./pages/NoteDetail'))
 const About = lazy(() => import('./pages/About'))
 const Resume = lazy(() => import('./pages/Resume'))
+const NotFound = lazy(() => import('./pages/NotFound'))
 
 // /blog → /notes 的兼容重定向。
 // 导航已统一到 /notes；保留 /blog/* 旧链接可达，避免外链失效。
@@ -57,7 +59,7 @@ function App() {
               <Route path="/blog/*" element={<RedirectToNotes />} />
               <Route path="/resume" element={<Resume />} />
               <Route path="/about" element={<About />} />
-              <Route path="*" element={<Navigate to="/" replace />} />
+              <Route path="*" element={<NotFound />} />
             </Routes>
           </Suspense>
         </div>
@@ -66,6 +68,7 @@ function App() {
       {/* 放 Suspense 外：懒加载期间 ⌘K 也可用 */}
       <CommandPalette />
       <WeChatModal visible={wechatVisible} onClose={() => setWechatVisible(false)} />
+      <BackToTop />
     </>
   )
 }

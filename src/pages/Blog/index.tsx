@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { NOTE_TYPE_LABEL, notes, type Note, type NoteType } from '../../data/notes'
 import { useTilt } from '../../hooks/useTilt'
 import { useBlurUp } from '../../hooks/useBlurUp'
+import { SiteFooter } from '../../components/SiteFooter'
 import './index.css'
 
 const FILTERS: Array<NoteType | 'all'> = ['all', 'tech', 'life', 'travel', 'thought']
@@ -175,6 +176,7 @@ export default function Blog() {
           </aside>
         </div>
       </section>
+      <SiteFooter />
     </main>
   )
 }

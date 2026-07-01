@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { SiteFooter } from '../../components/SiteFooter'
 import './index.css'
 
 export default function Resume() {
@@ -11,6 +12,7 @@ export default function Resume() {
         详细简历建设中，敬请期待。
       </p>
       <Link to="/" className="inner-page__back">← 返回首页</Link>
+      <SiteFooter />
     </div>
   )
 }

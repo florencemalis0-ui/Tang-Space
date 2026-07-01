@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { NOTE_TYPE_LABEL, notes } from '../../data/notes'
+import { SiteFooter } from '../../components/SiteFooter'
 import '../Blog/index.css'
 import './index.css'
 
@@ -136,6 +137,7 @@ export default function NoteDetail() {
           </div>
         </div>
       ) : null}
+      <SiteFooter />
     </main>
   )
 }

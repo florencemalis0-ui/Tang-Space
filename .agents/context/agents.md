@@ -198,7 +198,9 @@ Tang-Space/
 │   │   ├── Avatar/          # 头像（hover 浮现「Be Brave」，点击弹微信二维码）
 │   │   ├── Navigation/      # 首页导航（pill 形，移动端汉堡菜单）
 │   │   ├── WeChatModal/     # 微信二维码弹窗（全局唯一，挂在 App）
-│   │   └── CommandPalette/  # ⌘K 命令面板（全局，挂在 App，Suspense 外）
+│   │   ├── CommandPalette/  # ⌘K 命令面板（全局，挂在 App，Suspense 外，含笔记搜索）
+│   │   ├── BackToTop/       # 回顶浮窗按钮（全局，滚动 > 1 屏浮现）
+│   │   └── SiteFooter/      # 全站页脚（身份/微信/⌘K/版权，Home 与内页共用）
 │   ├── webgl/               # 3D 过程化视觉（首页）
 │   │   ├── Experience.ts    # Three.js 主控（renderer/camera/水晶体/微尘/Bloom 后处理/loop/dispose）
 │   │   └── useExperience.ts # React hook 接入（滚动/鼠标/降级/清理 + resetScroll 复位）
@@ -217,7 +219,8 @@ Tang-Space/
 │       ├── Blog/            # /notes 列表（卡片网格 + 侧边栏，已实现）
 │       ├── NoteDetail/      # /notes/:id 详情（图库 + lightbox，已实现）
 │       ├── About/           # /about（journal 双栏，已实现）
-│       └── Resume/          # /resume（占位）
+│       ├── Resume/          # /resume（占位）
+│       └── NotFound/        # 404 品牌页（凤凰水晶风格，catch-all 渲染非重定向）
 ├── public/
 │   ├── assets/
 │   │   └── img/

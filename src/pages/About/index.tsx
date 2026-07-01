@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { notes } from '../../data/notes'
 import { EMAIL_B64 } from '../../data/contacts'
 import { decryptEmail } from '../../utils/email'
+import { SiteFooter } from '../../components/SiteFooter'
 import '../Blog/index.css'
 import './index.css'
 
@@ -122,6 +123,7 @@ export default function About() {
           </aside>
         </div>
       </div>
+      <SiteFooter />
     </main>
   )
 }

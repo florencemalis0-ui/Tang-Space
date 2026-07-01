@@ -4,6 +4,7 @@ import { Avatar } from '../../components/Avatar'
 import { Navigation } from '../../components/Navigation'
 import { useHitokoto } from '../../hooks/useHitokoto'
 import { useIUp } from '../../hooks/useIUp'
+import { SiteFooter } from '../../components/SiteFooter'
 import './index.css'
 
 const TECH_TAGS = ['Go', 'Python', 'AI/ML', 'Cloud Native', 'Backend', '快手']
@@ -84,19 +85,7 @@ export default function Home() {
         </section>
 
         {/* footer */}
-        <footer className="home-footer">
-          <p>
-            Made with ♥ by TangTang
-            <button
-              type="button"
-              className="cmdk-hint"
-              onClick={() => window.dispatchEvent(new CustomEvent('tang:open-cmdk'))}
-              aria-label="打开命令面板"
-            >
-              ⌘K
-            </button>
-          </p>
-        </footer>
+        <SiteFooter />
       </div>
     </div>
   )

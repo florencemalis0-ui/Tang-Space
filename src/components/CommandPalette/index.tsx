@@ -206,7 +206,7 @@ export function CommandPalette() {
           <input
             ref={inputRef}
             className={styles.input}
-            placeholder="输入命令或搜索…"
+            placeholder="搜索笔记、跳转页面、或输入命令…"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={onInputKeyDown}
@@ -233,7 +233,7 @@ export function CommandPalette() {
         <div className={styles.list} id="cmd-listbox" role="listbox">
           {filtered.length === 0 ? (
             <div className={styles.empty} role="presentation">
-              无匹配命令
+              无匹配结果
             </div>
           ) : (
             filtered.map((cmd, i) => {

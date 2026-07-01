@@ -1,0 +1,48 @@
+/* BackToTop 浮窗按钮：右下角，滚动超过一屏浮现 */
+.back {
+  position: fixed;
+  right: clamp(16px, 3vw, 28px);
+  bottom: clamp(16px, 3vw, 28px);
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(10, 14, 31, 0.55);
+  backdrop-filter: blur(8px);
+  color: var(--color-ink-secondary);
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(12px);
+  pointer-events: none;
+  transition:
+    opacity var(--duration-normal) var(--ease-out),
+    transform var(--duration-normal) var(--ease-out),
+    border-color var(--duration-fast) ease,
+    color var(--duration-fast) ease;
+}
+
+.back.show {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.back:hover {
+  border-color: var(--color-border-strong);
+  color: var(--color-ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .back {
+    transition: none;
+    transform: none;
+  }
+
+  .back.show {
+    transform: none;
+  }
+}
