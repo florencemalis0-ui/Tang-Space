@@ -10,7 +10,7 @@ A personal brand site built as procedural 3D art — refraction crystals, Bloom 
 scroll-driven parallax, all hand-written with Three.js. No imported models, no
 borrowed assets. The code *is* the artwork.
 
-一个以「过程化 3D 视觉」承载的个人品牌主页 —— 折射水晶、Bloom 辉光、滚动视差穿越，
+一个以「过程化 3D 视觉」承载的个人主页 —— 折射水晶、Bloom 辉光、滚动视差穿越，
 全部 Three.js 自写，不导入任何外部模型，不搬运他人资产。**代码即艺术**。
 
 [![Live Site](https://img.shields.io/badge/Live-tangtang-0a0e1f?style=flat-square&labelColor=fb5959)](https://florencemalis0-ui.github.io/Tang-Space/)

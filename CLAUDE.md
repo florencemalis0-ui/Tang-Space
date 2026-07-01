@@ -1,6 +1,6 @@
 # Tang-Space — Claude Code 指南
 
-TangTang（唐睿阳）的个人品牌主页。React 18 + TypeScript + Vite 6 + react-router-dom v7，部署在 GitHub Pages 项目页 `/Tang-Space/`。全局 Three.js 3D 过程化视觉（过程化水晶体 + Bloom 后处理 + 远处微尘），凤凰粉白配色。
+TangTang（唐睿阳）的个人主页。React 18 + TypeScript + Vite 6 + react-router-dom v7，部署在 GitHub Pages 项目页 `/Tang-Space/`。全局 Three.js 3D 过程化视觉（过程化水晶体 + Bloom 后处理 + 远处微尘），凤凰粉白配色。
 
 ## 必读文档（动手前先读）
 - `.agents/context/agents.md` — 完整项目规则与结构（权威）

@@ -11,7 +11,7 @@ brand
 
 ## Product Purpose
 
-TangTang 的个人主页。一个展示身份、技术背景和个人风格的品牌主页。
+TangTang 的个人主页。一个展示身份、技术背景和个人风格的个人站点。
 成功标准：访客在 10 秒内能感受到「这是一个有技术深度、有个性的工程师」，并对进一步了解产生兴趣。
 
 唐睿阳，快手（Kuaishou）工程师，AI · Go · Python · Backend · Cloud Native 方向。

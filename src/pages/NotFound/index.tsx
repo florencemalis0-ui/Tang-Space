@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import './index.css'
 
 /**
- * NotFound — 404 品牌页。
+ * NotFound — 404 定制页。
  *
  * 凤凰水晶风格：大号 404 + 玫红信号点缀（One Signal：此页无 nav active 圆点，
  * 玫红用于背景光晕示意）+ 返回首页 / 记录入口。

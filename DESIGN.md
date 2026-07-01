@@ -1,6 +1,6 @@
 ---
 name: TangTang Homepage
-description: TangTang 的个人品牌主页 — 凤凰粉白 3D 过程化视觉，代码即艺术
+description: TangTang 的个人主页 — 凤凰粉白 3D 过程化视觉，代码即艺术
 colors:
   bg-dark: "#0a0e1f"
   ink-deep: "#ffffff"

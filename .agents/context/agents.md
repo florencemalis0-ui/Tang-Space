@@ -172,7 +172,7 @@ These guidelines work when they produce fewer unnecessary changes in diffs, fewe
 
 ## 关于这个项目
 
-这是 **TangTang（唐睿阳）** 的个人品牌主页，部署在 GitHub Pages。
+这是 **TangTang（唐睿阳）** 的个人主页，部署在 GitHub Pages。
 GitHub 用户名：`florencemalis0-ui`
 快手（Kuaishou）工程师，方向：AI · Go · Python · Backend · Cloud Native。
 
@@ -220,7 +220,7 @@ Tang-Space/
 │       ├── NoteDetail/      # /notes/:id 详情（图库 + lightbox，已实现）
 │       ├── About/           # /about（journal 双栏，已实现）
 │       ├── Resume/          # /resume（占位）
-│       └── NotFound/        # 404 品牌页（凤凰水晶风格，catch-all 渲染非重定向）
+│       └── NotFound/        # 404 定制页（凤凰水晶风格，catch-all 渲染非重定向）
 ├── public/
 │   ├── assets/
 │   │   └── img/
