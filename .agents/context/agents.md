@@ -217,7 +217,7 @@ Tang-Space/
 │   └── pages/
 │       ├── Home/            # 首页（3D 过程化水晶背景 + 滚动叙事）
 │       ├── Blog/            # /notes 列表（卡片网格 + 侧边栏，已实现）
-│       ├── NoteDetail/      # /notes/:id 详情（图库 + lightbox，已实现）
+│       ├── NoteDetail/      # /notes/:id 详情（markdown 正文 + rehype-highlight 代码高亮 + 图库 + lightbox）
 │       ├── About/           # /about（journal 双栏，已实现）
 │       ├── Resume/          # /resume（占位）
 │       └── NotFound/        # 404 定制页（凤凰水晶风格，catch-all 渲染非重定向）

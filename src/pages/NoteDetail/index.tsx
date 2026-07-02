@@ -1,13 +1,37 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import ReactMarkdown from 'react-markdown'
+import ReactMarkdown, { type Components } from 'react-markdown'
 import remarkGfm from 'remark-gfm'
+import rehypeHighlight from 'rehype-highlight'
 import { NOTE_TYPE_LABEL, notes } from '../../data/notes'
 import { SiteFooter } from '../../components/SiteFooter'
 import '../Blog/index.css'
 import './index.css'
 
 const INITIAL_IMAGE_COUNT = 12
+
+// 代码块编辑器外壳：语言标签头 + 容器（rehype-highlight 负责 token 上色）
+const markdownComponents: Components = {
+  pre({ children }) {
+    const arr: unknown[] = Array.isArray(children) ? children : [children]
+    const codeEl = arr.find(
+      (c): c is { props?: { className?: string } } =>
+        c !== null && typeof c === 'object' && 'props' in c,
+    )
+    const match = /language-(\w+)/.exec(codeEl?.props?.className ?? '')
+    const lang = match?.[1] ?? null
+    return (
+      <div className="note-code">
+        {lang ? (
+          <div className="note-code__head">
+            <span className="note-code__lang">{lang}</span>
+          </div>
+        ) : null}
+        <pre className="note-code__pre">{children}</pre>
+      </div>
+    )
+  },
+}
 
 export default function NoteDetail() {
   const { id } = useParams()
@@ -100,7 +124,13 @@ export default function NoteDetail() {
 
         {note.body ? (
           <div className="note-detail__body">
-            <ReactMarkdown remarkPlugins={[remarkGfm]}>{note.body}</ReactMarkdown>
+            <ReactMarkdown
+              remarkPlugins={[remarkGfm]}
+              rehypePlugins={[rehypeHighlight]}
+              components={markdownComponents}
+            >
+              {note.body}
+            </ReactMarkdown>
           </div>
         ) : null}
 

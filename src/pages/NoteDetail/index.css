@@ -115,21 +115,84 @@
   padding: 0.1em 0.4em;
 }
 
-.note-detail__body pre {
-  margin: 1.2em 0;
-  padding: 1em 1.2em;
-  background: rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: var(--radius-md);
-  overflow-x: auto;
+/* 代码块：编辑器风格容器 + 语言标签头
+   （rehype-highlight 把 code 标成 .hljs 并给 token 上色） */
+.note-code {
+  margin: 1.4em 0;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
+  overflow: hidden;
+  background: #0b0f22;
 }
 
-.note-detail__body pre code {
+.note-code__head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.note-code__lang {
+  color: rgba(255, 255, 255, 0.5);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.note-code__pre {
+  margin: 0;
+  padding: 14px 16px;
+  overflow-x: auto;
+  background: transparent;
+}
+
+.note-code__pre code {
+  display: block;
   background: transparent;
   padding: 0;
-  font-size: 0.85rem;
-  line-height: 1.6;
+  border-radius: 0;
+  font-family: var(--font-mono);
+  font-size: 0.84rem;
+  line-height: 1.65;
+  color: #d4d4e8;
 }
+
+/* highlight.js 主题：VS Code Dark+ 调色 */
+.note-code__pre code .hljs-comment,
+.note-code__pre code .hljs-quote { color: #6a9955; font-style: italic; }
+.note-code__pre code .hljs-keyword,
+.note-code__pre code .hljs-selector-tag,
+.note-code__pre code .hljs-selector-class,
+.note-code__pre code .hljs-selector-id,
+.note-code__pre code .hljs-built_in,
+.note-code__pre code .hljs-name,
+.note-code__pre code .hljs-tag { color: #569cd6; }
+.note-code__pre code .hljs-string,
+.note-code__pre code .hljs-regexp,
+.note-code__pre code .hljs-template-variable { color: #ce9178; }
+.note-code__pre code .hljs-number,
+.note-code__pre code .hljs-literal { color: #b5cea8; }
+.note-code__pre code .hljs-title,
+.note-code__pre code .hljs-section,
+.note-code__pre code .hljs-title.function_,
+.note-code__pre code .hljs-title.class_ { color: #dcdcaa; }
+.note-code__pre code .hljs-type { color: #4ec9b0; }
+.note-code__pre code .hljs-attr,
+.note-code__pre code .hljs-attribute,
+.note-code__pre code .hljs-variable,
+.note-code__pre code .hljs-property,
+.note-code__pre code .hljs-template-tag { color: #9cdcfe; }
+.note-code__pre code .hljs-meta { color: #9b9b9b; }
+.note-code__pre code .hljs-symbol,
+.note-code__pre code .hljs-bullet { color: #d4d4e8; }
+.note-code__pre code .hljs-link { color: #4ec9b0; text-decoration: underline; }
+.note-code__pre code .hljs-emphasis { font-style: italic; }
+.note-code__pre code .hljs-strong { font-weight: 700; }
+.note-code__pre code .hljs-addition { color: #b5cea8; }
+.note-code__pre code .hljs-deletion { color: #ce9178; }
 
 .note-detail__body a {
   color: var(--color-ink);
