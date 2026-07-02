@@ -156,7 +156,7 @@
 }
 
 .note-card--featured .note-card__title {
-  font-size: clamp(1.3rem, 2.4vw, 1.7rem);
+  font-size: clamp(1.05rem, 1.7vw, 1.3rem);
 }
 
 .note-card--tech {
