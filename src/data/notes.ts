@@ -23,11 +23,17 @@ export const NOTE_TYPE_LABEL: Record<NoteType | 'all', string> = {
 /**
  * 图片辅助函数。
  *
- * 以后你只需要把图片放到：public/assets/img/life/
- * 然后在 md frontmatter 里写：images: [hangzhou-01.jpg, hangzhou-02.jpg]
+ * 文件名可带子目录：images: [tech/roce-to-infiniband.jpg] → assets/img/tech/...
+ * 不带子目录默认 life/：images: [hangzhou-01.jpg] → assets/img/life/...
+ *
+ * 放图位置：public/assets/img/<子目录>/，frontmatter 写 <子目录>/<文件名>。
  */
 export function lifeImages(...fileNames: string[]) {
-  return fileNames.map((fileName) => `${import.meta.env.BASE_URL}assets/img/life/${fileName}`)
+  return fileNames.map((fileName) =>
+    fileName.includes('/')
+      ? `${import.meta.env.BASE_URL}assets/img/${fileName}`
+      : `${import.meta.env.BASE_URL}assets/img/life/${fileName}`
+  )
 }
 
 /**

@@ -226,7 +226,8 @@ Tang-Space/
 ├── public/
 │   ├── assets/
 │   │   └── img/
-│   │       ├── life/        # 旅行/生活照片（notes.ts 的 lifeImages 引用）
+│   │       ├── life/        # 旅行/生活照片（lifeImages 默认路径，不带子目录）
+│   │       ├── tech/        # 技术文章配图（lifeImages 带子目录引用，如 tech/xxx.jpg）
 │   │       └── wechat.jpg   # 微信二维码
 │   ├── favicon.ico
 │   └── apple-touch-icon.png

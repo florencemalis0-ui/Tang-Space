@@ -6,6 +6,7 @@ date: 2026.07.01
 summary: 从一个懂 RoCE 的工程师视角，看 InfiniBand 到底换了一套什么逻辑。不是术语替换，而是工程关注点的迁移。
 tags: [RoCE, InfiniBand, AI 训练, 网络, RDMA]
 featured: true
+images: [tech/roce-to-infiniband.jpg]
 ---
 InfiniBand (简称 IB) 是一种高性能、低延迟的网络技术，广泛应用于 HPC（高性能计算）和 AI 训练场景中。对于已经熟悉 RoCE（RDMA over Converged Ethernet）的工程师来说，理解 IB 的逻辑，有助于更好地应对不同网络环境下的性能优化和故障排查。
 
