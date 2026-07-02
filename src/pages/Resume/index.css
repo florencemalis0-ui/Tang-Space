@@ -1,10 +1,311 @@
+/* ===================================================
+   Resume — 时间轴式简历（工作 / 项目）
+   深底透 3D + 玻璃卡 + 紫节点（凤凰粉留给全局信号水晶，守 One Signal）
+   =================================================== */
 .resume-page {
   min-height: 100vh;
+  color: var(--color-ink);
+  /* 半透明遮罩透出全局 3D；紫光晕作氛围（玫红是信号色，不用于背景） */
   background-color: rgba(10, 14, 31, 0.7);
+  background-image:
+    radial-gradient(circle at 14% 10%, rgba(98, 72, 164, 0.12), transparent 32%),
+    radial-gradient(circle at 86% 18%, rgba(224, 184, 230, 0.08), transparent 34%);
+  padding: clamp(32px, 7vw, 84px) var(--space-lg);
+}
+
+.resume-shell {
+  width: min(860px, 100%);
+  margin: 0 auto;
+}
+
+/* ===================================================
+   Hero
+   =================================================== */
+.resume-hero {
+  margin-bottom: var(--space-xl);
+}
+
+.resume-hero__top {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  margin-bottom: var(--space-md);
+}
+
+.resume-hero__title {
+  font-size: clamp(2.4rem, 7vw, 4.4rem);
+  line-height: 0.98;
+  letter-spacing: -0.045em;
+  margin: var(--space-sm) 0 var(--space-md);
+  text-wrap: balance;
+}
+
+.resume-hero__desc {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: clamp(1rem, 2vw, 1.15rem);
+  line-height: 1.85;
+  text-wrap: pretty;
+}
+
+/* ===================================================
+   Section
+   =================================================== */
+.resume-section {
+  margin-bottom: var(--space-xl);
+}
+
+.resume-section:last-of-type {
+  margin-bottom: var(--space-lg);
+}
+
+.resume-section__head {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: var(--space-md);
+}
+
+.resume-section__num {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.4);
+  letter-spacing: 0.06em;
+}
+
+.resume-section__title {
+  font-size: clamp(1.4rem, 3vw, 1.8rem);
+  letter-spacing: -0.02em;
+}
+
+/* ===================================================
+   Timeline（每项自带左轨：节点 + 向下连接线）
+   =================================================== */
+.resume-timeline {
+  display: grid;
+  gap: var(--space-lg);
+}
+
+.resume-item {
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  column-gap: 18px;
+}
+
+.resume-item__rail {
+  position: relative;
+}
+
+/* 节点 */
+.resume-item__rail::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 22px;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: #6248a4;
+  border: 3px solid rgba(10, 14, 31, 0.95);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.12),
+    0 0 14px rgba(98, 72, 164, 0.45);
+  transform: translateX(-50%);
+}
+
+/* 向下连接线（末项不画） */
+.resume-item__rail::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 36px;
+  bottom: calc(-1 * var(--space-lg));
+  width: 1px;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.18),
+    rgba(255, 255, 255, 0.04)
+  );
+  transform: translateX(-50%);
+}
+
+.resume-item:last-child .resume-item__rail::before {
+  display: none;
+}
+
+.resume-item__body {
+  border: 1px solid rgba(255, 255, 255, 0.105);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.045);
+  padding: var(--space-md);
+  transition:
+    border-color var(--duration-normal) ease,
+    background var(--duration-normal) ease;
+}
+
+.resume-item__body:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.065);
+}
+
+.resume-item__top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-xs);
+  margin-bottom: 6px;
+}
+
+.resume-item__name {
+  font-size: clamp(1.1rem, 2vw, 1.35rem);
+  letter-spacing: -0.02em;
+}
+
+.resume-item__period {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  color: rgba(255, 255, 255, 0.5);
+  letter-spacing: 0.04em;
+}
+
+.resume-item__role {
+  display: inline-block;
+  margin-bottom: var(--space-sm);
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(234, 189, 246, 0.28);
+  background: rgba(234, 189, 246, 0.1);
+  color: rgba(234, 189, 246, 0.92);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+}
+
+.resume-item__tag {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(251, 191, 36, 0.4);
+  background: rgba(251, 191, 36, 0.12);
+  color: rgba(251, 191, 36, 0.9);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+}
+
+.resume-item__desc {
+  color: rgba(255, 255, 255, 0.72);
+  line-height: 1.8;
+  font-size: 0.95rem;
+  text-wrap: pretty;
+}
+
+.resume-item__highlights {
+  margin: var(--space-sm) 0 0;
+  padding-left: 1.2em;
+  display: grid;
+  gap: 6px;
+}
+
+.resume-item__highlights li {
+  color: rgba(255, 255, 255, 0.66);
+  line-height: 1.7;
+  font-size: 0.9rem;
+}
+
+.resume-item__highlights li::marker {
+  color: rgba(234, 189, 246, 0.6);
+}
+
+.resume-item__link {
+  display: inline-block;
+  margin-top: var(--space-sm);
+  color: var(--color-ink);
+  font-size: 0.86rem;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: rgba(255, 255, 255, 0.3);
+  transition: text-decoration-color var(--duration-fast) ease;
+}
+
+.resume-item__link:hover {
+  text-decoration-color: var(--color-ink);
+}
+
+/* 技术标签 chips（等宽元数据） */
+.resume-tech {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: var(--space-md);
+}
+
+.resume-tech span {
+  border: 1px solid rgba(255, 255, 255, 0.11);
+  border-radius: var(--radius-full);
+  padding: 4px 9px;
+  color: rgba(255, 255, 255, 0.58);
+  background: rgba(0, 0, 0, 0.18);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+}
+
+/* ===================================================
+   空状态（数据待填写时占位，守「不编占位」铁律）
+   =================================================== */
+.resume-empty {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: var(--space-xl) var(--space-lg);
-  text-align: center;
+  align-items: flex-start;
+  gap: 8px;
+  padding: var(--space-md);
+  border: 1px dashed rgba(255, 255, 255, 0.16);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.resume-empty__label {
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: rgba(255, 255, 255, 0.5);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+}
+
+.resume-empty p {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.88rem;
+  line-height: 1.7;
+}
+
+.resume-empty code {
+  font-family: var(--font-mono);
+  font-size: 0.82em;
+  color: rgba(234, 189, 246, 0.85);
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-sm);
+  padding: 0.1em 0.4em;
+}
+
+/* ===================================================
+   Responsive
+   =================================================== */
+@media (max-width: 640px) {
+  .resume-page {
+    padding-inline: var(--space-md);
+  }
+
+  .resume-item {
+    grid-template-columns: 22px 1fr;
+    column-gap: 14px;
+  }
+}
+
+/* reduced-motion：本项目时间轴无循环动效，hover 过渡对运动敏感者无碍，
+   仍按规保留兜底（未来若加节点脉冲在此关闭） */
+@media (prefers-reduced-motion: reduce) {
+  .resume-item__body {
+    transition: none;
+  }
 }

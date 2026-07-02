@@ -211,6 +211,7 @@ Tang-Space/
 │   │   └── useBlurUp.ts     # 图片 blur-up 渐显（治缓存图 onLoad 不触发）
 │   ├── data/
 │   │   ├── notes.ts         # 记录数据：glob 读 content/notes/*.md + 极简 frontmatter 解析（契约：notes 数组 + Note 接口，消费方零改动）
+│   │   ├── resume.ts         # 简历数据：WorkItem / ProjectItem 接口 + workExperience / projects 数组（空框架，待填真实经历）
 │   │   └── contacts.ts      # EMAIL_B64 常量（邮箱 Base64）
 │   ├── utils/
 │   │   └── email.ts         # Base64 邮箱解码
@@ -219,7 +220,7 @@ Tang-Space/
 │       ├── Blog/            # /notes 列表（卡片网格 + 侧边栏，已实现）
 │       ├── NoteDetail/      # /notes/:id 详情（markdown 正文 + rehype-highlight 代码高亮 + 图库 + lightbox）
 │       ├── About/           # /about（journal 双栏，已实现）
-│       ├── Resume/          # /resume（占位）
+│       ├── Resume/          # /resume（时间轴式：工作 / 项目两段，读 data/resume.ts，空数据走「待补充」空状态）
 │       └── NotFound/        # 404 定制页（凤凰水晶风格，catch-all 渲染非重定向）
 ├── content/
 │   └── notes/               # 笔记 markdown 源（frontmatter + 正文，notes.ts glob 读取）
