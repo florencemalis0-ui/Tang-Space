@@ -1,5 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
+import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
 import { NOTE_TYPE_LABEL, notes } from '../../data/notes'
 import { SiteFooter } from '../../components/SiteFooter'
 import '../Blog/index.css'
@@ -95,6 +97,12 @@ export default function NoteDetail() {
             ))}
           </div>
         </header>
+
+        {note.body ? (
+          <div className="note-detail__body">
+            <ReactMarkdown remarkPlugins={[remarkGfm]}>{note.body}</ReactMarkdown>
+          </div>
+        ) : null}
 
         {hasImages ? (
           <section className="note-detail__gallery" aria-label="记录图片">

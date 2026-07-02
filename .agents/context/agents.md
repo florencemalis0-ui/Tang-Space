@@ -210,7 +210,7 @@ Tang-Space/
 │   │   ├── useTilt.ts       # 记录卡片 3D tilt（CSS 变量注入，MAX 4°）
 │   │   └── useBlurUp.ts     # 图片 blur-up 渐显（治缓存图 onLoad 不触发）
 │   ├── data/
-│   │   ├── notes.ts         # 记录内容（硬编码数组，id 即详情页地址）
+│   │   ├── notes.ts         # 记录数据：glob 读 content/notes/*.md + 极简 frontmatter 解析（契约：notes 数组 + Note 接口，消费方零改动）
 │   │   └── contacts.ts      # EMAIL_B64 常量（邮箱 Base64）
 │   ├── utils/
 │   │   └── email.ts         # Base64 邮箱解码
@@ -221,6 +221,8 @@ Tang-Space/
 │       ├── About/           # /about（journal 双栏，已实现）
 │       ├── Resume/          # /resume（占位）
 │       └── NotFound/        # 404 定制页（凤凰水晶风格，catch-all 渲染非重定向）
+├── content/
+│   └── notes/               # 笔记 markdown 源（frontmatter + 正文，notes.ts glob 读取）
 ├── public/
 │   ├── assets/
 │   │   └── img/

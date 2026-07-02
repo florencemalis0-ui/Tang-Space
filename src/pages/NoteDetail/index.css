@@ -52,6 +52,110 @@
   margin-top: var(--space-lg);
 }
 
+/* Markdown 正文排版（react-markdown 渲染原生标签，套父级样式） */
+.note-detail__body {
+  max-width: 760px;
+  margin-top: clamp(32px, 5vw, 48px);
+  color: rgba(255, 255, 255, 0.82);
+  font-size: clamp(1rem, 1.6vw, 1.08rem);
+  line-height: 1.9;
+  text-wrap: pretty;
+}
+
+.note-detail__body > *:first-child {
+  margin-top: 0;
+}
+
+.note-detail__body > *:last-child {
+  margin-bottom: 0;
+}
+
+.note-detail__body p {
+  margin: 0 0 1.1em;
+}
+
+.note-detail__body h2 {
+  margin: 1.8em 0 0.7em;
+  font-size: clamp(1.3rem, 2.4vw, 1.6rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.note-detail__body h3 {
+  margin: 1.5em 0 0.6em;
+  font-size: clamp(1.1rem, 2vw, 1.25rem);
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.note-detail__body ul,
+.note-detail__body ol {
+  margin: 0 0 1.1em;
+  padding-left: 1.4em;
+}
+
+.note-detail__body li {
+  margin: 0.3em 0;
+}
+
+.note-detail__body blockquote {
+  margin: 1.4em 0;
+  padding: 0.2em 0 0.2em 1.1em;
+  border-left: 2px solid rgba(234, 189, 246, 0.5);
+  color: rgba(255, 255, 255, 0.7);
+  font-style: italic;
+}
+
+.note-detail__body code {
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-sm);
+  padding: 0.1em 0.4em;
+}
+
+.note-detail__body pre {
+  margin: 1.2em 0;
+  padding: 1em 1.2em;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-md);
+  overflow-x: auto;
+}
+
+.note-detail__body pre code {
+  background: transparent;
+  padding: 0;
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+
+.note-detail__body a {
+  color: var(--color-ink);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-color: rgba(255, 255, 255, 0.3);
+  transition: text-decoration-color var(--duration-fast) ease;
+}
+
+.note-detail__body a:hover {
+  text-decoration-color: var(--color-ink);
+}
+
+.note-detail__body img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius-md);
+  margin: 1.2em 0;
+}
+
+.note-detail__body hr {
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  margin: 2em 0;
+}
+
 .note-detail__gallery {
   display: grid;
   gap: var(--space-lg);
